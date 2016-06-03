@@ -1,0 +1,194 @@
+package com.bitheads.braincloud.services;
+
+import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.StatusCodes;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+/**
+ * Created by prestonjennings on 15-10-05.
+ */
+public class CommsTest extends TestFixtureNoAuth
+{
+    /*
+    @Test
+    public void testDevBadAuthNoRetry() throws Exception
+    {
+
+        // this should always succeed but helps devs verify that only one auth packet gets sent
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().initialize("123", "123", "1.0.0", "http://localhost:5432");
+        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal("abc", "123", true, tr);
+        tr.RunExpectFail(-1, -1);
+
+        BrainCloudClient.getInstance().resetCommunication();
+    }
+
+    @Test
+    public void testDevBad503() throws Exception
+    {
+        // this test assumes you're running a server that returns 503
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().initialize("123", "123", "1.0.0", "http://localhost:5432");
+        // don't authenticate as we want retries to happen
+        BrainCloudClient.getInstance().getPlayerStateService().getAttributes(tr);
+        tr.RunExpectFail(StatusCodes.CLIENT_NETWORK_ERROR, ReasonCodes.CLIENT_NETWORK_ERROR_TIMEOUT);
+
+        BrainCloudClient.getInstance().resetCommunication();
+    }
+    */
+
+    @Test
+    public void testGlobalErrorHandler() throws Exception
+    {
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().registerGlobalErrorCallback(tr);
+
+        int globalErrorCount = 0;
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
+        globalErrorCount += tr.m_globalErrorCount;
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
+        globalErrorCount += tr.m_globalErrorCount;
+
+        BrainCloudClient.getInstance().deregisterGlobalErrorCallback();
+        Assert.assertEquals(2, globalErrorCount);
+
+        BrainCloudClient.getInstance().resetCommunication();
+    }
+
+    @Test
+    public void testNoSession() throws Exception {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
+
+        System.out.println(tr.m_statusMessage);
+
+        BrainCloudClient.getInstance().resetCommunication();
+    }
+
+    @Test
+    public void testSessionTimeout() throws Exception {
+        // this test assumes you're running a server that returns 503
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        tr.Run();
+
+        System.out.println("Waiting for session to timeout...");
+
+        Thread.sleep(61 * 1000);
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.PLAYER_SESSION_EXPIRED);
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.PLAYER_SESSION_EXPIRED);
+
+        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        tr.Run();
+
+        BrainCloudClient.getInstance().getPlayerStateService().logout(tr);
+        tr.Run();
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
+
+        BrainCloudClient.getInstance().resetCommunication();
+    }
+
+    @Test
+    public void testErrorCallback() throws Exception {
+        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_version, m_serverUrl);
+        BrainCloudClient.getInstance().enableLogging(true);
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getEntityService().createEntity("type", "{}", "", tr);
+        tr.RunExpectFail(-1, -1);
+        Assert.assertTrue(tr.m_statusMessage.startsWith("{"));
+
+        tr.Reset();
+        BrainCloudClient.getInstance().setOldStyleStatusMessageErrorCallback(true);
+        BrainCloudClient.getInstance().getEntityService().createEntity("type", "{}", "", tr);
+        tr.RunExpectFail(-1, -1);
+        Assert.assertFalse(tr.m_statusMessage.startsWith("{"));
+
+        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_version, "https://localhost:5432");
+
+        tr.Reset();
+        BrainCloudClient.getInstance().setOldStyleStatusMessageErrorCallback(false);
+        BrainCloudClient.getInstance().getEntityService().createEntity("type", "{}", "", tr);
+        tr.RunExpectFail(-1, -1);
+        Assert.assertTrue(tr.m_statusMessage.startsWith("{"));
+
+        tr.Reset();
+        BrainCloudClient.getInstance().setOldStyleStatusMessageErrorCallback(true);
+        BrainCloudClient.getInstance().getEntityService().createEntity("type", "{}", "", tr);
+        tr.RunExpectFail(-1, -1);
+        Assert.assertFalse(tr.m_statusMessage.startsWith("{"));
+
+        BrainCloudClient.getInstance().setOldStyleStatusMessageErrorCallback(false);
+    }
+
+    @Test
+    public void testMessageCache() throws Exception
+    {
+        TestResult tr = new TestResult();
+        BrainCloudClient bcc = BrainCloudClient.getInstance();
+
+        bcc.initialize(m_appId, m_secret, m_version, m_serverUrl + "failunittest");
+        bcc.enableLogging(true);
+        bcc.registerNetworkErrorCallback(tr);
+        bcc.registerGlobalErrorCallback(tr);
+        bcc.enableNetworkErrorMessageCaching(true);
+
+        ArrayList<Integer> packetTimeouts = new ArrayList<Integer>();
+        packetTimeouts.add(1);
+        packetTimeouts.add(1);
+        packetTimeouts.add(1);
+        bcc.setPacketTimeouts(packetTimeouts);
+
+        tr.setMaxWait(30);
+
+        int networkErrorCount = 0;
+        int globalErrorCount = 0;
+
+        System.out.println("Authenticate Universal");
+        bcc.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+        tr.RunExpectFail(StatusCodes.CLIENT_NETWORK_ERROR, ReasonCodes.CLIENT_NETWORK_ERROR_TIMEOUT);
+        networkErrorCount += tr.m_networkErrorCount;
+
+        System.out.println("retryCachedMessages");
+        bcc.retryCachedMessages();
+        tr.RunExpectFail(StatusCodes.CLIENT_NETWORK_ERROR, ReasonCodes.CLIENT_NETWORK_ERROR_TIMEOUT);
+        networkErrorCount += tr.m_networkErrorCount;
+
+        System.out.println("flushCachedMessages");
+        bcc.flushCachedMessages(true);
+        bcc.runCallbacks();
+        globalErrorCount += tr.m_globalErrorCount;
+
+        bcc.enableNetworkErrorMessageCaching(false);
+        bcc.deregisterNetworkErrorCallback();
+        bcc.deregisterGlobalErrorCallback();
+        bcc.setPacketTimeoutsToDefault();
+        bcc.resetCommunication();
+
+        Assert.assertEquals(2, networkErrorCount);
+        Assert.assertEquals(1, globalErrorCount);
+    }
+
+}
