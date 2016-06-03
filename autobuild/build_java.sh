@@ -27,9 +27,11 @@ cp -rf ../../TestBCClient/brainCloud .
 rm -rf brainCloud/build
 
 cp -f ../docs/README.TXT brainCloud
+pushd brainCloud
 sed -i xxx "s/Platform: xxx/Platform: Java/g" README.TXT
 sed -i xxx "s/Version: x.x.x/Version: ${build_version}/g" README.TXT
 rm *.xxx
+popd
 
 zip -r ../../autobuild/artifacts/brainCloudClient_Java_${build_version}.zip brainCloud -x "brainCloud/src/test/*" "brainCloud/src/androidTest/*" "brainCloud/src/sharedTest/*"
 
