@@ -67,7 +67,8 @@ public class CommsTest extends TestFixtureNoAuth
     }
 
     @Test
-    public void testNoSession() throws Exception {
+    public void testNoSession() throws Exception
+    {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
@@ -79,7 +80,8 @@ public class CommsTest extends TestFixtureNoAuth
     }
 
     @Test
-    public void testSessionTimeout() throws Exception {
+    public void testSessionTimeout() throws Exception
+    {
         // this test assumes you're running a server that returns 503
         TestResult tr = new TestResult();
 
@@ -111,7 +113,8 @@ public class CommsTest extends TestFixtureNoAuth
     }
 
     @Test
-    public void testErrorCallback() throws Exception {
+    public void testErrorCallback() throws Exception
+    {
         BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_version, m_serverUrl);
         BrainCloudClient.getInstance().enableLogging(true);
 
@@ -191,4 +194,25 @@ public class CommsTest extends TestFixtureNoAuth
         Assert.assertEquals(1, globalErrorCount);
     }
 
+    @Test
+    public void testMessageBundleMarker() throws Exception
+    {
+        TestResult tr = new TestResult();
+        BrainCloudClient bcc = BrainCloudClient.getInstance();
+
+        //bcc.initialize(m_appId, m_secret, m_version, m_serverUrl);
+        //bcc.enableLogging(true);
+        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+        BrainCloudClient.getInstance().insertEndOfMessageBundleMarker();
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
+        BrainCloudClient.getInstance().insertEndOfMessageBundleMarker();
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
+
+        // messages launch right away so only need to call run twice
+
+        tr.Run();
+        tr.Run();
+        //tr.Run();
+    }
 }

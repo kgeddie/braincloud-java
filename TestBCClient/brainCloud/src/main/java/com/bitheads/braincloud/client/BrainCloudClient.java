@@ -454,6 +454,26 @@ public class BrainCloudClient {
         _restClient.flushCachedMessages(in_sendApiErrorCallbacks);
     }
 
+
+    /**
+     * Inserts a marker which will tell the brainCloud comms layer
+     * to close the message bundle off at this point. Any messages queued
+     * before this method was called will likely be bundled together in
+     * the next send to the server.
+     *
+     * To ensure that only a single message is sent to the server you would
+     * do something like this:
+     *
+     * InsertEndOfMessageBundleMarker()
+     * SomeApiCall()
+     * InsertEndOfMessageBundleMarker()
+     *
+     */
+    public void insertEndOfMessageBundleMarker() {
+        _restClient.insertEndOfMessageBundleMarker();
+    }
+
+
     public void sendRequest(ServerCall serverCall) {
         _restClient.addToQueue(serverCall);
     }

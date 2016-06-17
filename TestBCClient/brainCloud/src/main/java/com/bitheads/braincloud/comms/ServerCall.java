@@ -14,12 +14,14 @@ public class ServerCall {
     private ServiceOperation _serviceOperation;
     private JSONObject _data;
     private IServerCallback _callback;
+    boolean _isEndOfBundleMarker;
 
     public ServerCall(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject data, IServerCallback callback) {
         _serviceName = serviceName;
         _serviceOperation = serviceOperation;
         _data = data;
         _callback = callback;
+        _isEndOfBundleMarker = false;
     }
 
     public JSONObject getPayload() throws JSONException {
@@ -55,4 +57,11 @@ public class ServerCall {
         this._callback = _callback;
     }
 
+    public boolean isEndOfBundleMarker() {
+        return _isEndOfBundleMarker;
+    }
+
+    public void setEndOfBundleMarker(boolean value) {
+        _isEndOfBundleMarker = value;
+    }
 }

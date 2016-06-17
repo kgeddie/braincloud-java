@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class BrainCloudRestClient implements Runnable {
 
     private static long NO_PACKET_EXPECTED = -1;
+    private static int MAX_BUNDLE_SIZE = 50;
 
     private BrainCloudClient _client;
     private String _serverUrl;
@@ -404,6 +405,12 @@ public class BrainCloudRestClient implements Runnable {
         }
     }
 
+    public void insertEndOfMessageBundleMarker() {
+        ServerCall sc = new ServerCall(null, null, null, null);
+        sc.setEndOfBundleMarker(true);
+        addToQueue(sc);
+    }
+
     private boolean shouldRetryPacket() {
         for (ServerCall serverCall : _bundleQueue) {
             if (serverCall != null) {
@@ -565,20 +572,36 @@ public class BrainCloudRestClient implements Runnable {
                         serverCall = new ServerCall(ServiceName.heartbeat, ServiceOperation.READ, null, null);
                         _bundleQueue.add(serverCall);
                         return;
-                    } else
-                        continue;
+                    }
+                    continue;
                 }
-                _bundleQueue.add(serverCall);
                 break;
             } catch (InterruptedException ignored) {
+
             }
         }
 
+        // if we got here it means we got a valid serverCall object from the message queue (above)
 
-        for (; ; ) {
+        // only add if it's not an end of bundle marker
+        if (!serverCall.isEndOfBundleMarker()) {
+            _bundleQueue.add(serverCall);
+        }
+
+        while (_bundleQueue.size() < MAX_BUNDLE_SIZE) {
             serverCall = _messageQueue.poll();
             if (serverCall == null)
                 return;
+
+            if (serverCall.isEndOfBundleMarker()) {
+                if (_bundleQueue.size() == 0) {
+                    // skip markers at beginning of bundle queue
+                }
+                else {
+                    // stop processing queue
+                    return;
+                }
+            }
             _bundleQueue.add(serverCall);
         }
     }
