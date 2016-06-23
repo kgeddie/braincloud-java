@@ -270,9 +270,9 @@ public class FriendService {
     }
 
     /**
-     * Retrieves profile information for the partial matches of the specified text.
+     * Returns player state of a particular user.
      *
-     * @param profileId Universal ID text on which to search.
+     * @param profileId Profile Id of player to retrieve player state for.
      * @param callback Method to be invoked when the server response is received.
      */
     public void getSummaryDataForProfileId(String profileId, IServerCallback callback) {
