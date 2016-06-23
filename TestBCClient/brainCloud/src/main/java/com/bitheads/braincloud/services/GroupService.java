@@ -18,6 +18,10 @@ public class GroupService {
         OWNER, ADMIN, MEMBER, OTHER
     }
 
+    public enum AutoJoinStrategy {
+        JoinFirstGroup, JoinRandomGroup
+    }
+
     private enum Parameter {
         groupId,
         profileId,
@@ -35,7 +39,10 @@ public class GroupService {
         version,
         context,
         pageOffset,
-        returnData
+        returnData,
+        summarizeOutput,
+        autoJoinStrategy,
+        where
     }
 
     private BrainCloudClient _client;
@@ -133,6 +140,34 @@ public class GroupService {
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.APPROVE_GROUP_JOIN_REQUEST, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Automatically join an open group that matches the search criteria and has space available.
+     *
+     * Service Name - group
+     * Service Operation - AUTO_JOIN_GROUP
+     *
+     * @param groupType Name of the associated group type.
+     * @param autoJoinStrategy Selection strategy to employ when there are multiple matches
+     * @param dataQueryJson Query parameters (optional)
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void autoJoinGroup(String groupType, AutoJoinStrategy autoJoinStrategy, String dataQueryJson, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.groupType.name(), groupType);
+            data.put(Parameter.autoJoinStrategy.name(), autoJoinStrategy);
+
+            if (StringUtil.IsOptionalParameterValid(dataQueryJson))
+                data.put(Parameter.where.name(), dataQueryJson);
+
+            ServerCall sc = new ServerCall(ServiceName.group,
+                    ServiceOperation.AUTO_JOIN_GROUP, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -342,6 +377,26 @@ public class GroupService {
     }
 
     /**
+     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
+     */
+    @Deprecated
+    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, boolean returnData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.entityId.name(), entityId);
+            data.put(Parameter.data.name(), new JSONObject(jsonData));
+            data.put(Parameter.returnData.name(), returnData);
+
+            ServerCall sc = new ServerCall(ServiceName.group,
+                    ServiceOperation.INCREMENT_GROUP_ENTITY_DATA, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Increment elements for the group entity's data field.
      *
      * Service Name - group
@@ -351,15 +406,17 @@ public class GroupService {
      * @param entityId ID of the entity.
      * @param jsonData Partial data map with incremental values.
      * @param returnData Should the group entity be returned in the response?
+     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback The method to be invoked when the server response is received
      */
-    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, boolean returnData, IServerCallback callback) {
+    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, boolean returnData, boolean summarizeOutput, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
             data.put(Parameter.returnData.name(), returnData);
+            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.INCREMENT_GROUP_ENTITY_DATA, data, callback);
@@ -587,6 +644,28 @@ public class GroupService {
     }
 
     /**
+     * Read the data of the specified group.
+     *
+     * Service Name - group
+     * Service Operation - READ_GROUP_DATA
+     *
+     * @param groupId ID of the group.
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void readGroupData(String groupId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.groupId.name(), groupId);
+
+            ServerCall sc = new ServerCall(ServiceName.group,
+                    ServiceOperation.READ_GROUP_DATA, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Read the specified group entity.
      *
      * Service Name - group
@@ -729,17 +808,9 @@ public class GroupService {
     }
 
     /**
-     * Update a group entity.
-     *
-     * Service Name - group
-     * Service Operation - UPDATE_GROUP_ENTITY_DATA
-     *
-     * @param groupId ID of the group.
-     * @param entityId ID of the entity.
-     * @param version The current version of the group entity (for concurrency checking).
-     * @param jsonData Custom application data.
-     * @param callback The method to be invoked when the server response is received
+     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
      */
+    @Deprecated
     public void updateGroupEntityData(
             String groupId,
             String entityId,
@@ -752,6 +823,42 @@ public class GroupService {
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.version.name(), version);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
+
+            ServerCall sc = new ServerCall(ServiceName.group,
+                    ServiceOperation.UPDATE_GROUP_ENTITY_DATA, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Update a group entity.
+     *
+     * Service Name - group
+     * Service Operation - UPDATE_GROUP_ENTITY_DATA
+     *
+     * @param groupId ID of the group.
+     * @param entityId ID of the entity.
+     * @param version The current version of the group entity (for concurrency checking).
+     * @param jsonData Custom application data.
+     * @param summarizeOutput Should only the entity summary be returned in the response?
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void updateGroupEntityData(
+            String groupId,
+            String entityId,
+            long version,
+            String jsonData,
+            boolean summarizeOutput,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.entityId.name(), entityId);
+            data.put(Parameter.version.name(), version);
+            data.put(Parameter.data.name(), new JSONObject(jsonData));
+            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.UPDATE_GROUP_ENTITY_DATA, data, callback);

@@ -46,7 +46,7 @@ public class FriendService {
      *
      * @param externalId The friend's external id e.g. Facebook id
      * @param authenticationType The authentication type of the friend id e.g. Facebook
-      */
+     */
     public void getFriendProfileInfoForExternalId(String externalId, String authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -68,7 +68,7 @@ public class FriendService {
      *
      * @param profileId Profile (player) ID.
      * @param authenticationType The authentication type e.g. Facebook
-      */
+     */
     public void getExternalIdForProfileId(String profileId, String authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -124,22 +124,6 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_PLAYER_BY_UNIVERSAL_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
-    }
-
-    /**
-     * @deprecated Use listFriends method instead - removal after June 21 2016
-     */
-    @Deprecated
-    public void readFriendsWithApplication(boolean includeSummaryData, IServerCallback callback) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put(Parameter.includeSummaryData.name(), includeSummaryData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.READ_FRIENDS_WITH_APPLICATION, data, callback);
         BrainCloudClient.getInstance().sendRequest(sc);
     }
 
@@ -282,6 +266,24 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.REMOVE_FRIENDS, data, callback);
+        BrainCloudClient.getInstance().sendRequest(sc);
+    }
+
+    /**
+     * Retrieves profile information for the partial matches of the specified text.
+     *
+     * @param profileId Universal ID text on which to search.
+     * @param callback Method to be invoked when the server response is received.
+     */
+    public void getSummaryDataForProfileId(String profileId, IServerCallback callback) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put(Parameter.profileId.name(), profileId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_SUMMARY_DATA_FOR_PROFILE_ID, data, callback);
         BrainCloudClient.getInstance().sendRequest(sc);
     }
 }

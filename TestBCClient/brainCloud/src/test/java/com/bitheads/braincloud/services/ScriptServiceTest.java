@@ -6,18 +6,14 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by prestonjennings on 15-09-02.
  */
-public class ScriptServiceTest extends TestFixtureBase
-{
+public class ScriptServiceTest extends TestFixtureBase {
     private final String _scriptName = "testScript";
 
     @Test
-    public void testRunScript() throws Exception
-    {
+    public void testRunScript() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getScriptService().runScript(
@@ -29,8 +25,7 @@ public class ScriptServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testScheduleRunScriptUTC() throws Exception
-    {
+    public void testScheduleRunScriptUTC() throws Exception {
         TestResult tr = new TestResult();
 
         Date date = new Date();
@@ -45,8 +40,7 @@ public class ScriptServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testScheduleRunScriptMinutes() throws Exception
-    {
+    public void testScheduleRunScriptMinutes() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getScriptService().scheduleRunScriptMinutes(
@@ -59,8 +53,27 @@ public class ScriptServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testRunParentScript() throws Exception
-    {
+    public void testCancelScheduledScript() throws Exception {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getScriptService().scheduleRunScriptMinutes(
+                _scriptName,
+                Helpers.createJsonPair("testParm1", 1),
+                60,
+                tr);
+
+        tr.Run();
+
+        String jobId = tr.m_response.getJSONObject("data").getString("jobId");
+
+        BrainCloudClient.getInstance().getScriptService().cancelScheduledScript(
+                jobId, tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testRunParentScript() throws Exception {
         goToChildProfile();
 
         TestResult tr = new TestResult();

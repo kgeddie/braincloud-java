@@ -14,7 +14,8 @@ public class S3HandlingService {
 
     public enum Parameter {
         category,
-        fileDetails
+        fileDetails,
+        fileId
     }
 
     private BrainCloudClient _client;
@@ -83,4 +84,21 @@ public class S3HandlingService {
         }
     }
 
+    /**
+     * Returns the CDN url for a file
+     *
+     * @param fileId ID of file
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getCDNUrl(String fileId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.fileId.name(), fileId);
+
+            ServerCall sc = new ServerCall(ServiceName.s3Handling, ServiceOperation.GET_CDN_URL, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
 }

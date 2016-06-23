@@ -18,7 +18,8 @@ public class ScriptService {
         scriptData,
         startDateUTC,
         minutesFromNow,
-        parentLevel
+        parentLevel,
+        jobId
     }
 
     private BrainCloudClient _client;
@@ -33,18 +34,18 @@ public class ScriptService {
      * Service Name - Script
      * Service Operation - Run
      *
-     * @param in_scriptName The name of the script to be run
-     * @param in_jsonScriptData Data to be sent to the script in json format
-     * @see The API documentation site for more details on cloud code
+     * @param scriptName The name of the script to be run
+     * @param jsonScriptData Data to be sent to the script in json format
+     * See The API documentation site for more details on cloud code
      */
-    public void runScript(String in_scriptName, String in_jsonScriptData, IServerCallback callback) {
+    public void runScript(String scriptName, String jsonScriptData, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.scriptName.name(), in_scriptName);
+            data.put(Parameter.scriptName.name(), scriptName);
 
-            if (StringUtil.IsOptionalParameterValid(in_jsonScriptData)) {
-                JSONObject jsonData = new JSONObject(in_jsonScriptData);
+            if (StringUtil.IsOptionalParameterValid(jsonScriptData)) {
+                JSONObject jsonData = new JSONObject(jsonScriptData);
                 data.put(Parameter.scriptData.name(), jsonData);
             }
 
@@ -61,23 +62,23 @@ public class ScriptService {
      * Service Name - Script
      * Service Operation - ScheduleCloudScript
      *
-     * @param in_scriptName The name of the script to be run
-     * @param in_jsonScriptData JSON bundle to pass to script
-     * @param in_startTimeUTC The start date as a Date object
-     * @see The API documentation site for more details on cloud code
+     * @param scriptName The name of the script to be run
+     * @param jsonScriptData JSON bundle to pass to script
+     * @param startTimeUTC The start date as a Date object
+     * See The API documentation site for more details on cloud code
      */
-    public void scheduleRunScriptUTC(String in_scriptName, String in_jsonScriptData, Date in_startTimeUTC, IServerCallback callback) {
+    public void scheduleRunScriptUTC(String scriptName, String jsonScriptData, Date startTimeUTC, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.scriptName.name(), in_scriptName);
+            data.put(Parameter.scriptName.name(), scriptName);
 
-            if (StringUtil.IsOptionalParameterValid(in_jsonScriptData)) {
-                JSONObject jsonData = new JSONObject(in_jsonScriptData);
+            if (StringUtil.IsOptionalParameterValid(jsonScriptData)) {
+                JSONObject jsonData = new JSONObject(jsonScriptData);
                 data.put(Parameter.scriptData.name(), jsonData);
             }
 
-            data.put(Parameter.startDateUTC.name(), in_startTimeUTC.getTime());
+            data.put(Parameter.startDateUTC.name(), startTimeUTC.getTime());
 
             ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.SCHEDULE_CLOUD_SCRIPT, data, callback);
             _client.sendRequest(sc);
@@ -92,23 +93,23 @@ public class ScriptService {
      * Service Name - Script
      * Service Operation - ScheduleCloudScript
      *
-     * @param in_scriptName The name of the script to be run
-     * @param in_jsonScriptData JSON bundle to pass to script
-     * @param in_minutesFromNow Number of minutes from now to run script
-     * @see The API documentation site for more details on cloud code
+     * @param scriptName The name of the script to be run
+     * @param jsonScriptData JSON bundle to pass to script
+     * @param minutesFromNow Number of minutes from now to run script
+     * See The API documentation site for more details on cloud code
      */
-    public void scheduleRunScriptMinutes(String in_scriptName, String in_jsonScriptData, int in_minutesFromNow, IServerCallback callback) {
+    public void scheduleRunScriptMinutes(String scriptName, String jsonScriptData, int minutesFromNow, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.scriptName.name(), in_scriptName);
+            data.put(Parameter.scriptName.name(), scriptName);
 
-            if (StringUtil.IsOptionalParameterValid(in_jsonScriptData)) {
-                JSONObject jsonData = new JSONObject(in_jsonScriptData);
+            if (StringUtil.IsOptionalParameterValid(jsonScriptData)) {
+                JSONObject jsonData = new JSONObject(jsonScriptData);
                 data.put(Parameter.scriptData.name(), jsonData);
             }
 
-            data.put(Parameter.minutesFromNow.name(), in_minutesFromNow);
+            data.put(Parameter.minutesFromNow.name(), minutesFromNow);
 
             ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.SCHEDULE_CLOUD_SCRIPT, data, callback);
             _client.sendRequest(sc);
@@ -124,23 +125,23 @@ public class ScriptService {
      * Service Name - Script
      * Service Operation - RUN_PARENT_SCRIPT
      *
-     * @param in_scriptName The name of the script to be run
-     * @param in_scriptData Data to be sent to the script in json format
-     * @param in_parentLevel The level name of the parent to run the script from
-     * @param in_callback The method to be invoked when the server response is received
-     * @see The API documentation site for more details on cloud code
+     * @param scriptName The name of the script to be run
+     * @param scriptData Data to be sent to the script in json format
+     * @param parentLevel The level name of the parent to run the script from
+     * @param callback The method to be invoked when the server response is received
+     * See The API documentation site for more details on cloud code
      */
-    public void runParentScript(String in_scriptName,
-                                String in_scriptData,
-                                String in_parentLevel,
+    public void runParentScript(String scriptName,
+                                String scriptData,
+                                String parentLevel,
                                 IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.scriptName.name(), in_scriptName);
-            data.put(Parameter.parentLevel.name(), in_parentLevel);
+            data.put(Parameter.scriptName.name(), scriptName);
+            data.put(Parameter.parentLevel.name(), parentLevel);
 
-            if (StringUtil.IsOptionalParameterValid(in_scriptData)) {
-                JSONObject jsonData = new JSONObject(in_scriptData);
+            if (StringUtil.IsOptionalParameterValid(scriptData)) {
+                JSONObject jsonData = new JSONObject(scriptData);
                 data.put(Parameter.scriptData.name(), jsonData);
             }
 
@@ -151,5 +152,24 @@ public class ScriptService {
         }
     }
 
+    /**
+     * Cancels a scheduled cloud code script
+     *
+     * Service Name - Script
+     * Service Operation - CANCEL_SCHEDULED_SCRIPT
+     *
+     * @param jobId The scheduled script job to cancel
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void cancelScheduledScript(String jobId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.jobId.name(), jobId);
 
+            ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.CANCEL_SCHEDULED_SCRIPT, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
 }

@@ -69,17 +69,6 @@ public class AsyncMatchService {
     }
 
     /**
-     * @deprecated Use method without matchId parameter.  Removal after May 10 2016.
-     */
-    public void createMatch(String jsonOpponentIds,
-                            String pushNotificationMessage,
-                            String matchId,
-                            IServerCallback callback) {
-
-        createMatchWithInitialTurn(jsonOpponentIds, null, pushNotificationMessage, matchId, null, null, callback);
-    }
-
-    /**
      * Creates an instance of an asynchronous match with an initial turn.
      *
      * Service Name - AsyncMatch
@@ -138,47 +127,6 @@ public class AsyncMatchService {
 
             ServerCall sc = new ServerCall(ServiceName.asyncMatch, ServiceOperation.CREATE, data, callback);
             _client.sendRequest(sc);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Use method without matchId parameter.  Removal after May 10 2016.
-     */
-    public void createMatchWithInitialTurn(String jsonOpponentIds, String jsonMatchState, String pushNotificationMessage,
-                                           String matchId, String nextPlayer, String jsonSummary, IServerCallback callback) {
-
-        try {
-            JSONArray opponentIdsData = new JSONArray(jsonOpponentIds);
-            JSONObject data = new JSONObject();
-            data.put(Parameter.players.name(), opponentIdsData);
-
-            if (StringUtil.IsOptionalParameterValid(jsonMatchState)) {
-                JSONObject matchStateData = new JSONObject(jsonMatchState);
-                data.put(Parameter.matchState.name(), matchStateData);
-            }
-
-            if (StringUtil.IsOptionalParameterValid(matchId))
-                data.put(Parameter.matchId.name(), matchId);
-
-            if (StringUtil.IsOptionalParameterValid(nextPlayer)) {
-                JSONObject currPlayer = new JSONObject();
-                currPlayer.put(Parameter.currentPlayer.name(), nextPlayer);
-                data.put(Parameter.status.name(), currPlayer);
-            }
-
-            if (StringUtil.IsOptionalParameterValid(jsonSummary))
-                data.put(Parameter.summary.name(), new JSONObject(jsonSummary));
-
-            if (StringUtil.IsOptionalParameterValid(pushNotificationMessage)) {
-                data.put(Parameter.pushContent.name(), pushNotificationMessage);
-            }
-
-            BrainCloudClient braincloudClient = BrainCloudClient.getInstance();
-            ServerCall sc = new ServerCall(ServiceName.asyncMatch, ServiceOperation.CREATE, data, callback);
-            braincloudClient.sendRequest(sc);
 
         } catch (JSONException e) {
             e.printStackTrace();

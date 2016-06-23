@@ -53,6 +53,23 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void testAutoJoinGroup() throws Exception {
+        createGroupAsUserA(true);
+        authenticate(Users.UserB);
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getGroupService().autoJoinGroup(
+                _groupType,
+                GroupService.AutoJoinStrategy.JoinFirstGroup,
+                null,
+                tr);
+        tr.Run();
+
+        logout();
+        deleteGroupAsUserA();
+    }
+
+    @Test
     public void testAddGroupMember() throws Exception {
         authenticate(Users.UserA);
         createGroup();
@@ -500,6 +517,7 @@ public class GroupServiceTest extends TestFixtureBase {
                 id,
                 1,
                 Helpers.createJsonPair("testUpdate", 1),
+                true,
                 tr);
         tr.Run();
 
@@ -535,6 +553,20 @@ public class GroupServiceTest extends TestFixtureBase {
                 _groupId,
                 "testName",
                 tr);
+        tr.Run();
+
+        deleteGroup();
+        logout();
+    }
+
+    @Test
+    public void testReadGroupData() throws Exception {
+        authenticate(Users.UserA);
+        createGroup();
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getGroupService().readGroupData(
+                _groupId, tr);
         tr.Run();
 
         deleteGroup();

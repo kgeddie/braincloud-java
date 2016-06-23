@@ -153,6 +153,26 @@ public class FileService {
     }
 
     /**
+     * Returns the CDN url for a file object
+     *
+     * @param cloudPath File path
+     * @param cloudFileName Name of file
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getCDNUrl(String cloudPath, String cloudFileName, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.cloudPath.name(), cloudPath);
+            data.put(Parameter.cloudFilename.name(), cloudFileName);
+
+            ServerCall sc = new ServerCall(ServiceName.file, ServiceOperation.GET_CDN_URL, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
      * the fileUploadFailed callback method will be called once the upload has been canceled.
      *

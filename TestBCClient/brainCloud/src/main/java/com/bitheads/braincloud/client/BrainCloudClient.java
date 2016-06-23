@@ -29,7 +29,6 @@ import com.bitheads.braincloud.services.S3HandlingService;
 import com.bitheads.braincloud.services.ScriptService;
 import com.bitheads.braincloud.services.SocialLeaderboardService;
 import com.bitheads.braincloud.services.TimeService;
-import com.bitheads.braincloud.services.TwitterService;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -75,7 +74,6 @@ public class BrainCloudClient {
     private ScriptService _scriptService = new ScriptService(this);
     private SocialLeaderboardService _socialLeaderboardService = new SocialLeaderboardService(this);
     private TimeService _timeService = new TimeService(this);
-    private TwitterService _twitterService = new TwitterService(this);
 
     private static BrainCloudClient instance = null;
 
@@ -158,13 +156,6 @@ public class BrainCloudClient {
 
     public void resetCommunication() {
         _restClient.resetCommunication();
-    }
-
-    /**
-     * @deprecated Use runCallbacks()
-     */
-    public void update() {
-        runCallbacks();
     }
 
     /**
@@ -632,13 +623,5 @@ public class BrainCloudClient {
 
     public TimeService getTimeService() {
         return _timeService;
-    }
-
-    /**
-     * Deprecated - Removal after June 21 2016
-     */
-    @Deprecated
-    public TwitterService getTwitterService() {
-        return _twitterService;
     }
 }

@@ -5,18 +5,14 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import org.json.JSONArray;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by prestonjennings on 15-09-02.
  */
-public class S3HandlingServiceTest extends TestFixtureBase
-{
+public class S3HandlingServiceTest extends TestFixtureBase {
     private final String _category = "test";
 
     @Test
-    public void testGetUpdatedFiles() throws Exception
-    {
+    public void testGetUpdatedFiles() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getS3HandlingService().getUpdatedFiles(
@@ -28,8 +24,7 @@ public class S3HandlingServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetFileList() throws Exception
-    {
+    public void testGetFileList() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getS3HandlingService().getFileList(
@@ -39,8 +34,21 @@ public class S3HandlingServiceTest extends TestFixtureBase
         tr.Run();
     }
 
-    private String getModifiedFileDetails() throws Exception
-    {
+    @Test
+    public void testGetCdnUrl() throws Exception {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getS3HandlingService().getFileList(_category, tr);
+        tr.Run();
+
+        JSONArray files = tr.m_response.getJSONObject("data").getJSONArray("fileDetails");
+        String fileId = files.getJSONObject(0).getString("fileId");
+
+        BrainCloudClient.getInstance().getS3HandlingService().getCDNUrl(fileId, tr);
+        tr.Run();
+    }
+
+    private String getModifiedFileDetails() throws Exception {
         TestResult tr = new TestResult();
         String fileDetails = "";
 
@@ -48,8 +56,7 @@ public class S3HandlingServiceTest extends TestFixtureBase
                 _category,
                 tr);
 
-        if (tr.Run())
-        {
+        if (tr.Run()) {
             JSONArray files = tr.m_response.getJSONObject("data").getJSONArray("fileDetails");
 
             if (files.length() <= 0) return "";

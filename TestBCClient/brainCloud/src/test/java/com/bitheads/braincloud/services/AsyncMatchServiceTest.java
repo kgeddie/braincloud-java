@@ -31,7 +31,6 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         BrainCloudClient.getInstance().getAsyncMatchService().createMatch(
                 players.toString(),
                 null,
-                null,
                 tr);
 
         String matchId = "";
@@ -58,7 +57,6 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         BrainCloudClient.getInstance().getAsyncMatchService().createMatchWithInitialTurn(
                 players.toString(),
                 Helpers.createJsonPair("blob", 1),
-                null,
                 null,
                 null,
                 Helpers.createJsonPair("map", "level1"),

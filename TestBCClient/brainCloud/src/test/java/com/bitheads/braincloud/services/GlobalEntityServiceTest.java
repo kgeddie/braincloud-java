@@ -19,7 +19,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     private final String _defaultEntityValue = "Test Name 01";
 
     @Test
-    public void testcreateEntity() throws Exception
+    public void testCreateEntity() throws Exception
     {
         TestResult tr = new TestResult();
 
@@ -34,7 +34,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testcreateEntityWithIndexedId() throws Exception
+    public void testCreateEntityWithIndexedId() throws Exception
     {
         TestResult tr = new TestResult();
 
@@ -60,6 +60,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 Helpers.createJsonPair(_defaultEntityValueName, "Test Name 02 Changed"),
+                true,
                 tr);
 
         tr.Run();
@@ -76,6 +77,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 ACL.readWriteOther().toJsonString(),
+                true,
             tr);
 
         tr.Run();
@@ -92,6 +94,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 1000,
+                true,
                 tr);
 
         tr.Run();
@@ -231,6 +234,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
         BrainCloudClient.getInstance().getGlobalEntityService().incrementGlobalEntityData(
                 entityId,
                 Helpers.createJsonPair("test", 1234),
+                true,
                 true,
                 tr);
         tr.Run();

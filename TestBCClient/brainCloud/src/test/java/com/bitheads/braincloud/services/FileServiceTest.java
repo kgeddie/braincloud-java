@@ -72,6 +72,32 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
     }
 
     @Test
+    public void testGetCdnUrl() throws Exception {
+        TestResult tr = new TestResult();
+        String localPath = createFile(1);
+        String fileName = "testFile";
+
+        BrainCloudClient.getInstance().getFileService().uploadFile(
+                "", fileName, true, true, localPath, tr);
+        tr.Run();
+        if (tr.m_result) {
+            String id = getUploadId(tr.m_response);
+            waitForReturn(new String[]{id}, false);
+        }
+
+        Assert.assertEquals(0, _failCount);
+        Assert.assertEquals(1, _returnCount);
+
+        BrainCloudClient.getInstance().getFileService().getCDNUrl(
+                "", fileName, tr);
+        tr.Run();
+
+        BrainCloudClient.getInstance().getFileService().deleteUserFile(
+                "", fileName, tr);
+        tr.Run();
+    }
+
+    @Test
     public void testDeleteUserFiles() throws Exception {
         TestResult tr = new TestResult();
 

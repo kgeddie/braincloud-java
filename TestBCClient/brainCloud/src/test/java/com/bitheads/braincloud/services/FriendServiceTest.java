@@ -33,6 +33,18 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testGetSummaryDataForProfileId() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getFriendService().getSummaryDataForProfileId(
+                getUser(Users.UserA).profileId,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testFindPlayerByName() throws Exception
     {
         TestResult tr = new TestResult();

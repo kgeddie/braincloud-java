@@ -106,6 +106,7 @@ public class EntityServiceTest extends TestFixtureBase {
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 null,
                 1,
+                true,
                 tr);
 
         tr.Run();
@@ -125,6 +126,7 @@ public class EntityServiceTest extends TestFixtureBase {
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 1,
+                true,
                 tr);
 
         tr.Run();
@@ -157,6 +159,7 @@ public class EntityServiceTest extends TestFixtureBase {
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 ACL.readWriteOther().toJsonString(),
                 1,
+                true,
                 tr);
 
         tr.Run();
@@ -268,8 +271,33 @@ public class EntityServiceTest extends TestFixtureBase {
 
         BrainCloudClient.getInstance().getEntityService().incrementUserEntityData(
                 entityId,
+                Helpers.createJsonPair("test", 1234),
+                true,
+                true,
+                tr);
+        tr.Run();
+
+        BrainCloudClient.getInstance().getEntityService().deleteEntity(entityId, -1, tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testIncrementSharedUserEntityData() throws Exception {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getEntityService().createEntity(
+                _defaultEntityType,
+                Helpers.createJsonPair("test", 1234),
+                "",
+                tr);
+        tr.Run();
+        String entityId = getEntityId(tr.m_response);
+
+        BrainCloudClient.getInstance().getEntityService().incrementSharedUserEntityData(
+                entityId,
                 getUser(Users.UserA).profileId,
                 Helpers.createJsonPair("test", 1234),
+                true,
                 true,
                 tr);
         tr.Run();
@@ -349,7 +377,7 @@ public class EntityServiceTest extends TestFixtureBase {
     private void deleteAllDefaultEntities(int version) {
         TestResult tr = new TestResult();
 
-        ArrayList<String> entityIds = new ArrayList<String>(0);
+        ArrayList<String> entityIds = new ArrayList<>(0);
 
         //get all entities
         BrainCloudClient.getInstance().getEntityService().getEntitiesByType(_defaultEntityType, tr);
