@@ -106,7 +106,6 @@ public class EntityServiceTest extends TestFixtureBase {
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 null,
                 1,
-                true,
                 tr);
 
         tr.Run();
@@ -126,7 +125,6 @@ public class EntityServiceTest extends TestFixtureBase {
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 1,
-                true,
                 tr);
 
         tr.Run();
@@ -159,7 +157,6 @@ public class EntityServiceTest extends TestFixtureBase {
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 ACL.readWriteOther().toJsonString(),
                 1,
-                true,
                 tr);
 
         tr.Run();
@@ -272,8 +269,6 @@ public class EntityServiceTest extends TestFixtureBase {
         BrainCloudClient.getInstance().getEntityService().incrementUserEntityData(
                 entityId,
                 Helpers.createJsonPair("test", 1234),
-                true,
-                true,
                 tr);
         tr.Run();
 
@@ -297,8 +292,6 @@ public class EntityServiceTest extends TestFixtureBase {
                 entityId,
                 getUser(Users.UserA).profileId,
                 Helpers.createJsonPair("test", 1234),
-                true,
-                true,
                 tr);
         tr.Run();
 

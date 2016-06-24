@@ -1,26 +1,20 @@
 package com.bitheads.braincloud.services;
 
-import android.util.JsonWriter;
-
 import com.bitheads.braincloud.client.BrainCloudClient;
 
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by prestonjennings on 15-09-02.
  */
-public class GlobalEntityServiceTest extends TestFixtureBase
-{
+public class GlobalEntityServiceTest extends TestFixtureBase {
     private final String _defaultEntityType = "testGlobalEntity";
     private final String _defaultEntityValueName = "globalTestName";
     private final String _defaultEntityValue = "Test Name 01";
 
     @Test
-    public void testCreateEntity() throws Exception
-    {
+    public void testCreateEntity() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getGlobalEntityService().createEntity(
@@ -34,8 +28,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testCreateEntityWithIndexedId() throws Exception
-    {
+    public void testCreateEntityWithIndexedId() throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getGlobalEntityService().createEntityWithIndexedId(
@@ -50,8 +43,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testUpdateEntity() throws Exception
-    {
+    public void testUpdateEntity() throws Exception {
         TestResult tr = new TestResult();
 
         String entityId = createDefaultGlobalEntity();
@@ -60,15 +52,13 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 Helpers.createJsonPair(_defaultEntityValueName, "Test Name 02 Changed"),
-                true,
                 tr);
 
         tr.Run();
     }
 
     @Test
-    public void testUpdateEntityAcl() throws Exception
-    {
+    public void testUpdateEntityAcl() throws Exception {
         TestResult tr = new TestResult();
 
         String entityId = createDefaultGlobalEntity();
@@ -77,15 +67,13 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 ACL.readWriteOther().toJsonString(),
-                true,
-            tr);
+                tr);
 
         tr.Run();
     }
 
     @Test
-    public void testUpdateEntityTimeToLive() throws Exception
-    {
+    public void testUpdateEntityTimeToLive() throws Exception {
         TestResult tr = new TestResult();
 
         String entityId = createDefaultGlobalEntity();
@@ -94,15 +82,13 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                 entityId,
                 1,
                 1000,
-                true,
                 tr);
 
         tr.Run();
     }
 
     @Test
-    public void testDeleteEntity() throws Exception
-    {
+    public void testDeleteEntity() throws Exception {
         TestResult tr = new TestResult();
 
         String entityId = createDefaultGlobalEntity();
@@ -116,8 +102,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testReadEntity() throws Exception
-    {
+    public void testReadEntity() throws Exception {
         TestResult tr = new TestResult();
 
         String entityId = createDefaultGlobalEntity();
@@ -130,8 +115,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetList() throws Exception
-    {
+    public void testGetList() throws Exception {
         TestResult tr = new TestResult();
 
         createDefaultGlobalEntity();
@@ -147,8 +131,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetListByIndexedId() throws Exception
-    {
+    public void testGetListByIndexedId() throws Exception {
         TestResult tr = new TestResult();
 
         String indexedId = "testIndexedId";
@@ -165,8 +148,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetListCount() throws Exception
-    {
+    public void testGetListCount() throws Exception {
         TestResult tr = new TestResult();
 
         createDefaultGlobalEntity();
@@ -180,8 +162,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetPage() throws Exception
-    {
+    public void testGetPage() throws Exception {
         TestResult tr = new TestResult();
 
         generateDefaultEntitites(200);
@@ -194,8 +175,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetPageOffset() throws Exception
-    {
+    public void testGetPageOffset() throws Exception {
         TestResult tr = new TestResult();
         generateDefaultEntitites(200);
 
@@ -234,27 +214,22 @@ public class GlobalEntityServiceTest extends TestFixtureBase
         BrainCloudClient.getInstance().getGlobalEntityService().incrementGlobalEntityData(
                 entityId,
                 Helpers.createJsonPair("test", 1234),
-                true,
-                true,
                 tr);
         tr.Run();
     }
-    
-    
+
+
     ////// helpers
 
-    private static String getEntityId(JSONObject json) throws Exception
-    {
+    private static String getEntityId(JSONObject json) throws Exception {
         return json.getJSONObject("data").getString("entityId");
     }
 
-    private String createDefaultGlobalEntity() throws Exception
-    {
+    private String createDefaultGlobalEntity() throws Exception {
         return createDefaultGlobalEntity(ACL.Access.None);
     }
 
-    private String createDefaultGlobalEntity(ACL.Access accessLevel) throws Exception
-    {
+    private String createDefaultGlobalEntity(ACL.Access accessLevel) throws Exception {
         return createDefaultGlobalEntity(accessLevel, "");
     }
 
@@ -263,8 +238,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
     /// </summary>
     /// <param name="accessLevel"> accessLevel for entity </param>
     /// <returns> The ID of the entity </returns>
-    private String createDefaultGlobalEntity(ACL.Access accessLevel, String indexedId) throws Exception
-    {
+    private String createDefaultGlobalEntity(ACL.Access accessLevel, String indexedId) throws Exception {
         TestResult tr = new TestResult();
 
         ACL access = new ACL();
@@ -272,17 +246,14 @@ public class GlobalEntityServiceTest extends TestFixtureBase
         String entityId = "";
 
         //Create entity
-        if (indexedId.length() <= 0)
-        {
+        if (indexedId.length() <= 0) {
             BrainCloudClient.getInstance().getGlobalEntityService().createEntity(
                     _defaultEntityType,
                     0,
                     access.toJsonString(),
                     Helpers.createJsonPair(_defaultEntityValueName, _defaultEntityValue),
                     tr);
-        }
-        else
-        {
+        } else {
             BrainCloudClient.getInstance().getGlobalEntityService().createEntityWithIndexedId(
                     _defaultEntityType,
                     indexedId,
@@ -292,16 +263,14 @@ public class GlobalEntityServiceTest extends TestFixtureBase
                     tr);
         }
 
-        if (tr.Run())
-        {
+        if (tr.Run()) {
             entityId = getEntityId(tr.m_response);
         }
 
         return entityId;
     }
 
-    private String createContext(int numberOfEntitiesPerPage, int startPage, String entityType) throws Exception
-    {
+    private String createContext(int numberOfEntitiesPerPage, int startPage, String entityType) throws Exception {
         JSONObject context = new JSONObject();
 
         JSONObject pagination = new JSONObject();
@@ -316,8 +285,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
         return context.toString();
     }
 
-    private void generateDefaultEntitites(int numberOfEntites) throws Exception
-    {
+    private void generateDefaultEntitites(int numberOfEntites) throws Exception {
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getGlobalEntityService().getListCount(
@@ -331,8 +299,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase
         numberOfEntites -= existing;
         if (numberOfEntites <= 0) return;
 
-        for (int i = 0; i < numberOfEntites; i++)
-        {
+        for (int i = 0; i < numberOfEntites; i++) {
             createDefaultGlobalEntity(ACL.Access.ReadWrite);
         }
     }

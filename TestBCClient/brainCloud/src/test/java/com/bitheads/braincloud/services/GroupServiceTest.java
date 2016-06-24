@@ -201,7 +201,6 @@ public class GroupServiceTest extends TestFixtureBase {
         BrainCloudClient.getInstance().getGroupService().incrementGroupData(
                 _groupId,
                 Helpers.createJsonPair("testInc", 1),
-                false,
                 tr);
         tr.Run();
 
@@ -220,7 +219,6 @@ public class GroupServiceTest extends TestFixtureBase {
                 _groupId,
                 id,
                 Helpers.createJsonPair("testInc", 1),
-                true,
                 tr);
         tr.Run();
 
@@ -517,7 +515,6 @@ public class GroupServiceTest extends TestFixtureBase {
                 id,
                 1,
                 Helpers.createJsonPair("testUpdate", 1),
-                true,
                 tr);
         tr.Run();
 
