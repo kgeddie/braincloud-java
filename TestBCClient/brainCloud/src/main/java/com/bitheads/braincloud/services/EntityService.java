@@ -22,44 +22,13 @@ public class EntityService {
         orderBy,
         targetPlayerId,
         version,
-        data,
-        returnData,
-        summarizeOutput
+        data
     }
 
     private BrainCloudClient _client;
 
     public EntityService(BrainCloudClient client) {
         _client = client;
-    }
-
-    /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
-     */
-    @Deprecated
-    public void createEntity(String entityType, String jsonEntityData,
-                             String jsonEntityAcl, IServerCallback callback) {
-
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityType.name(), entityType);
-
-            JSONObject jsonData = new JSONObject(jsonEntityData);
-            data.put(Parameter.data.name(), jsonData);
-
-            if (StringUtil.IsOptionalParameterValid(jsonEntityAcl)) {
-                JSONObject jsonAcl;
-                jsonAcl = new JSONObject(jsonEntityAcl);
-                data.put(Parameter.acl.name(), jsonAcl);
-            }
-
-            ServerCall serverCall = new ServerCall(ServiceName.entity,
-                    ServiceOperation.CREATE, data, callback);
-            _client.sendRequest(serverCall);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -70,11 +39,10 @@ public class EntityService {
      * @param jsonEntityAcl The entity's access control list as json. A null acl implies
      *            default permissions which make the entity readable/writeable
      *            by only the player.
-     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback Callback.
      */
     public void createEntity(String entityType, String jsonEntityData,
-                             String jsonEntityAcl, boolean summarizeOutput, IServerCallback callback) {
+                             String jsonEntityAcl, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
@@ -82,7 +50,6 @@ public class EntityService {
 
             JSONObject jsonData = new JSONObject(jsonEntityData);
             data.put(Parameter.data.name(), jsonData);
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             if (StringUtil.IsOptionalParameterValid(jsonEntityAcl)) {
                 JSONObject jsonAcl;
@@ -303,9 +270,20 @@ public class EntityService {
     }
 
     /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
+     * Method updates a new entity on the server. This operation results in the
+     * entity data being completely replaced by the passed in JSON String.
+     *
+     * @param entityId The id of the entity to update
+     * @param entityType The entity type as defined by the user
+     * @param jsonEntityData The entity's data as a json String.
+     * @param jsonEntityAcl The entity's access control list as json. A null acl implies
+     *            default permissions which make the entity readable/writeable
+     *            by only the player.
+     * @param version Current version of the entity. If the version of the
+     *            entity on the server does not match the version passed in, the
+     *            server operation will fail. Use -1 to skip version checking.
+     * @param callback Callback.
      */
-    @Deprecated
     public void updateEntity(String entityId, String entityType,
                              String jsonEntityData, String jsonEntityAcl,
                              int version, IServerCallback callback) {
@@ -335,54 +313,18 @@ public class EntityService {
     }
 
     /**
-     * Method updates a new entity on the server. This operation results in the
-     * entity data being completely replaced by the passed in JSON String.
+     * Method updates a shared entity owned by another player. This operation results in the entity
+     * data being completely replaced by the passed in JSON string.
+     *
+     * Service Name - Entity
+     * Service Operation - UpdateShared
      *
      * @param entityId The id of the entity to update
+     * @param targetPlayerId The id of the player who owns the shared entity
      * @param entityType The entity type as defined by the user
-     * @param jsonEntityData The entity's data as a json String.
-     * @param jsonEntityAcl The entity's access control list as json. A null acl implies
-     *            default permissions which make the entity readable/writeable
-     *            by only the player.
-     * @param version Current version of the entity. If the version of the
-     *            entity on the server does not match the version passed in, the
-     *            server operation will fail. Use -1 to skip version checking.
-     * @param summarizeOutput Should only the entity summary be returned in the response?
-     * @param callback Callback.
+     * @param jsonEntityData    The entity's data as a json string.
+     * @param callback The method to be invoked when the server response is received
      */
-    public void updateEntity(String entityId, String entityType,
-                             String jsonEntityData, String jsonEntityAcl,
-                             int version, boolean summarizeOutput, IServerCallback callback) {
-        try {
-
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityId.name(), entityId);
-            data.put(Parameter.entityType.name(), entityType);
-            data.put(Parameter.version.name(), version);
-
-            JSONObject jsonData = new JSONObject(jsonEntityData);
-            data.put(Parameter.data.name(), jsonData);
-
-            if (StringUtil.IsOptionalParameterValid(jsonEntityAcl)) {
-                JSONObject jsonAcl = new JSONObject(jsonEntityAcl);
-                data.put(Parameter.acl.name(), jsonAcl);
-            }
-
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
-
-            ServerCall sc = new ServerCall(ServiceName.entity,
-                    ServiceOperation.UPDATE, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
-     */
-    @Deprecated
     public void updateSharedEntity(String targetPlayerId, String entityId,
                                    String entityType, String jsonEntityData, int version,
                                    IServerCallback callback) {
@@ -408,48 +350,19 @@ public class EntityService {
     }
 
     /**
-     * Method updates a shared entity owned by another player. This operation results in the entity
-     * data being completely replaced by the passed in JSON string.
+     * Method updates a singleton entity on the server. This operation results
+     * in the entity data being completely replaced by the passed in JSON
+     * string. If the entity doesn't exist it is created.
      *
-     * Service Name - Entity
-     * Service Operation - UpdateShared
-     *
-     * @param entityId The id of the entity to update
-     * @param targetPlayerId The id of the player who owns the shared entity
      * @param entityType The entity type as defined by the user
-     * @param jsonEntityData    The entity's data as a json string.
-     * @param summarizeOutput Should only the entity summary be returned in the response?
-     * @param callback The method to be invoked when the server response is received
+     * @param jsonEntityData The entity's data as a json string
+     * @param jsonAclData The entity's access control list as json. A null acl implies default
+     *            permissions which make the entity readable/writeable by only the player.
+     * @param version Current version of the entity. If the version of the
+     *            entity on the server does not match the version passed in, the
+     *            server operation will fail. Use -1 to skip version checking.
+     * @param callback The callback handler
      */
-    public void updateSharedEntity(String targetPlayerId, String entityId,
-                                   String entityType, String jsonEntityData, int version, boolean summarizeOutput,
-                                   IServerCallback callback) {
-
-        try {
-
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityId.name(), entityId);
-            data.put(Parameter.entityType.name(), entityType);
-            data.put(Parameter.targetPlayerId.name(), targetPlayerId);
-            data.put(Parameter.version.name(), version);
-
-            JSONObject jsonData = new JSONObject(jsonEntityData);
-            data.put(Parameter.data.name(), jsonData);
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
-
-            ServerCall sc = new ServerCall(ServiceName.entity,
-                    ServiceOperation.UPDATE_SHARED, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
-     */
-    @Deprecated
     public void updateSingleton(String entityType, String jsonEntityData,
                                 String jsonAclData, int version, IServerCallback callback) {
         try {
@@ -465,47 +378,6 @@ public class EntityService {
                 JSONObject jsonAcl = new JSONObject(jsonAclData);
                 data.put(Parameter.acl.name(), jsonAcl);
             }
-
-            ServerCall sc = new ServerCall(ServiceName.entity,
-                    ServiceOperation.UPDATE_SINGLETON, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Method updates a singleton entity on the server. This operation results
-     * in the entity data being completely replaced by the passed in JSON
-     * string. If the entity doesn't exist it is created.
-     *
-     * @param entityType The entity type as defined by the user
-     * @param jsonEntityData The entity's data as a json string
-     * @param jsonAclData The entity's access control list as json. A null acl implies default
-     *            permissions which make the entity readable/writeable by only the player.
-     * @param version Current version of the entity. If the version of the
-     *            entity on the server does not match the version passed in, the
-     *            server operation will fail. Use -1 to skip version checking.
-     * @param summarizeOutput Should only the entity summary be returned in the response?
-     * @param callback The callback handler
-     */
-    public void updateSingleton(String entityType, String jsonEntityData,
-                                String jsonAclData, int version, boolean summarizeOutput, IServerCallback callback) {
-        try {
-
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityType.name(), entityType);
-            data.put(Parameter.version.name(), version);
-
-            JSONObject jsonData = new JSONObject(jsonEntityData);
-            data.put(Parameter.data.name(), jsonData);
-
-            if (StringUtil.IsOptionalParameterValid(jsonAclData)) {
-                JSONObject jsonAcl = new JSONObject(jsonAclData);
-                data.put(Parameter.acl.name(), jsonAcl);
-            }
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.entity,
                     ServiceOperation.UPDATE_SINGLETON, data, callback);
@@ -630,18 +502,14 @@ public class EntityService {
      *
      * @param entityId The id of the entity to update
      * @param jsonData The entity's data object
-     * @param returnData Should the entity be returned in the response?
-     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback The callback object
      */
-    public void incrementUserEntityData(String entityId, String jsonData, boolean returnData, boolean summarizeOutput, IServerCallback callback) {
+    public void incrementUserEntityData(String entityId, String jsonData, IServerCallback callback) {
         try {
 
             JSONObject data = new JSONObject();
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.returnData.name(), returnData);
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.entity,
                     ServiceOperation.INCREMENT_USER_ENTITY_DATA, data, callback);
@@ -660,19 +528,15 @@ public class EntityService {
      * @param entityId The id of the entity to update
      * @param targetPlayerId Profile ID of the entity owner
      * @param jsonData The entity's data object
-     * @param returnData Should the entity be returned in the response?
-     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback The callback object
      */
-    public void incrementSharedUserEntityData(String entityId, String targetPlayerId, String jsonData, boolean returnData, boolean summarizeOutput, IServerCallback callback) {
+    public void incrementSharedUserEntityData(String entityId, String targetPlayerId, String jsonData, IServerCallback callback) {
         try {
 
             JSONObject data = new JSONObject();
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.targetPlayerId.name(), targetPlayerId);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.returnData.name(), returnData);
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.entity,
                     ServiceOperation.INCREMENT_SHARED_USER_ENTITY_DATA, data, callback);

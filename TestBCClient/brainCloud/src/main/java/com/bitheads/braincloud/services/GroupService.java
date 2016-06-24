@@ -39,8 +39,6 @@ public class GroupService {
         version,
         context,
         pageOffset,
-        returnData,
-        summarizeOutput,
         autoJoinStrategy,
         where
     }
@@ -358,38 +356,16 @@ public class GroupService {
      *
      * @param groupId ID of the group.
      * @param jsonData Partial data map with incremental values.
-     * @param returnData Should the group entity be returned in the response?
      * @param callback The method to be invoked when the server response is received
      */
-    public void incrementGroupData(String groupId, String jsonData, boolean returnData, IServerCallback callback) {
+    public void incrementGroupData(String groupId, String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.returnData.name(), returnData);
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.INCREMENT_GROUP_DATA, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
-     */
-    @Deprecated
-    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, boolean returnData, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.groupId.name(), groupId);
-            data.put(Parameter.entityId.name(), entityId);
-            data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.returnData.name(), returnData);
-
-            ServerCall sc = new ServerCall(ServiceName.group,
-                    ServiceOperation.INCREMENT_GROUP_ENTITY_DATA, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -405,18 +381,14 @@ public class GroupService {
      * @param groupId ID of the group.
      * @param entityId ID of the entity.
      * @param jsonData Partial data map with incremental values.
-     * @param returnData Should the group entity be returned in the response?
-     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback The method to be invoked when the server response is received
      */
-    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, boolean returnData, boolean summarizeOutput, IServerCallback callback) {
+    public void incrementGroupEntityData(String groupId, String entityId, String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.returnData.name(), returnData);
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.INCREMENT_GROUP_ENTITY_DATA, data, callback);
@@ -808,31 +780,6 @@ public class GroupService {
     }
 
     /**
-     * Deprecated - Use method with summarizeOutput parameter instead - Removal after September 21 2016
-     */
-    @Deprecated
-    public void updateGroupEntityData(
-            String groupId,
-            String entityId,
-            long version,
-            String jsonData,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.groupId.name(), groupId);
-            data.put(Parameter.entityId.name(), entityId);
-            data.put(Parameter.version.name(), version);
-            data.put(Parameter.data.name(), new JSONObject(jsonData));
-
-            ServerCall sc = new ServerCall(ServiceName.group,
-                    ServiceOperation.UPDATE_GROUP_ENTITY_DATA, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Update a group entity.
      *
      * Service Name - group
@@ -842,7 +789,6 @@ public class GroupService {
      * @param entityId ID of the entity.
      * @param version The current version of the group entity (for concurrency checking).
      * @param jsonData Custom application data.
-     * @param summarizeOutput Should only the entity summary be returned in the response?
      * @param callback The method to be invoked when the server response is received
      */
     public void updateGroupEntityData(
@@ -850,7 +796,6 @@ public class GroupService {
             String entityId,
             long version,
             String jsonData,
-            boolean summarizeOutput,
             IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -858,7 +803,6 @@ public class GroupService {
             data.put(Parameter.entityId.name(), entityId);
             data.put(Parameter.version.name(), version);
             data.put(Parameter.data.name(), new JSONObject(jsonData));
-            data.put(Parameter.summarizeOutput.name(), summarizeOutput);
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.UPDATE_GROUP_ENTITY_DATA, data, callback);
