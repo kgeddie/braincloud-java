@@ -43,6 +43,7 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testConsumeCurrency() throws Exception
     {
+        testAwardCurrency();
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getProductService().consumeCurrency(
