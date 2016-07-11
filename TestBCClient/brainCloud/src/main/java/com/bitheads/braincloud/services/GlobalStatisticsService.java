@@ -87,16 +87,15 @@ public class GlobalStatisticsService {
      * Atomically increment (or decrement) global statistics. Global statistics
      * are defined through the brainCloud portal.
      *
-     * @param in_jsonData The JSON encoded data to be sent to the server.For the full
+     * @param jsonData The JSON encoded data to be sent to the server.For the full
      *            statistics grammer see the http://getbraincloud.com/apidocs site.
      * @param callback The callback.
      */
-    public void incrementGlobalStats(String in_jsonData,
-                                     IServerCallback callback) {
+    public void incrementGlobalStats(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            JSONObject jsonData = new JSONObject(in_jsonData);
-            data.put(Parameter.statistics.name(), jsonData);
+            JSONObject jsonDataObj = new JSONObject(jsonData);
+            data.put(Parameter.statistics.name(), jsonDataObj);
 
             ServerCall sc = new ServerCall(ServiceName.globalGameStatistics,
                     ServiceOperation.UPDATE_INCREMENT, data, callback);
@@ -106,4 +105,33 @@ public class GlobalStatisticsService {
         }
     }
 
+    /**
+     * Apply statistics grammar to a partial set of statistics.
+     *
+     * Service Name - GlobalStatistics
+     * Service Operation - PROCESS_STATISTICS
+     *
+     * @param jsonData The JSON format is as follows:
+     * {
+     *     "DEAD_CATS": "RESET",
+     *     "LIVES_LEFT": "SET#9",
+     *     "MICE_KILLED": "INC#2",
+     *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+     *     "TREES_CLIMBED": 1
+     * }
+     * @param callback Method to be invoked when the server response is received.
+     */
+    public void processStatistics(String jsonData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            JSONObject jsonDataObj = new JSONObject(jsonData);
+            data.put(Parameter.statistics.name(), jsonDataObj);
+
+            ServerCall sc = new ServerCall(ServiceName.globalGameStatistics,
+                    ServiceOperation.PROCESS_STATISTICS, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
 }

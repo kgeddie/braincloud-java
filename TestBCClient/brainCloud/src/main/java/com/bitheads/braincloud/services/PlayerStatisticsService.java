@@ -219,4 +219,34 @@ public class PlayerStatisticsService {
         } catch (JSONException je) {
         }
     }
+
+    /**
+     * Apply statistics grammar to a partial set of statistics.
+     *
+     * Service Name - PlayerStatistics
+     * Service Operation - PROCESS_STATISTICS
+     *
+     * @param jsonData The JSON format is as follows:
+     * {
+     *     "DEAD_CATS": "RESET",
+     *     "LIVES_LEFT": "SET#9",
+     *     "MICE_KILLED": "INC#2",
+     *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+     *     "TREES_CLIMBED": 1
+     * }
+     * @param callback Method to be invoked when the server response is received.
+     */
+    public void processStatistics(String jsonData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            JSONObject jsonDataObj = new JSONObject(jsonData);
+            data.put(Parameter.statistics.name(), jsonDataObj);
+
+            ServerCall sc = new ServerCall(ServiceName.playerStatistics,
+                    ServiceOperation.PROCESS_STATISTICS, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
 }

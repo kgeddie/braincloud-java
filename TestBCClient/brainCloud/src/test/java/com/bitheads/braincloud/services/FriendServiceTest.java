@@ -101,6 +101,15 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testGetPlayersOnlineStatus() throws Exception
+    {
+        TestResult tr = new TestResult();
+        String[] ids = { getUser(Users.UserB).profileId };
+        BrainCloudClient.getInstance().getFriendService().getPlayersOnlineStatus(ids, tr);
+        tr.Run();
+    }
+
+    @Test
     public void testReadFriendEntity() throws Exception
     {
 
