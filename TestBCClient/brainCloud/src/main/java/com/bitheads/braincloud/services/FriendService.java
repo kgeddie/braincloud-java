@@ -288,15 +288,15 @@ public class FriendService {
     }
 
     /**
-     * Get players online status
+     * Get users online status
      *
      * Service Name - Friend
-     * Service Operation - GET_PLAYERS_ONLINE_STATUS
+     * Service Operation - GET_USERS_ONLINE_STATUS
      *
-     * @param profileIds Collection of player IDs.
+     * @param profileIds Collection of profile IDs.
      * @param callback Method to be invoked when the server response is received.
      */
-    public void getPlayersOnlineStatus(String[] profileIds, IServerCallback callback) {
+    public void getUsersOnlineStatus(String[] profileIds, IServerCallback callback) {
         JSONArray profiles = new JSONArray();
         for (String achId : profileIds) {
             profiles.put(achId);
@@ -309,7 +309,7 @@ public class FriendService {
             e.printStackTrace();
         }
 
-        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PLAYERS_ONLINE_STATUS, data, callback);
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_USERS_ONLINE_STATUS, data, callback);
         BrainCloudClient.getInstance().sendRequest(sc);
     }
 }
