@@ -106,4 +106,19 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
 
         tr.Run();
     }
+
+    @Test
+    public void testProcessStatistics() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        JSONObject stats = new JSONObject();
+        stats.put("TestStat", "RESET");
+
+        BrainCloudClient.getInstance().getPlayerStatisticsService().processStatistics(
+                stats.toString(),
+                tr);
+
+        tr.Run();
+    }
 }

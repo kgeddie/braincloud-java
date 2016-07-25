@@ -2,10 +2,7 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
 
-import org.json.JSONObject;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -97,6 +94,15 @@ public class FriendServiceTest extends TestFixtureBase
         TestResult tr = new TestResult();
         String[] ids = { getUser(Users.UserB).profileId };
         BrainCloudClient.getInstance().getFriendService().removeFriends(ids, tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testGetUsersOnlineStatus() throws Exception
+    {
+        TestResult tr = new TestResult();
+        String[] ids = { getUser(Users.UserB).profileId };
+        BrainCloudClient.getInstance().getFriendService().getUsersOnlineStatus(ids, tr);
         tr.Run();
     }
 
