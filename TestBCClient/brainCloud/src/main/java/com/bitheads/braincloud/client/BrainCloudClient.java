@@ -112,8 +112,8 @@ public class BrainCloudClient {
         _restClient.initialize(DEFAULT_SERVER_URL, gameId, secretKey);
 
         Locale locale = Locale.getDefault();
-        _countryCode = locale.getCountry();
-        _languageCode = locale.getLanguage();
+        if(_countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
         _timeZoneOffset = ((double) timeZone.getRawOffset()) / (1000.0 * 60.0 * 60.0);
@@ -509,8 +509,27 @@ public class BrainCloudClient {
         return _countryCode;
     }
 
+    /**
+     * Sets the country code sent to brainCloud when a user authenticates.
+     * Will override any auto detected country.
+     * @param countryCode ISO 3166-1 two-letter country code
+     */
+    public void setCountryCode(String countryCode) {
+        _countryCode = countryCode;
+    }
+
     public String getLanguageCode() {
         return _languageCode;
+    }
+
+    /**
+     * Sets the language code sent to brainCloud when a user authenticates.
+     * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+     * Will override any auto detected language.
+     * @param languageCode ISO 639-1 two-letter language code
+     */
+    public void setLanguageCode(String languageCode) {
+        _languageCode = languageCode;
     }
 
     public double getTimeZoneOffset() {
