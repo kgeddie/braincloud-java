@@ -514,7 +514,7 @@ public class BrainCloudClient {
      * Will override any auto detected country.
      * @param countryCode ISO 3166-1 two-letter country code
      */
-    public void setCountryCode(String countryCode) {
+    public void overrideCountryCode(String countryCode) {
         _countryCode = countryCode;
     }
 
@@ -528,7 +528,7 @@ public class BrainCloudClient {
      * Will override any auto detected language.
      * @param languageCode ISO 639-1 two-letter language code
      */
-    public void setLanguageCode(String languageCode) {
+    public void overrideLanguageCode(String languageCode) {
         _languageCode = languageCode;
     }
 
