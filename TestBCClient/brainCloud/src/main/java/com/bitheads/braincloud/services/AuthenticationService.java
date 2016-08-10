@@ -83,20 +83,6 @@ public class AuthenticationService {
     }
 
     /**
-     * @deprecated Use generateAnonymousId() instead - Removal after August 17 2016
-     */
-    @Deprecated public String generateGUID() {
-        return java.util.UUID.randomUUID().toString();
-    }
-
-    /**
-     * @deprecated Use generateAnonymousId() instead - Removal after August 17 2016
-     */
-    @Deprecated public void generateNewAnonymousId() {
-        _anonymousId = java.util.UUID.randomUUID().toString();
-    }
-
-    /**
      * Authenticate a user anonymously with brainCloud - used for apps that
      * don't want to bother the user to login, or for users who are sensitive to
      * their privacy
