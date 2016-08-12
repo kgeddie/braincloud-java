@@ -114,7 +114,7 @@ public class ProfanityService {
             data.put(Parameter.flagPhone.name(), in_flagPhone);
             data.put(Parameter.flagUrls.name(), in_flagUrls);
 
-            ServerCall sc = new ServerCall(ServiceName.profanity, ServiceOperation.PROFANITY_CHECK, data, in_callback);
+            ServerCall sc = new ServerCall(ServiceName.profanity, ServiceOperation.PROFANITY_REPLACE_TEXT, data, in_callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

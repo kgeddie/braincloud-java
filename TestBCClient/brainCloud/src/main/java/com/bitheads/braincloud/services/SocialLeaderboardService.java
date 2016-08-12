@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class SocialLeaderboardService {
 
@@ -46,7 +47,8 @@ public class SocialLeaderboardService {
         includeLeaderboardSize,
         versionId,
         leaderboardResultCount,
-        groupId
+        groupId,
+        profileIds
     }
 
     private BrainCloudClient _client;
@@ -487,6 +489,31 @@ public class SocialLeaderboardService {
 
             ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
                     ServiceOperation.GET_GROUP_SOCIAL_LEADERBOARD, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Retrieve the social leaderboard for a list of players.
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD
+     *
+     * @param leaderboardId The leaderboard to retrieve
+     * @param profileIds The IDs of the players
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getPlayersSocialLeaderboard(String leaderboardId, String[] profileIds, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.profileIds.name(), profileIds);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+                    ServiceOperation.GET_PLAYERS_SOCIAL_LEADERBOARD, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {

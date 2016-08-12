@@ -21,7 +21,8 @@ public class PushNotificationService {
         substitutions,
         groupId,
         alertContent,
-        customData
+        customData,
+        profileIds
     }
 
     private BrainCloudClient _client;
@@ -189,6 +190,54 @@ public class PushNotificationService {
             }
 
             ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_TO_GROUP, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a notification to a user consisting of alert content and custom data.
+     *
+     * @param toPlayerId The playerId of the user to receive the notification
+     * @param alertContentJson Body and title of alert
+     * @param customDataJson Optional custom data
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void sendNormalizedPushNotification(String toPlayerId, String alertContentJson, String customDataJson, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toPlayerId.name(), toPlayerId);
+            data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
+            if (StringUtil.IsOptionalParameterValid(customDataJson)) {
+                data.put(Parameter.customData.name(), new JSONObject(customDataJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a notification to multiple users consisting of alert content and custom data.
+     *
+     * @param profileIds Collection of profile IDs to send the notification to
+     * @param alertContentJson Body and title of alert
+     * @param customDataJson Optional custom data
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void sendNormalizedPushNotificationBatch(String[] profileIds, String alertContentJson, String customDataJson, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.profileIds.name(), profileIds);
+            data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
+            if (StringUtil.IsOptionalParameterValid(customDataJson)) {
+                data.put(Parameter.customData.name(), new JSONObject(customDataJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_BATCH, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

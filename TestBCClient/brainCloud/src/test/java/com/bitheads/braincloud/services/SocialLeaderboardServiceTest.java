@@ -312,6 +312,19 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    @Test
+    public void testGetPlayersSocialLeaderboard() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayersSocialLeaderboard(
+                _socialLeaderboardId,
+                new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                tr);
+
+        tr.Run();
+    }
+
     public void postScoreToDynamicLeaderboard() throws Exception
     {
         TestResult tr = new TestResult();

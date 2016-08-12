@@ -126,4 +126,32 @@ public class PushNotificationServiceTest extends TestFixtureBase
                 tr);
         tr.Run();
     }
+
+    @Test
+    public void testSendNormalizedPushNotification() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getPushNotificationService().sendNormalizedPushNotification(
+                getUser(Users.UserA).profileId,
+                "{ \"body\": \"content of message\", \"title\": \"message title\" }",
+                Helpers.createJsonPair("1", "asdf"),
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testSendNormalizedPushNotificationBatch() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getPushNotificationService().sendNormalizedPushNotificationBatch(
+                new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                "{ \"body\": \"content of message\", \"title\": \"message title\" }",
+                Helpers.createJsonPair("1", "asdf"),
+                tr);
+
+        tr.Run();
+    }
 }
