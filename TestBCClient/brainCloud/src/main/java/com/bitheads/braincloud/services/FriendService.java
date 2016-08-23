@@ -83,18 +83,9 @@ public class FriendService {
     }
 
     /**
-     * Finds a list of players matching the search text by performing a substring
-     * search of all player names.
-     * If the number of results exceeds maxResults the message
-     * "Too many results to return." is received and no players are returned
-     *
-     * Service Name - Friend
-     * Service Operation - FindPlayerByName
-     *
-     * @param searchText The substring to search for. Minimum length of 3 characters.
-     * @param maxResults Maximum number of results to return. If there are more the message
-     * @param callback The callback
+     * @deprecated Use findUsersByExactName & findUsersBySubstrName instead - removal after Nov 22 2016
      */
+    @Deprecated
     public void findPlayerByName(String searchText, int maxResults, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -105,6 +96,53 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_PLAYER_BY_NAME, data, callback);
+        BrainCloudClient.getInstance().sendRequest(sc);
+    }
+
+    /**
+     * Finds a list of players matching the search text by performing an exact match search
+     *
+     * Service Name - friend
+     * Service Operation - FIND_USERS_BY_EXACT_NAME
+     *
+     * @param searchText The string to search for.
+     * @param maxResults  Maximum number of results to return.
+     * @param callback Method to be invoked when the server response is received.
+     */
+    public void findUsersByExactName(String searchText, int maxResults, IServerCallback callback) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put(Parameter.searchText.name(), searchText);
+            data.put(Parameter.maxResults.name(), maxResults);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_USERS_BY_EXACT_NAME, data, callback);
+        BrainCloudClient.getInstance().sendRequest(sc);
+    }
+
+    /**
+     * Finds a list of players matching the search text by performing a substring
+     * search of all player names.
+     *
+     * Service Name - friend
+     * Service Operation - FIND_USERS_BY_SUBSTR_NAME
+     *
+     * @param searchText The substring to search for. Minimum length of 3 characters.
+     * @param maxResults  Maximum number of results to return. If there are more the message
+     * @param callback Method to be invoked when the server response is received.
+     */
+    public void findUsersBySubstrName(String searchText, int maxResults, IServerCallback callback) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put(Parameter.searchText.name(), searchText);
+            data.put(Parameter.maxResults.name(), maxResults);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_USERS_BY_SUBSTR_NAME, data, callback);
         BrainCloudClient.getInstance().sendRequest(sc);
     }
 

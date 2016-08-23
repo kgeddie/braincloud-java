@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class SocialLeaderboardService {
 
@@ -38,6 +37,7 @@ public class SocialLeaderboardService {
         leaderboardType,
         rotationType,
         rotationReset,
+        rotationResetTime,
         retainedCount,
         sort,
         startIndex,
@@ -355,10 +355,15 @@ public class SocialLeaderboardService {
      * @param retainedCount How many rotations to keep
      * @param callback The callback.
      */
-    public void postScoreToDynamicLeaderboard(String leaderboardId,
-                                              long score, String jsonData, String leaderboardType,
-                                              String rotationType, Date rotationReset,
-                                              int retainedCount, IServerCallback callback) {
+    public void postScoreToDynamicLeaderboard(
+            String leaderboardId,
+            long score,
+            String jsonData,
+            String leaderboardType,
+            String rotationType,
+            Date rotationReset,
+            int retainedCount,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -370,12 +375,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.rotationType.name(), rotationType);
 
             if (rotationReset != null) {
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy HH:mm");
-                    data.put(Parameter.rotationReset.name(), dateFormat.format(rotationReset));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                data.put(Parameter.rotationResetTime.name(), rotationReset.getTime());
             }
 
             data.put(Parameter.retainedCount.name(), retainedCount);

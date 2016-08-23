@@ -55,6 +55,32 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void findUsersByExactName() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getFriendService().findUsersByExactName(
+                "search",
+                10,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void findUsersBySubstrName() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getFriendService().findUsersBySubstrName(
+                "search",
+                10,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testFindPlayerByUniversalId() throws Exception
     {
         TestResult tr = new TestResult();

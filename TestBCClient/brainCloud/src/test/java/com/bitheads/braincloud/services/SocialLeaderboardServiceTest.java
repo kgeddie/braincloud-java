@@ -6,6 +6,7 @@ import com.bitheads.braincloud.client.StatusCodes;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -199,15 +200,13 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     {
         TestResult tr = new TestResult();
 
-        Date date = new Date();
-        date.setTime(date.getTime() + 5 * 24 * 60 * 60 * 1000);
         BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.CUMULATIVE,
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
                 SocialLeaderboardService.SocialLeaderboardType.CUMULATIVE.toString(),
                 SocialLeaderboardService.RotationType.WEEKLY.toString(),
-                date,
+                addDays(new Date(), 3),
                 5,
                 tr);
 
@@ -219,15 +218,13 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     {
         TestResult tr = new TestResult();
 
-        Date date = new Date();
-        date.setTime(date.getTime() + 15 * 60 * 60 * 1000);
         BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE,
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
                 SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE.toString(),
                 SocialLeaderboardService.RotationType.DAILY.toString(),
-                date,
+                addDays(new Date(), 3),
                 5,
                 tr);
 
@@ -330,12 +327,12 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
-                _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE,
+                _dynamicLeaderboardId + "-" + (int)(Math.random() * 10000000),
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
                 SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE.toString(),
                 SocialLeaderboardService.RotationType.NEVER.toString(),
-                null,
+                addDays(new Date(), 3),
                 5,
                 tr);
 
@@ -355,4 +352,11 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
 }
