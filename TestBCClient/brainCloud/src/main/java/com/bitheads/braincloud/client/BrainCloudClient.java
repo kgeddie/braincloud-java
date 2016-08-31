@@ -43,7 +43,7 @@ public class BrainCloudClient {
     private String _languageCode;
     private double _timeZoneOffset;
 
-    private final static String BRAINCLOUD_VERSION = "3.0.0";
+    private final static String BRAINCLOUD_VERSION = "3.0.1";
 
     private BrainCloudRestClient _restClient;
 
@@ -106,17 +106,7 @@ public class BrainCloudClient {
      *            The game version (e.g. "1.0.0").
      */
     public void initialize(String gameId, String secretKey, String gameVersion) {
-        _gameId = gameId;
-        _gameVersion = gameVersion;
-        _releasePlatform = Platform.GooglePlayAndroid;
-        _restClient.initialize(DEFAULT_SERVER_URL, gameId, secretKey);
-
-        Locale locale = Locale.getDefault();
-        if(_countryCode.isEmpty()) _countryCode = locale.getCountry();
-        if(_languageCode.isEmpty()) _languageCode = locale.getLanguage();
-
-        TimeZone timeZone = TimeZone.getDefault();
-        _timeZoneOffset = ((double) timeZone.getRawOffset()) / (1000.0 * 60.0 * 60.0);
+        initialize(gameId, secretKey, gameVersion, DEFAULT_SERVER_URL);
     }
 
     /**
@@ -136,6 +126,13 @@ public class BrainCloudClient {
         _gameId = gameId;
         _gameVersion = gameVersion;
         _releasePlatform = Platform.GooglePlayAndroid;
+
+        Locale locale = Locale.getDefault();
+        if(_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
+
+        TimeZone timeZone = TimeZone.getDefault();
+        _timeZoneOffset = ((double) timeZone.getRawOffset()) / (1000.0 * 60.0 * 60.0);
 
         _restClient.initialize(
                 serverUrl.endsWith("/dispatcherv2") ? serverUrl : serverUrl + "/dispatcherv2",
