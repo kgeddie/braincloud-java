@@ -392,6 +392,15 @@ public class BrainCloudWrapper implements IServerCallback {
     }
 
     /**
+     * Re-authenticates the user with brainCloud
+     *
+     * @param callback The callback handler
+     */
+    public void reconnect(IServerCallback callback) {
+        authenticateAnonymous(callback);
+    }
+
+    /**
      * Run callbacks, to be called once per frame from your main thread
      */
     public void runCallbacks() {

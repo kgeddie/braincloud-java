@@ -93,6 +93,27 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
 
         Logout();
     }
+
+    @Test
+    public void testReconnect()
+    {
+        BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
+        bcw.initialize(m_appId, m_secret, m_version, m_serverUrl);
+
+        TestResult tr = new TestResult();
+        String uid = getUser(Users.UserA).id;
+        uid += "_wrapper";
+        bcw.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
+        tr.Run();
+
+        BrainCloudWrapper.getBC().getPlayerStateService().logout(tr);
+        tr.Run();
+
+        bcw.reconnect(tr);
+        tr.Run();
+
+        Logout();
+    }
 /*
     @Test
     public void testVerifyAlwaysAllowProfileFalse()
