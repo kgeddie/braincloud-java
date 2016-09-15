@@ -348,8 +348,9 @@ public class GroupServiceTest extends TestFixtureBase {
     @Test
     public void testReadGroupEntitiesPage() throws Exception {
         authenticate(Users.UserA);
+        createGroup();
 
-        String context = createContext(10, 1, "entityType", _entityType);
+        String context = createContext(10, 1, "groupId", _groupId);
 
         TestResult tr = new TestResult();
         BrainCloudClient.getInstance().getGroupService().readGroupEntitiesPage(
@@ -357,14 +358,16 @@ public class GroupServiceTest extends TestFixtureBase {
                 tr);
         tr.Run();
 
+        deleteGroup();
         logout();
     }
 
     @Test
     public void testReadGroupEntitiesPageByOffset() throws Exception {
         authenticate(Users.UserA);
+        createGroup();
 
-        String context = createContext(10, 1, "entityType", _entityType);
+        String context = createContext(10, 1, "groupId", _groupId);
 
         TestResult tr = new TestResult();
         BrainCloudClient.getInstance().getGroupService().readGroupEntitiesPage(
@@ -379,6 +382,7 @@ public class GroupServiceTest extends TestFixtureBase {
                 1,
                 tr);
 
+        deleteGroup();
         logout();
     }
 
