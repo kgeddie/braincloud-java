@@ -9,7 +9,6 @@ import com.bitheads.braincloud.comms.ServerCall;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SocialLeaderboardService {
@@ -519,5 +518,18 @@ public class SocialLeaderboardService {
         } catch (JSONException je) {
             je.printStackTrace();
         }
+    }
+
+    /**
+     * Retrieve a list of all leaderboards
+     *
+     * Service Name - leaderboard
+     * Service Operation - LIST_ALL_LEADERBOARDS
+     *
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void listAllLeaderboards(IServerCallback callback) {
+        ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.LIST_ALL_LEADERBOARDS, null, callback);
+        _client.sendRequest(sc);
     }
 }

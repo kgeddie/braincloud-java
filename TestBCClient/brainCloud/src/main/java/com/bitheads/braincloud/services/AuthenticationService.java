@@ -281,6 +281,7 @@ public class AuthenticationService {
             message.put(Parameter.countryCode.name(), _client.getCountryCode());
             message.put(Parameter.languageCode.name(), _client.getLanguageCode());
             message.put(Parameter.timeZoneOffset.name(), _client.getTimeZoneOffset());
+            message.put("clientLib", "java");
 
             System.out.println(message.toString());
 

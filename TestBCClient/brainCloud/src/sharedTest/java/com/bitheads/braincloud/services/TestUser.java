@@ -45,6 +45,8 @@ public class TestUser
                 tr.Run();
                 BrainCloudClient.getInstance().getPlayerStateService().updatePlayerName(id, tr);
                 tr.Run();
+                BrainCloudClient.getInstance().getPlayerStateService().updateContactEmail("braincloudunittest@gmail.com", tr);
+                tr.Run();
             }
 
             BrainCloudClient.getInstance().getPlayerStateService().logout(tr);

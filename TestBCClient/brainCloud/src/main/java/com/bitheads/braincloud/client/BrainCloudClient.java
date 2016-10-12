@@ -15,6 +15,7 @@ import com.bitheads.braincloud.services.GlobalEntityService;
 import com.bitheads.braincloud.services.GlobalStatisticsService;
 import com.bitheads.braincloud.services.GroupService;
 import com.bitheads.braincloud.services.IdentityService;
+import com.bitheads.braincloud.services.MailService;
 import com.bitheads.braincloud.services.MatchMakingService;
 import com.bitheads.braincloud.services.OneWayMatchService;
 import com.bitheads.braincloud.services.PlaybackStreamService;
@@ -43,7 +44,7 @@ public class BrainCloudClient {
     private String _languageCode;
     private double _timeZoneOffset;
 
-    private final static String BRAINCLOUD_VERSION = "3.0.1";
+    private final static String BRAINCLOUD_VERSION = "3.1.0";
 
     private BrainCloudRestClient _restClient;
 
@@ -60,6 +61,7 @@ public class BrainCloudClient {
     private GlobalStatisticsService _globalStatisticsService = new GlobalStatisticsService(this);
     private GroupService _groupService = new GroupService(this);
     private IdentityService _identityService = new IdentityService(this);
+    private MailService _mailService = new MailService(this);
     private MatchMakingService _matchMakingService = new MatchMakingService(this);
     private OneWayMatchService _oneWayMatchService = new OneWayMatchService(this);
     private PlaybackStreamService _playbackStreamService = new PlaybackStreamService(this);
@@ -583,6 +585,10 @@ public class BrainCloudClient {
 
     public IdentityService getIdentityService() {
         return _identityService;
+    }
+
+    public MailService getMailService() {
+        return _mailService;
     }
 
     public MatchMakingService getMatchMakingService() {

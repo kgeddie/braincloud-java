@@ -18,6 +18,7 @@ public enum ServiceName {
     globalApp,
     group,
     heartbeat,
+    mail,
     matchMaking,
     onewayMatch,
     playbackStream,
@@ -31,6 +32,6 @@ public enum ServiceName {
     s3Handling,
     script,
     socialLeaderboard,
-    time,
-    twitter
+    leaderboard,
+    time
 }
