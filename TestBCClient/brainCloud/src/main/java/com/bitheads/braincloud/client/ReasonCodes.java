@@ -29,6 +29,9 @@ public interface ReasonCodes {
     int MERGE_PROFILES = 40212;
     int INVALID_PROPERTY_NAME = 40213;
     int EMAIL_NOT_VALIDATED = 40214;
+    int DATABASE_ERROR = 40215;
+    int PROPERTY_NOT_OVERRIDEABLE = 40216;
+    int UNKNOWN_AUTH_ERROR = 40217;
 
 
     // Forbidden (403)...
