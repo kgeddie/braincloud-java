@@ -130,7 +130,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 5,
                 5,
-                true,
                 tr);
 
         tr.Run();
@@ -146,7 +145,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 5,
                 5,
-                true,
                 1,
                 tr);
 
@@ -328,6 +326,26 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         TestResult tr = new TestResult();
 
         BrainCloudClient.getInstance().getSocialLeaderboardService().listAllLeaderboards(tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void getGlobalLeaderboardEntryCount() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardEntryCount(_globalLeaderboardId, tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void getGlobalLeaderboardEntryCountByVersion() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardEntryCountByVersion(_globalLeaderboardId, 1, tr);
 
         tr.Run();
     }

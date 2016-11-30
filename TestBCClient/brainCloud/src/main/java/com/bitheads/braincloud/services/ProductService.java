@@ -54,16 +54,9 @@ public class ProductService {
     }
 
     /**
-     * Award player the passed-in amount of currency. Returns
-     * JSON representing the new currency values.
-     *
-     * Service Name - Product
-     * Service Operation - AwardVC
-     *
-     * @param in_currencyType The currency type to award.
-     * @param in_amount The amount of currency to award.
-     * @param callback The callback.
+     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
      */
+    @Deprecated
     public void awardCurrency(String in_currencyType, long in_amount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -78,15 +71,9 @@ public class ProductService {
     }
 
     /**
-     * Consume the passed-in amount of currency from the player.
-     *
-     * Service Name - Product
-     * Service Operation - ConsumePlayerVC
-     *
-     * @param in_currencyType The currency type to consume.
-     * @param in_amount The amount of currency to consume.
-     * @param callback The callback.
+     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
      */
+    @Deprecated
     public void consumeCurrency(String in_currencyType, long in_amount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -101,13 +88,9 @@ public class ProductService {
     }
 
     /**
-     * Resets the player's currency back to zero.
-     *
-     * Service Name - Product
-     * Service Operation - ResetPlayerVC
-     *
-     * @param callback The callback.
+     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
      */
+    @Deprecated
     public void resetCurrency(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.product, ServiceOperation.RESET_PLAYER_VC, null, callback);
         _client.sendRequest(sc);

@@ -201,22 +201,9 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Method returns a page of results of the global leaderboard.
-     *
-     * Leaderboards entries contain the player's score and optionally, some user-defined
-     * data associated with the score.
-     *
-     * Note: If no leaderboard records exist then this method will empty list.
-     *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardPage
-     *
-     * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param beforeCount The count of number of players before the current player to include.
-     * @param afterCount The count of number of players after the current player to include.
-     * @param includeLeaderboardSize Whether to return leaderboard size
+     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
      */
+    @Deprecated
     public void getGlobalLeaderboardView(
             String leaderboardId,
             SortOrder sort,
@@ -242,8 +229,11 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * By using a non-current version id, the user can retrieve a historial leaderboard.
-     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     *
+     * Leaderboards entries contain the player's score and optionally, some user-defined
+     * data associated with the score.
+     *
+     * Note: If no leaderboard records exist then this method will empty list.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
@@ -252,12 +242,32 @@ public class SocialLeaderboardService {
      * @param sort Sort order of the returned list.
      * @param beforeCount The count of number of players before the current player to include.
      * @param afterCount The count of number of players after the current player to include.
-     * @param includeLeaderboardSize Whether to return leaderboard size
-     * @param versionId The historical version id
-     * @returns JSON String representing the entries in the leaderboard.
-     * See GetGlobalLeaderboardView documentation. Note that historial leaderboards do not
-     * include the 'timeBeforeReset' parameter.
      */
+    public void getGlobalLeaderboardView(
+            String leaderboardId,
+            SortOrder sort,
+            int beforeCount,
+            int afterCount,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
+     */
+    @Deprecated
     public void getGlobalLeaderboardViewByVersion(
             String leaderboardId,
             SortOrder sort,
@@ -273,6 +283,46 @@ public class SocialLeaderboardService {
             data.put(Parameter.beforeCount.name(), beforeCount);
             data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial leaderboard.
+     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort Sort order of the returned list.
+     * @param beforeCount The count of number of players before the current player to include.
+     * @param afterCount The count of number of players after the current player to include.
+     * @param versionId The historical version id
+     * @returns JSON String representing the entries in the leaderboard.
+     * See GetGlobalLeaderboardView documentation. Note that historial leaderboards do not
+     * include the 'timeBeforeReset' parameter.
+     */
+    public void getGlobalLeaderboardViewByVersion(
+            String leaderboardId,
+            SortOrder sort,
+            int beforeCount,
+            int afterCount,
+            int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.versionId.name(), versionId);
 
             ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
@@ -299,6 +349,57 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
             ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VERSIONS, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets the number of entries in a global leaderboard
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_ENTRY_COUNT
+     *
+     * @param leaderboardId The leaderboard ID
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getGlobalLeaderboardEntryCount(
+            String leaderboardId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets the number of entries in a global leaderboard
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_ENTRY_COUNT
+     *
+     * @param leaderboardId The leaderboard ID
+     * @param versionId The version of the leaderboard
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getGlobalLeaderboardEntryCountByVersion(
+            String leaderboardId,
+            int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {

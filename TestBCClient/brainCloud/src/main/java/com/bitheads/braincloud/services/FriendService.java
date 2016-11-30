@@ -83,23 +83,6 @@ public class FriendService {
     }
 
     /**
-     * @deprecated Use findUsersByExactName & findUsersBySubstrName instead - removal after Nov 22 2016
-     */
-    @Deprecated
-    public void findPlayerByName(String searchText, int maxResults, IServerCallback callback) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put(Parameter.searchText.name(), searchText);
-            data.put(Parameter.maxResults.name(), maxResults);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_PLAYER_BY_NAME, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
-    }
-
-    /**
      * Finds a list of players matching the search text by performing an exact match search
      *
      * Service Name - friend
