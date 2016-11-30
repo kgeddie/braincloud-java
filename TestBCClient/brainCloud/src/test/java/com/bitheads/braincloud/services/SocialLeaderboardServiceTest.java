@@ -19,7 +19,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     private final String _globalLeaderboardId = "testLeaderboard";
     private final String _socialLeaderboardId = "testSocialLeaderboard";
     private final String _dynamicLeaderboardId = "testDynamicLeaderboard";
-    private final String _eventId = "tournamentRewardTest";
     
     @Test
     public void testGetSocialLeaderboard() throws Exception
@@ -242,33 +241,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
 
         BrainCloudClient.getInstance().getSocialLeaderboardService().resetLeaderboardScore(
                 _globalLeaderboardId,
-                tr);
-
-        tr.Run();
-    }
-
-    @Test
-    public void testGetCompletedTournament() throws Exception
-    {
-        TestResult tr = new TestResult();
-
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getCompletedTournament(
-                _socialLeaderboardId,
-                true,
-                tr);
-
-        tr.Run();
-    }
-
-    @Test
-    public void testTriggerSocialLeaderboardTournamentReward() throws Exception
-    {
-        TestResult tr = new TestResult();
-
-        BrainCloudClient.getInstance().getSocialLeaderboardService().triggerSocialLeaderboardTournamentReward(
-                _socialLeaderboardId,
-                _eventId,
-                1,
                 tr);
 
         tr.Run();

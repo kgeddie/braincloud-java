@@ -509,69 +509,6 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * If a social leaderboard has been configured to reset periodically, each
-     * period can be considered to be a tournament. When the leaderboard resets,
-     * the tournament has ended and participants can be ranked based on their
-     * final scores.
-     *
-     * This API method will return the sorted leaderboard including: the player
-     * the game's pacers all friends who participated in the tournament
-     *
-     * This API method will return the leaderboard results for a particular
-     * tournament only once. If the method is called twice, the second call will
-     * yield an empty result.
-     *
-     * Note that if the leaderboard has not been configured to reset, the
-     * concept of a tournament does not apply.
-     *
-     * @param leaderboardId The id of the leaderboard
-     * @param replaceName True if the player's name should be replaced with "You"
-     * @param callback The callback.
-     */
-    public void getCompletedTournament(String leaderboardId,
-                                       boolean replaceName, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.replaceName.name(), replaceName);
-
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
-                    ServiceOperation.GET_COMPLETED_TOURNAMENT, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * This method triggers a reward (via a player statistics event) to the
-     * currently logged in player for ranking at the completion of a tournament.
-     *
-     * @param leaderboardId The leaderboard the tournament was on
-     * @param eventName The player statistics event name to trigger
-     * @param eventMultiplier The multiplier to associate with the event
-     * @param callback The callback.
-     */
-    public void triggerSocialLeaderboardTournamentReward(String leaderboardId,
-                                                         String eventName, long eventMultiplier,
-                                                         IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.eventName.name(), eventName);
-            data.put(Parameter.eventMultiplier.name(), eventMultiplier);
-
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
-                    ServiceOperation.REWARD_TOURNAMENT, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Retrieve the social leaderboard for a group.
      *
      * Service Name - leaderboard
