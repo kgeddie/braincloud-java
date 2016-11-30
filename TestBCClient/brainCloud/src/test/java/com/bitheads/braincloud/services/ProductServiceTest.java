@@ -1,6 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 import org.junit.Test;
 
@@ -37,7 +38,7 @@ public class ProductServiceTest extends TestFixtureBase
                 200,
                 tr);
 
-        tr.Run();
+        tr.RunExpectFail(403, ReasonCodes.CURRENCY_SECURITY_ERROR);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class ProductServiceTest extends TestFixtureBase
                 100,
                 tr);
 
-        tr.Run();
+        tr.RunExpectFail(403, ReasonCodes.CURRENCY_SECURITY_ERROR);
     }
 
     @Test
@@ -62,7 +63,7 @@ public class ProductServiceTest extends TestFixtureBase
         BrainCloudClient.getInstance().getProductService().resetCurrency(
                 tr);
 
-        tr.Run();
+        tr.RunExpectFail(403, ReasonCodes.CURRENCY_SECURITY_ERROR);
     }
 
     @Test
@@ -109,39 +110,4 @@ public class ProductServiceTest extends TestFixtureBase
 // TODO: 15-09-03  
     }
 
-    @Test
-    public void testAwardParentCurrency() throws Exception
-    {
-        goToChildProfile();
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getProductService().awardParentCurrency(_currencytype, 1000, m_parentLevelName, tr);
-        tr.Run();
-    }
-
-    @Test
-    public void testConsumeParentCurrency() throws Exception
-    {
-        goToChildProfile();
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getProductService().consumeParentCurrency(_currencytype, 1000, m_parentLevelName, tr);
-        tr.Run();
-    }
-
-    @Test
-    public void testGetParentCurrency() throws Exception
-    {
-        goToChildProfile();
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getProductService().getParentCurrency(_currencytype, m_parentLevelName, tr);
-        tr.Run();
-    }
-
-    @Test
-    public void testResetParentCurrency() throws Exception
-    {
-        goToChildProfile();
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getProductService().resetParentCurrency(m_parentLevelName, tr);
-        tr.Run();
-    }
 }
