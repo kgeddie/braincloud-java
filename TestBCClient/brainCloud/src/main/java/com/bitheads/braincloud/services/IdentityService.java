@@ -26,7 +26,9 @@ public class IdentityService {
         releasePlatform,
         countryCode,
         languageCode,
-        timeZoneOffset
+        timeZoneOffset,
+        externalAuthName,
+        peer
     }
 
     private BrainCloudClient _client;
@@ -648,6 +650,114 @@ public class IdentityService {
         } catch (JSONException je) {
             je.printStackTrace();
         }
+    }
+
+    /**
+     * Attach a new identity to a parent app
+     *
+     * Service Name - identity
+     * Service Operation - ATTACH_PARENT_WITH_IDENTITY
+     *
+     * @param externalId The users id for the new credentials
+     * @param authenticationToken The password/token
+     * @param authenticationType Type of identity
+     * @param forceCreate Should a new profile be created if it does not exist?
+     * @param externalAuthName Optional - if attaching an external identity
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void attachParentWithIdentity(String externalId, String authenticationToken, AuthenticationType authenticationType,
+                                         boolean forceCreate, String externalAuthName, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.authenticationToken.name(), authenticationToken);
+            data.put(Parameter.authenticationType.name(), authenticationType.toString());
+            data.put(Parameter.forceCreate.name(), forceCreate);
+            if (StringUtil.IsOptionalParameterValid(externalAuthName))
+                data.put(Parameter.externalAuthName.name(), externalAuthName);
+
+            ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.ATTACH_PARENT_WITH_IDENTITY, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
+     * Detaches parent from this player's profile
+     *
+     * Service Name - identity
+     * Service Operation - DETACH_PARENT
+     *
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void detachParent(IServerCallback callback) {
+        ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.DETACH_PARENT, null, callback);
+        _client.sendRequest(sc);
+    }
+
+    /**
+     * Attaches a peer identity to this player's profile
+     *
+     * Service Name - identity
+     * Service Operation - ATTACH_PEER_PROFILE
+     *
+     * @param externalId The users id for the new credentials
+     * @param authenticationToken The password/token
+     * @param authenticationType Type of identity
+     * @param forceCreate Should a new profile be created if it does not exist?
+     * @param externalAuthName Optional - if attaching an external identity
+     * @param peer Name of the peer to connect to
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void attachPeerProfile(String externalId, String authenticationToken, AuthenticationType authenticationType,
+                                  boolean forceCreate, String externalAuthName, String peer, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.authenticationToken.name(), authenticationToken);
+            data.put(Parameter.authenticationType.name(), authenticationType.toString());
+            data.put(Parameter.peer.name(), peer);
+            data.put(Parameter.forceCreate.name(), forceCreate);
+            if (StringUtil.IsOptionalParameterValid(externalAuthName))
+                data.put(Parameter.externalAuthName.name(), externalAuthName);
+
+            ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.ATTACH_PEER_PROFILE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
+     * Detaches a peer identity from this player's profile
+     *
+     * Service Name - identity
+     * Service Operation - DETACH_PEER
+     *
+     * @param peer Name of the peer to connect to
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void detachPeer(String peer, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.peer.name(), peer);
+
+            ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.DETACH_PEER, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
+     * Returns a list of peer profiles attached to this user
+     *
+     * Service Name - identity
+     * Service Operation - GET_PEER_PROFILES
+     *
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getPeerProfiles(IServerCallback callback) {
+        ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_PEER_PROFILES, null, callback);
+        _client.sendRequest(sc);
     }
 
     /*** PRIVATE Methods ***/

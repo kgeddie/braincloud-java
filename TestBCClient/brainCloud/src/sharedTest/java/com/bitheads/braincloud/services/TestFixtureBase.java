@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
 
 import org.junit.After;
@@ -20,6 +21,7 @@ public class TestFixtureBase {
     static protected String m_version = "";
     static protected String m_parentLevelName = "";
     static protected String m_childAppId = "";
+    static protected String m_peerName = "";
 
     @Before
     public void setUp() throws Exception {
@@ -111,6 +113,9 @@ public class TestFixtureBase {
                 case "parentLevelName":
                     m_parentLevelName = split[1];
                     break;
+                case "peerName":
+                    m_peerName = split[1];
+                    break;
             }
         }
     }
@@ -166,6 +171,20 @@ public class TestFixtureBase {
     public boolean goToParentProfile() {
         TestResult tr = new TestResult();
         BrainCloudClient.getInstance().getIdentityService().switchToParentProfile(m_parentLevelName, tr);
+        return tr.Run();
+    }
+
+    public boolean attachPeer(Users user) {
+        TestUser testUser = getUser(user);
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getIdentityService().attachPeerProfile(
+                testUser.id + "_peer", testUser.password, AuthenticationType.Universal, true, null, m_peerName, tr);
+        return tr.Run();
+    }
+
+    public boolean detachPeer() {
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getIdentityService().detachPeer(m_peerName, tr);
         return tr.Run();
     }
 
