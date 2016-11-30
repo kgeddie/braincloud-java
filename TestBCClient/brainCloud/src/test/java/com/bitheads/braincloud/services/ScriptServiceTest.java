@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class ScriptServiceTest extends TestFixtureBase {
     private final String _scriptName = "testScript";
+    private final String _peerScriptName = "TestPeerScriptPublic";
 
     @Test
     public void testRunScript() throws Exception {
@@ -83,5 +84,35 @@ public class ScriptServiceTest extends TestFixtureBase {
                 m_parentLevelName,
                 tr);
         tr.Run();
+    }
+
+    @Test
+    public void runPeerScript() throws Exception {
+        if(attachPeer(Users.UserA)) {
+            TestResult tr = new TestResult();
+            BrainCloudClient.getInstance().getScriptService().runPeerScript(
+                    _peerScriptName,
+                    Helpers.createJsonPair("testParm1", 1),
+                    m_peerName,
+                    tr);
+            tr.Run();
+
+            detachPeer();
+        }
+    }
+
+    @Test
+    public void runPeerScriptAsync() throws Exception {
+        if(attachPeer(Users.UserA)) {
+            TestResult tr = new TestResult();
+            BrainCloudClient.getInstance().getScriptService().runPeerScriptAsync(
+                    _peerScriptName,
+                    Helpers.createJsonPair("testParm1", 1),
+                    m_peerName,
+                    tr);
+            tr.Run();
+
+            detachPeer();
+        }
     }
 }

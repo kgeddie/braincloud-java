@@ -19,7 +19,8 @@ public class ScriptService {
         startDateUTC,
         minutesFromNow,
         parentLevel,
-        jobId
+        jobId,
+        peer
     }
 
     private BrainCloudClient _client;
@@ -167,6 +168,65 @@ public class ScriptService {
             data.put(Parameter.jobId.name(), jobId);
 
             ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.CANCEL_SCHEDULED_SCRIPT, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs a script from the context of a peer
+     *
+     * Service Name - Script
+     * Service Operation - RUN_PEER_SCRIPT
+     *
+     * @param scriptName The name of the script to be run
+     * @param jsonScriptData Data to be sent to the script in json format
+     * @param peer Peer the script belongs to
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void runPeerScript(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.scriptName.name(), scriptName);
+            data.put(Parameter.peer.name(), peer);
+
+            if (StringUtil.IsOptionalParameterValid(jsonScriptData)) {
+                JSONObject jsonData = new JSONObject(jsonScriptData);
+                data.put(Parameter.scriptData.name(), jsonData);
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.RUN_PEER_SCRIPT, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Runs a script asynchronously from the context of a peer
+     * This method does not wait for the script to complete before returning
+     *
+     * Service Name - Script
+     * Service Operation - RUN_PEER_SCRIPT_ASYNC
+     *
+     * @param scriptName The name of the script to be run
+     * @param jsonScriptData Data to be sent to the script in json format
+     * @param peer Peer the script belongs to
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void runPeerScriptAsync(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.scriptName.name(), scriptName);
+            data.put(Parameter.peer.name(), peer);
+
+            if (StringUtil.IsOptionalParameterValid(jsonScriptData)) {
+                JSONObject jsonData = new JSONObject(jsonScriptData);
+                data.put(Parameter.scriptData.name(), jsonData);
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.RUN_PEER_SCRIPT_ASYNC, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
