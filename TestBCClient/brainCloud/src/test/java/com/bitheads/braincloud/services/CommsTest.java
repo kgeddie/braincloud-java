@@ -44,6 +44,11 @@ public class CommsTest extends TestFixtureNoAuth
     }
     */
 
+    @Override
+    public boolean shouldAuthenticate() {
+        return false;
+    }
+
     @Test
     public void testGlobalErrorHandler() throws Exception
     {
@@ -88,6 +93,9 @@ public class CommsTest extends TestFixtureNoAuth
         BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
+        long prevSessionTimeout = BrainCloudClient.getInstance().getHeartbeatInterval();
+        BrainCloudClient.getInstance().setHeartbeatInterval(prevSessionTimeout * 4);
+
         System.out.println("Waiting for session to timeout...");
 
         Thread.sleep(61 * 1000);
@@ -110,6 +118,7 @@ public class CommsTest extends TestFixtureNoAuth
         tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
 
         BrainCloudClient.getInstance().resetCommunication();
+        BrainCloudClient.getInstance().setHeartbeatInterval(prevSessionTimeout);
     }
 
     @Test
@@ -194,10 +203,11 @@ public class CommsTest extends TestFixtureNoAuth
         Assert.assertEquals(1, globalErrorCount);
     }
 
-    @Test
+    @Test(timeout=600000)
     public void testMessageBundleMarker() throws Exception
     {
         TestResult tr = new TestResult();
+        tr.setMaxWait(600);
         BrainCloudClient bcc = BrainCloudClient.getInstance();
 
         //bcc.initialize(m_appId, m_secret, m_version, m_serverUrl);
@@ -213,6 +223,27 @@ public class CommsTest extends TestFixtureNoAuth
 
         tr.Run();
         tr.Run();
-        //tr.Run();
+        tr.Run();
+    }
+
+    @Test(timeout=10000000)
+    public void testAuthFirst() throws Exception
+    {
+        TestUser user = getUser(Users.UserA);
+        TestResult tr = new TestResult();
+        BrainCloudClient bcc = BrainCloudClient.getInstance();
+
+        bcc.getPlayerStatisticsService().readAllPlayerStats(tr);
+        bcc.insertEndOfMessageBundleMarker();
+
+        bcc.getPlayerStatisticsService().readAllPlayerStats(tr);
+        bcc.getAuthenticationService().authenticateUniversal(user.id, user.password, true, tr);
+
+        tr.RunExpectFail(403, ReasonCodes.NO_SESSION);
+        tr.Run();
+        tr.Run();
+
+
+        tr.setMaxWait(30);
     }
 }

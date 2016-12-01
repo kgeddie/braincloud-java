@@ -283,8 +283,6 @@ public class AuthenticationService {
             message.put(Parameter.timeZoneOffset.name(), _client.getTimeZoneOffset());
             message.put("clientLib", "java");
 
-            System.out.println(message.toString());
-
             ServerCall serverCall = new ServerCall(
                     ServiceName.authenticationV2,
                     ServiceOperation.AUTHENTICATE, message, callback);

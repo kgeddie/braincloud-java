@@ -99,7 +99,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 true,
                 tr);
 
-        tr.RunExpectFail(StatusCodes.INTERNAL_SERVER_ERROR, 0);
+        tr.RunExpectFail(StatusCodes.INTERNAL_SERVER_ERROR, 40499);
     }
 
     @Test

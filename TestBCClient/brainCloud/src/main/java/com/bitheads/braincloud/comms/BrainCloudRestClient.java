@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 public class BrainCloudRestClient implements Runnable {
 
@@ -47,6 +46,7 @@ public class BrainCloudRestClient implements Runnable {
     private int _authenticationTimeoutMillis = 15000;
     private boolean _oldStyleStatusMessageErrorCallback = false;
     private boolean _cacheMessagesOnNetworkError = false;
+    private long _lastSendTime;
 
     private int _uploadLowTransferTimeout = 120;
     private int _uploadLowTransferThreshold = 50;
@@ -66,10 +66,11 @@ public class BrainCloudRestClient implements Runnable {
     private Thread _thread;
     private final Object _lock = new Object();
 
-    private long _heartbeatInterval;
+    private long _heartbeatIntervalMillis = 30000;
     private int _retryCount;
     private ArrayList<Integer> _packetTimeouts = new ArrayList<>();
 
+    private LinkedBlockingQueue<ServerCall> _waitingQueue = new LinkedBlockingQueue<>();
     private LinkedBlockingQueue<ServerCall> _messageQueue = new LinkedBlockingQueue<>();
     private LinkedBlockingQueue<ServerCall> _bundleQueue = new LinkedBlockingQueue<>();
     private LinkedList<ServerCall> _networkErrorMessageQueue = new LinkedList<>();
@@ -109,7 +110,7 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     public void addToQueue(ServerCall serverCall) {
-        _messageQueue.add(serverCall);
+        _waitingQueue.add(serverCall);
     }
 
     public void runCallbacks() {
@@ -123,7 +124,14 @@ public class BrainCloudRestClient implements Runnable {
             return;
         }
 
+
         synchronized (_lock) {
+            //push waiting calls onto queue that the thread will use
+            if(_messageQueue.peek() == null) {
+                _messageQueue.addAll(_waitingQueue);
+                _waitingQueue.clear();
+            }
+
             ServerResponse response;
             while ((response = _serverResponses.poll()) != null) {
                 ServerCall sc = response._serverCall;
@@ -229,6 +237,7 @@ public class BrainCloudRestClient implements Runnable {
 
     public void resetCommunication() {
         synchronized (_lock) {
+            _waitingQueue.clear();
             _messageQueue.clear();
             _bundleQueue.clear();
             _networkErrorMessageQueue.clear();
@@ -352,11 +361,11 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     public long getHeartbeatInterval() {
-        return _heartbeatInterval;
+        return _heartbeatIntervalMillis;
     }
 
     public void setHeartbeatInterval(long heartbeatInterval) {
-        _heartbeatInterval = heartbeatInterval;
+        _heartbeatIntervalMillis = heartbeatInterval;
     }
 
     public boolean isAuthenticated() {
@@ -557,51 +566,44 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     private void fillBundle() {
-        ServerCall serverCall;
+        //waiting for callbacks to be run
+        if(_serverResponses.peek() != null) return;
 
-        long timeout = 1000L;
+        ServerCall firstCall = _messageQueue.peek();
 
-        if (_heartbeatInterval > 0)
-            timeout = _heartbeatInterval;
+        //check for heartbeat
+        if(firstCall == null) {
+            if (System.currentTimeMillis() - _lastSendTime > _heartbeatIntervalMillis && _isAuthenticated) {
+                ServerCall serverCall = new ServerCall(ServiceName.heartbeat, ServiceOperation.READ, null, null);
+                _bundleQueue.add(serverCall);
+                return;
+            }
+            else return;
+        }
 
-        for (; ; ) {
-            try {
-                serverCall = _messageQueue.poll(timeout, TimeUnit.MICROSECONDS);
-                if (serverCall == null) {
-                    if (_heartbeatInterval > 0) {
-                        serverCall = new ServerCall(ServiceName.heartbeat, ServiceOperation.READ, null, null);
-                        _bundleQueue.add(serverCall);
-                        return;
-                    }
-                    continue;
-                }
-                break;
-            } catch (InterruptedException ignored) {
+        // Handle auth first and alone
+        Iterator<ServerCall> it = _messageQueue.iterator();
+        while(it.hasNext()){
+            ServerCall call = it.next();
+            if(call.isEndOfBundleMarker()) break;
 
+            if(call.getServiceOperation() == ServiceOperation.AUTHENTICATE) {
+                it.remove();
+                _bundleQueue.add(call);
+                return;
             }
         }
 
-        // if we got here it means we got a valid serverCall object from the message queue (above)
-
-        // only add if it's not an end of bundle marker
-        if (!serverCall.isEndOfBundleMarker()) {
-            _bundleQueue.add(serverCall);
-        }
-
+        //fill bundle
         while (_bundleQueue.size() < MAX_BUNDLE_SIZE) {
-            serverCall = _messageQueue.poll();
+            ServerCall serverCall = _messageQueue.poll();
+
             if (serverCall == null)
                 return;
 
-            if (serverCall.isEndOfBundleMarker()) {
-                if (_bundleQueue.size() == 0) {
-                    // skip markers at beginning of bundle queue
-                }
-                else {
-                    // stop processing queue
-                    return;
-                }
-            }
+            if (serverCall.isEndOfBundleMarker())
+                return;
+
             _bundleQueue.add(serverCall);
         }
     }
@@ -663,6 +665,8 @@ public class BrainCloudRestClient implements Runnable {
                     e.printStackTrace();
                 }
             }
+
+            _lastSendTime = System.currentTimeMillis();
 
             connection.connect();
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
@@ -798,7 +802,9 @@ public class BrainCloudRestClient implements Runnable {
                             resetErrorCache();
                             _client.getAuthenticationService().setProfileId(profileId);
 
-                            // TODO: 15-09-02 Also need to set session expiry time
+                            long sessionExpiry = data.getLong("playerSessionExpiry");
+                            _heartbeatIntervalMillis = (long)(sessionExpiry * 1000 * 0.85);
+
                         } else if (sc.getServiceName().equals(ServiceName.playerState)
                                 && sc.getServiceOperation().equals(ServiceOperation.LOGOUT)) {
                             _isAuthenticated = false;

@@ -521,6 +521,10 @@ public class BrainCloudClient {
         return _languageCode;
     }
 
+    //For testing purposes
+    public long getHeartbeatInterval() {return _restClient.getHeartbeatInterval(); }
+    public void setHeartbeatInterval(long intervalMillis) {_restClient.setHeartbeatInterval(intervalMillis); }
+
     /**
      * Sets the language code sent to brainCloud when a user authenticates.
      * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
