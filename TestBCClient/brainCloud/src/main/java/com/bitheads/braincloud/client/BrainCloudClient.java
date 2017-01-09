@@ -125,13 +125,28 @@ public class BrainCloudClient {
      *              The server url (e.g. "https://sharedprod.braincloudservers.com").
      */
     public void initialize(String gameId, String secretKey, String gameVersion, String serverUrl) {
+        String error = null;
+        if (isNullOrEmpty(serverUrl))
+            error = "serverUrl was null or empty";
+        else if (isNullOrEmpty(secretKey))
+            error = "secretKey was null or empty";
+        else if (isNullOrEmpty(gameId))
+            error = "gameId was null or empty";
+        else if (isNullOrEmpty(gameVersion))
+            error = "gameVersion was null or empty";
+
+        if (error != null) {
+            System.out.println("ERROR | Failed to initialize brainCloud - " + error);
+            return;
+        }
+
         _gameId = gameId;
         _gameVersion = gameVersion;
         _releasePlatform = Platform.GooglePlayAndroid;
 
         Locale locale = Locale.getDefault();
-        if(_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
-        if(_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
+        if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
         _timeZoneOffset = ((double) timeZone.getRawOffset()) / (1000.0 * 60.0 * 60.0);
@@ -139,6 +154,10 @@ public class BrainCloudClient {
         _restClient.initialize(
                 serverUrl.endsWith("/dispatcherv2") ? serverUrl : serverUrl + "/dispatcherv2",
                 gameId, secretKey);
+    }
+
+    private static boolean isNullOrEmpty(String param) {
+        return param == null || param.trim().length() == 0;
     }
 
     /**
@@ -522,8 +541,13 @@ public class BrainCloudClient {
     }
 
     //For testing purposes
-    public long getHeartbeatInterval() {return _restClient.getHeartbeatInterval(); }
-    public void setHeartbeatInterval(long intervalMillis) {_restClient.setHeartbeatInterval(intervalMillis); }
+    public long getHeartbeatInterval() {
+        return _restClient.getHeartbeatInterval();
+    }
+
+    public void setHeartbeatInterval(long intervalMillis) {
+        _restClient.setHeartbeatInterval(intervalMillis);
+    }
 
     /**
      * Sets the language code sent to brainCloud when a user authenticates.
