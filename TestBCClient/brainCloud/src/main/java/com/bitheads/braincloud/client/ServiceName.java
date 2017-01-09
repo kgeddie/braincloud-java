@@ -33,5 +33,6 @@ public enum ServiceName {
     script,
     socialLeaderboard,
     leaderboard,
-    time
+    time,
+    tournament
 }

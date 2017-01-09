@@ -10,7 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baea3d21-1c88-467d-9b7c-e623d47d822f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/TournamentService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
     </list>
     <ignored path="TestBCClient.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,37 +59,77 @@
       <file leaf-file-name="BrainCloudClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="135" column="52" selection-start-line="135" selection-start-column="52" selection-end-line="135" selection-end-column="52" />
+            <state relative-caret-position="578">
+              <caret line="653" column="5" selection-start-line="653" selection-start-column="5" selection-end-line="653" selection-end-column="5" />
               <folding>
-                <element signature="e#7347#7348#0" expanded="true" />
-                <element signature="e#7413#7414#0" expanded="true" />
-                <element signature="e#20229#20230#0" expanded="true" />
-                <element signature="e#20271#20272#0" expanded="true" />
-                <element signature="e#20415#20416#0" expanded="true" />
-                <element signature="e#20472#20473#0" expanded="true" />
-                <element signature="e#20533#20534#0" expanded="true" />
-                <element signature="e#20597#20598#0" expanded="true" />
+                <element signature="e#7486#7487#0" expanded="true" />
+                <element signature="e#7552#7553#0" expanded="true" />
+                <element signature="e#20368#20369#0" expanded="true" />
+                <element signature="e#20410#20411#0" expanded="true" />
+                <element signature="e#20554#20555#0" expanded="true" />
+                <element signature="e#20611#20612#0" expanded="true" />
+                <element signature="e#20672#20673#0" expanded="true" />
+                <element signature="e#20736#20737#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReasonCodes.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java">
+      <file leaf-file-name="TournamentServiceTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="249" column="32" selection-start-line="249" selection-start-column="32" selection-end-line="249" selection-end-column="32" />
+            <state relative-caret-position="221">
+              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BrainCloudRestClient.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/comms/BrainCloudRestClient.java">
+      <file leaf-file-name="GroupServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GroupServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="563" column="44" selection-start-line="563" selection-start-column="12" selection-end-line="563" selection-end-column="44" />
+            <state relative-caret-position="221">
+              <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="26" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScriptServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ScriptServiceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="25" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TournamentService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/TournamentService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="92" column="53" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServiceOperation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="901">
+              <caret line="272" column="15" selection-start-line="272" selection-start-column="15" selection-end-line="272" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScriptService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/ScriptService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="81" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,6 +138,13 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="ASClass" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -2761,7 +2813,6 @@
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/MailService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/sharedTest/java/com/bitheads/braincloud/services/TestUser.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/MailServiceTest.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ProductServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/FriendService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/ProductService.java" />
@@ -2769,7 +2820,6 @@
         <option value="$PROJECT_DIR$/brainCloud/src/sharedTest/java/com/bitheads/braincloud/services/TestFixtureBase.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/IdentityServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/IdentityService.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/ScriptService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ScriptServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/comms/BrainCloudRestClient.java" />
@@ -2777,8 +2827,12 @@
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/CommsTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/TournamentService.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java" />
       </list>
     </option>
   </component>
@@ -3278,7 +3332,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="device.picker.selection" value="Nexus_5X_API_23" />
   </component>
-  <component name="RunManager" selected="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays">
+  <component name="RunManager" selected="JUnit.TournamentServiceTest">
     <configuration default="false" name="CommsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -3331,28 +3385,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="java in brainCloud" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="brainCloud" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="directory" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/brainCloud" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <dir value="$PROJECT_DIR$/brainCloud/src/test/java" />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="CommsTest.testGlobalErrorHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -3393,6 +3425,32 @@
       <option name="MAIN_CLASS_NAME" value="com.bitheads.braincloud.services.SocialLeaderboardServiceTest" />
       <option name="METHOD_NAME" value="testPostScoreToDynamicLeaderboardDays" />
       <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/brainCloud" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TournamentServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bitheads.braincloud.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="brainCloud" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.bitheads.braincloud.services" />
+      <option name="MAIN_CLASS_NAME" value="com.bitheads.braincloud.services.TournamentServiceTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/brainCloud" />
@@ -3683,17 +3741,17 @@
       <item index="0" class="java.lang.String" itemvalue="Android App.app" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.CommsTest" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.CommsTest.testSessionTimeout" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.java in brainCloud" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.CommsTest.testGlobalErrorHandler" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.CommsTest.testGlobalErrorHandler" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.CommsTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.CommsTest.testGlobalErrorHandler" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.CommsTest.testSessionTimeout" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.java in brainCloud" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.CommsTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.CommsTest.testGlobalErrorHandler" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.CommsTest.testSessionTimeout" />
       </list>
     </recent_temporary>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -3794,9 +3852,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CommsTest - 2016.12.08 at 15h 36m 38s.xml">
-      <configuration name="CommsTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CommsTest_testGlobalErrorHandler - 2016.12.08 at 15h 35m 06s.xml">
       <configuration name="CommsTest.testGlobalErrorHandler" configurationId="JUnit" />
     </history-entry>
@@ -3817,6 +3872,9 @@
     </history-entry>
     <history-entry file="SocialLeaderboardServiceTest_testPostScoreToDynamicLeaderboardDays - 2017.01.09 at 12h 16m 59s.xml">
       <configuration name="SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TournamentServiceTest - 2017.01.09 at 12h 56m 39s.xml">
+      <configuration name="TournamentServiceTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="java_in_brainCloud - 2016.12.01 at 15h 28m 02s.xml">
       <configuration name="java in brainCloud" configurationId="JUnit" />
@@ -3895,20 +3953,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/S3HandlingServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="43" column="87" selection-start-line="43" selection-start-column="76" selection-end-line="43" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GroupService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="528" column="86" selection-start-line="528" selection-start-column="84" selection-end-line="528" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/PlayerStateServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -4070,20 +4114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GroupServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="667" column="8" selection-start-line="667" selection-start-column="8" selection-end-line="669" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="16" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/MailServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -4130,27 +4160,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
           <caret line="698" column="56" selection-start-line="698" selection-start-column="56" selection-end-line="698" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="152" column="26" selection-start-line="152" selection-start-column="26" selection-end-line="152" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/ScriptService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="220" column="41" selection-start-line="220" selection-start-column="31" selection-end-line="220" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ScriptServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -4239,10 +4248,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="252" column="50" selection-start-line="252" selection-start-column="50" selection-end-line="252" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/comms/BrainCloudRestClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="563" column="44" selection-start-line="563" selection-start-column="12" selection-end-line="563" selection-end-column="44" />
+        <state relative-caret-position="425">
+          <caret line="555" column="36" selection-start-line="555" selection-start-column="36" selection-end-line="555" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="14" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="272" column="15" selection-start-line="272" selection-start-column="15" selection-end-line="272" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/ScriptService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="76" column="11" selection-start-line="76" selection-start-column="11" selection-end-line="81" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -4251,25 +4294,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="135" column="52" selection-start-line="135" selection-start-column="52" selection-end-line="135" selection-end-column="52" />
+        <state relative-caret-position="578">
+          <caret line="653" column="5" selection-start-line="653" selection-start-column="5" selection-end-line="653" selection-end-column="5" />
           <folding>
-            <element signature="e#7347#7348#0" expanded="true" />
-            <element signature="e#7413#7414#0" expanded="true" />
-            <element signature="e#20229#20230#0" expanded="true" />
-            <element signature="e#20271#20272#0" expanded="true" />
-            <element signature="e#20415#20416#0" expanded="true" />
-            <element signature="e#20472#20473#0" expanded="true" />
-            <element signature="e#20533#20534#0" expanded="true" />
-            <element signature="e#20597#20598#0" expanded="true" />
+            <element signature="e#7486#7487#0" expanded="true" />
+            <element signature="e#7552#7553#0" expanded="true" />
+            <element signature="e#20368#20369#0" expanded="true" />
+            <element signature="e#20410#20411#0" expanded="true" />
+            <element signature="e#20554#20555#0" expanded="true" />
+            <element signature="e#20611#20612#0" expanded="true" />
+            <element signature="e#20672#20673#0" expanded="true" />
+            <element signature="e#20736#20737#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java">
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ScriptServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="249" column="32" selection-start-line="249" selection-start-column="32" selection-end-line="249" selection-end-column="32" />
+        <state relative-caret-position="187">
+          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="25" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GroupServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="26" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/TournamentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="92" column="53" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
           <folding />
         </state>
       </provider>

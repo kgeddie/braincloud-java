@@ -30,6 +30,7 @@ import com.bitheads.braincloud.services.S3HandlingService;
 import com.bitheads.braincloud.services.ScriptService;
 import com.bitheads.braincloud.services.SocialLeaderboardService;
 import com.bitheads.braincloud.services.TimeService;
+import com.bitheads.braincloud.services.TournamentService;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -76,6 +77,7 @@ public class BrainCloudClient {
     private ScriptService _scriptService = new ScriptService(this);
     private SocialLeaderboardService _socialLeaderboardService = new SocialLeaderboardService(this);
     private TimeService _timeService = new TimeService(this);
+    private TournamentService _tournamentService = new TournamentService(this);
 
     private static BrainCloudClient instance = null;
 
@@ -673,5 +675,9 @@ public class BrainCloudClient {
 
     public TimeService getTimeService() {
         return _timeService;
+    }
+
+    public TournamentService getTournamentService() {
+        return _tournamentService;
     }
 }

@@ -1,0 +1,138 @@
+package com.bitheads.braincloud.services;
+
+import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.ReasonCodes;
+
+import org.junit.After;
+import org.junit.Test;
+
+import java.util.Date;
+
+/**
+ * Created by bradleyh on 1/9/2017.
+ */
+
+public class TournamentServiceTest extends TestFixtureBase {
+
+    private String _tournamentCode = "testTournament";
+    private String _leaderboardId = "testTournamentLeaderboard";
+    private boolean _didJoin;
+
+    @After
+    public void Teardown() throws Exception {
+        if (_didJoin) {
+            leaveTestTournament();
+        }
+    }
+
+    @Test
+    public void claimTournamentReward() throws Exception {
+        int version = joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().claimTournamentReward(
+                _leaderboardId,
+                version,
+                tr);
+
+        tr.RunExpectFail(400, ReasonCodes.VIEWING_REWARD_FOR_NON_PROCESSED_TOURNAMENTS);
+    }
+
+    @Test
+    public void getTournamentStatus() throws Exception {
+        int version = joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().getTournamentStatus(
+                _leaderboardId,
+                version,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void joinTournament() throws Exception {
+        joinTestTournament();
+    }
+
+    @Test
+    public void leaveTournament() throws Exception {
+        joinTestTournament();
+        leaveTestTournament();
+    }
+
+    @Test
+    public void postTournamentScore() throws Exception {
+        joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().postTournamentScore(
+                _leaderboardId,
+                200,
+                Helpers.createJsonPair("test", 1),
+                new Date(),
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void viewCurrentReward() throws Exception {
+        joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().viewCurrentReward(
+                _leaderboardId,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void viewReward() throws Exception {
+        joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().viewReward(
+                _leaderboardId,
+                -1,
+                tr);
+
+        tr.RunExpectFail(400, ReasonCodes.PLAYER_NOT_ENROLLED_IN_TOURNAMENT);
+    }
+
+    private int joinTestTournament() throws Exception {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().joinTournament(
+                _leaderboardId,
+                _tournamentCode,
+                0,
+                tr);
+
+        tr.Run();
+        _didJoin = true;
+
+        BrainCloudClient.getInstance().getTournamentService().getTournamentStatus(
+                _leaderboardId,
+                -1,
+                tr);
+        tr.Run();
+
+        int version = tr.m_response.getJSONObject("data").getInt("versionId");
+        return version;
+    }
+
+    private void leaveTestTournament() {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().leaveTournament(
+                _leaderboardId,
+                tr);
+
+        tr.Run();
+
+        _didJoin = false;
+    }
+}
