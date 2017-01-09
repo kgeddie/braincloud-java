@@ -47,7 +47,8 @@ public class SocialLeaderboardService {
         versionId,
         leaderboardResultCount,
         groupId,
-        profileIds
+        profileIds,
+        numDaysToRotate
     }
 
     private BrainCloudClient _client;
@@ -121,22 +122,9 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Method returns a page of results of the global leaderboard.
-     *
-     * Leaderboards entries contain the player's score and optionally, some user-defined
-     * data associated with the score.
-     *
-     * Note: If no leaderboard records exist then this method will empty list.
-     *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardPage
-     *
-     * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param startIndex The index at which to start the page.
-     * @param endIndex The index at which to end the page.
-     * @param includeLeaderboardSize Whether to return leaderboard size
+     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
      */
+    @Deprecated
     public void getGlobalLeaderboardPage(
             String leaderboardId,
             SortOrder sort,
@@ -162,8 +150,11 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * By using a non-current version id, the user can retrieve a historial leaderboard.
-     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     *
+     * Leaderboards entries contain the player's score and optionally, some user-defined
+     * data associated with the score.
+     *
+     * Note: If no leaderboard records exist then this method will empty list.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
@@ -172,9 +163,32 @@ public class SocialLeaderboardService {
      * @param sort Sort order of the returned list.
      * @param startIndex The index at which to start the page.
      * @param endIndex The index at which to end the page.
-     * @param includeLeaderboardSize Whether to return leaderboard size
-     * @param versionId The historical version to retrieve
      */
+    public void getGlobalLeaderboardPage(
+            String leaderboardId,
+            SortOrder sort,
+            int startIndex,
+            int endIndex,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.startIndex.name(), startIndex);
+            data.put(Parameter.endIndex.name(), endIndex);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
+     */
+    @Deprecated
     public void getGlobalLeaderboardPageByVersion(
             String leaderboardId,
             SortOrder sort,
@@ -190,6 +204,43 @@ public class SocialLeaderboardService {
             data.put(Parameter.startIndex.name(), startIndex);
             data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial leaderboard.
+     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort Sort order of the returned list.
+     * @param startIndex The index at which to start the page.
+     * @param endIndex The index at which to end the page.
+     * @param versionId The historical version to retrieve
+     */
+    public void getGlobalLeaderboardPageByVersion(
+            String leaderboardId,
+            SortOrder sort,
+            int startIndex,
+            int endIndex,
+            int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.startIndex.name(), startIndex);
+            data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.versionId.name(), versionId);
 
             ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
@@ -473,6 +524,55 @@ public class SocialLeaderboardService {
             }
             data.put(Parameter.leaderboardType.name(), leaderboardType);
             data.put(Parameter.rotationType.name(), rotationType);
+
+            if (rotationReset != null) {
+                data.put(Parameter.rotationResetTime.name(), rotationReset.getTime());
+            }
+
+            data.put(Parameter.retainedCount.name(), retainedCount);
+
+            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+                    ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Post the players score to the given social leaderboard. Pass leaderboard
+     * config data to dynamically create if necessary. You can optionally send a
+     * user-defined json String of data with the posted score. This String could
+     * include information relevant to the posted score.
+     *
+     * @param leaderboardId The leaderboard to post to
+     * @param score The score to post
+     * @param jsonData Optional user-defined data to post with the score
+     * @param leaderboardType leaderboard type
+     * @param rotationReset Date to reset the leaderboard
+     * @param retainedCount How many rotations to keep
+     * @param numDaysToRotate How many days between each rotation
+     * @param callback The callback.
+     */
+    public void postScoreToDynamicLeaderboardDays(
+            String leaderboardId,
+            long score,
+            String jsonData,
+            String leaderboardType,
+            Date rotationReset,
+            int retainedCount,
+            int numDaysToRotate,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.score.name(), score);
+            if (StringUtil.IsOptionalParameterValid(jsonData)) {
+                data.put(Parameter.data.name(), new JSONObject(jsonData));
+            }
+            data.put(Parameter.leaderboardType.name(), leaderboardType);
+            data.put(Parameter.rotationType.name(), "DAYS");
+            data.put(Parameter.numDaysToRotate.name(), numDaysToRotate);
 
             if (rotationReset != null) {
                 data.put(Parameter.rotationResetTime.name(), rotationReset.getTime());

@@ -64,7 +64,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 0,
                 10,
-                true,
                 tr);
 
         tr.Run();
@@ -80,7 +79,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
                 0,
                 10,
-                true,
                 tr);
 
         tr.Run();
@@ -96,7 +94,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
                 0,
                 10,
-                true,
                 tr);
 
         tr.RunExpectFail(StatusCodes.INTERNAL_SERVER_ERROR, 40499);
@@ -112,7 +109,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 0,
                 10,
-                true,
                 1,
                 tr);
 
@@ -172,6 +168,24 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     public void testPostScoreToDynamicLeaderboard() throws Exception
     {
         postScoreToDynamicLeaderboard();
+    }
+
+    @Test
+    public void testPostScoreToDynamicLeaderboardDays() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboardDays(
+                _dynamicLeaderboardId + "-" + "DAYS",
+                100,
+                Helpers.createJsonPair("testDataKey", 400),
+                SocialLeaderboardService.SocialLeaderboardType.LOW_VALUE.toString(),
+                null,
+                5,
+                3,
+                tr);
+
+        tr.Run();
     }
 
     @Test
