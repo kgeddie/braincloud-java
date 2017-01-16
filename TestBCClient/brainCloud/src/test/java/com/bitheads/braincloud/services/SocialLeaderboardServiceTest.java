@@ -336,6 +336,39 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    @Test
+    public void testGetPlayerScore() throws Exception
+    {
+        postScoreToNonDynamicLeaderboard();
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayerScore(
+                _globalLeaderboardId,
+                -1,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testGetPlayerScoresFromLeaderboards() throws Exception
+    {
+        postScoreToDynamicLeaderboard();
+        postScoreToNonDynamicLeaderboard();
+
+        TestResult tr = new TestResult();
+
+        String[] lbIds = new String[] {
+                _globalLeaderboardId,
+                _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE
+        };
+        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayerScoresFromLeaderboards(
+                lbIds,
+                tr);
+
+        tr.Run();
+    }
+
     public void postScoreToDynamicLeaderboard() throws Exception
     {
         TestResult tr = new TestResult();

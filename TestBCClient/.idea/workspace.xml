@@ -12,8 +12,8 @@
     <list default="true" id="baea3d21-1c88-467d-9b7c-e623d47d822f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GlobalEntityService.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GlobalEntityService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GlobalEntityServiceTest.java" afterPath="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GlobalEntityServiceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java" afterPath="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java" afterPath="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java" />
     </list>
     <ignored path="TestBCClient.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,28 +57,28 @@
       <file leaf-file-name="TournamentServiceTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+            <state relative-caret-position="272">
+              <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GlobalEntityServiceTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GlobalEntityServiceTest.java">
+      <file leaf-file-name="SocialLeaderboardService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="247" column="5" selection-start-line="247" selection-start-column="5" selection-end-line="247" selection-end-column="5" />
+            <state relative-caret-position="464">
+              <caret line="722" column="55" selection-start-line="722" selection-start-column="55" selection-end-line="722" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GlobalEntityService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GlobalEntityService.java">
+      <file leaf-file-name="SocialLeaderboardServiceTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
-              <caret line="424" column="34" selection-start-line="424" selection-start-column="34" selection-end-line="424" selection-end-column="34" />
+              <caret line="345" column="37" selection-start-line="345" selection-start-column="37" selection-end-line="345" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -97,8 +97,8 @@
       <file leaf-file-name="ServiceOperation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="69" column="36" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
+            <state relative-caret-position="555">
+              <caret line="82" column="24" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -2788,20 +2788,20 @@
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/ScriptServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/AuthenticationService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/CommsTest.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/BrainCloudClient.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/TournamentService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceName.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/comms/BrainCloudRestClient.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/EntityService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/EventService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/EventServiceTest.java" />
-        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GlobalEntityService.java" />
         <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GlobalEntityServiceTest.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java" />
+        <option value="$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java" />
       </list>
     </option>
   </component>
@@ -3301,33 +3301,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="device.picker.selection" value="Nexus_5X_API_23" />
   </component>
-  <component name="RunManager" selected="JUnit.GlobalEntityServiceTest">
-    <configuration default="false" name="SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.bitheads.braincloud.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="brainCloud" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.bitheads.braincloud.services" />
-      <option name="MAIN_CLASS_NAME" value="com.bitheads.braincloud.services.SocialLeaderboardServiceTest" />
-      <option name="METHOD_NAME" value="testPostScoreToDynamicLeaderboardDays" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/brainCloud" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.SocialLeaderboardServiceTest">
     <configuration default="false" name="TournamentServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -3418,6 +3392,32 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.bitheads.braincloud.services" />
       <option name="MAIN_CLASS_NAME" value="com.bitheads.braincloud.services.GlobalEntityServiceTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/brainCloud" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="SocialLeaderboardServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bitheads.braincloud.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="brainCloud" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.bitheads.braincloud.services" />
+      <option name="MAIN_CLASS_NAME" value="com.bitheads.braincloud.services.SocialLeaderboardServiceTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -3708,19 +3708,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Android App.app" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.GlobalStatisticsServiceTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.EventServiceTest" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.GlobalEntityServiceTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.GlobalStatisticsServiceTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.EventServiceTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.GlobalEntityServiceTest" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.GlobalEntityServiceTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.EventServiceTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.GlobalStatisticsServiceTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.SocialLeaderboardServiceTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.GlobalEntityServiceTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.EventServiceTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.GlobalStatisticsServiceTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.TournamentServiceTest" />
       </list>
     </recent_temporary>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -3821,9 +3821,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CommsTest_testSessionTimeout - 2016.12.01 at 15h 20m 30s.xml">
-      <configuration name="CommsTest.testSessionTimeout" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CommsTest_testSessionTimeout - 2016.12.08 at 15h 34m 34s.xml">
       <configuration name="CommsTest.testSessionTimeout" configurationId="JUnit" />
     </history-entry>
@@ -3838,6 +3835,9 @@
     </history-entry>
     <history-entry file="GlobalStatisticsServiceTest - 2017.01.16 at 14h 46m 22s.xml">
       <configuration name="GlobalStatisticsServiceTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SocialLeaderboardServiceTest - 2017.01.16 at 15h 23m 00s.xml">
+      <configuration name="SocialLeaderboardServiceTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="SocialLeaderboardServiceTest_testPostScoreToDynamicLeaderboardDays - 2017.01.09 at 12h 16m 59s.xml">
       <configuration name="SocialLeaderboardServiceTest.testPostScoreToDynamicLeaderboardDays" configurationId="JUnit" />
@@ -3878,7 +3878,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24985303" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4602041" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4602041" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -4166,14 +4166,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="183" column="18" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ReasonCodes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -4279,14 +4271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="317" column="4" selection-start-line="317" selection-start-column="4" selection-end-line="320" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/GroupServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -4313,22 +4297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="69" column="36" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/GlobalEntityService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -4341,6 +4309,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="247" column="5" selection-start-line="247" selection-start-column="5" selection-end-line="247" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/TournamentServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/client/ServiceOperation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="82" column="24" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/main/java/com/bitheads/braincloud/services/SocialLeaderboardService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="722" column="55" selection-start-line="722" selection-start-column="55" selection-end-line="722" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/brainCloud/src/test/java/com/bitheads/braincloud/services/SocialLeaderboardServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="345" column="37" selection-start-line="345" selection-start-column="37" selection-end-line="345" selection-end-column="37" />
           <folding />
         </state>
       </provider>

@@ -589,6 +589,30 @@ public class SocialLeaderboardService {
     }
 
     /**
+     * Removes a player's score from the leaderboard
+     *
+     * Service Name - leaderboard
+     * Service Operation - REMOVE_PLAYER_SCORE
+     *
+     * @param leaderboardId The leaderboard ID
+     * @param versionId The version of the leaderboard
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void removePlayerScore(String leaderboardId, int versionId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.REMOVE_PLAYER_SCORE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Reset the player's score for the given social leaderboard id.
      *
      * @param leaderboardId The leaderboard to post to
@@ -669,5 +693,51 @@ public class SocialLeaderboardService {
     public void listAllLeaderboards(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.LIST_ALL_LEADERBOARDS, null, callback);
         _client.sendRequest(sc);
+    }
+
+    /**
+     * Gets a player's score from a leaderboard
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_PLAYER_SCORE
+     *
+     * @param leaderboardId The leaderboard ID
+     * @param versionId The version of the leaderboard. Use -1 for current.
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getPlayerScore(String leaderboardId, int versionId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_PLAYER_SCORE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets a player's score from multiple leaderboards
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_PLAYER_SCORES_FROM_LEADERBOARDS
+     *
+     * @param leaderboardIds A collection of leaderboardIds to retrieve scores from
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getPlayerScoresFromLeaderboards(String[] leaderboardIds, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardIds.name(), leaderboardIds);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_PLAYER_SCORES_FROM_LEADERBOARDS, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
     }
 }
