@@ -97,7 +97,7 @@ public class TournamentService {
      *						  Usually 0, unless leaderboard is LOW_VALUE
      * @param callback The method to be invoked when the server response is received
      */
-    public void joinTournament(String leaderboardId, String tournamentCode, int initialScore, IServerCallback callback) {
+    public void joinTournament(String leaderboardId, String tournamentCode, long initialScore, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
@@ -192,7 +192,7 @@ public class TournamentService {
             SocialLeaderboardService.SortOrder sort,
             int beforeCount,
             int afterCount,
-            int initialScore,
+            long initialScore,
             IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
