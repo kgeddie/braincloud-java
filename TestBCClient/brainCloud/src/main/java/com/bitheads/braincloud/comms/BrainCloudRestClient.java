@@ -30,7 +30,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class BrainCloudRestClient implements Runnable {
 
     private static long NO_PACKET_EXPECTED = -1;
-    private static int MAX_BUNDLE_SIZE = 50;
 
     private BrainCloudClient _client;
     private String _serverUrl;
@@ -67,6 +66,7 @@ public class BrainCloudRestClient implements Runnable {
     private final Object _lock = new Object();
 
     private long _heartbeatIntervalMillis = 30000;
+    private int _maxBundleSize = 10;
     private int _retryCount;
     private ArrayList<Integer> _packetTimeouts = new ArrayList<>();
 
@@ -595,7 +595,7 @@ public class BrainCloudRestClient implements Runnable {
         }
 
         //fill bundle
-        while (_bundleQueue.size() < MAX_BUNDLE_SIZE) {
+        while (_bundleQueue.size() < _maxBundleSize) {
             ServerCall serverCall = _messageQueue.poll();
 
             if (serverCall == null)
@@ -804,6 +804,7 @@ public class BrainCloudRestClient implements Runnable {
 
                             long sessionExpiry = data.getLong("playerSessionExpiry");
                             _heartbeatIntervalMillis = (long)(sessionExpiry * 1000 * 0.85);
+                            _maxBundleSize = data.getInt("maxBundleMsgs");
 
                         } else if (sc.getServiceName().equals(ServiceName.playerState)
                                 && sc.getServiceOperation().equals(ServiceOperation.LOGOUT)) {
