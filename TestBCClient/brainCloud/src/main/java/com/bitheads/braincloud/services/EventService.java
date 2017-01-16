@@ -19,7 +19,8 @@ public class EventService {
         fromId,
         eventId,
         includeIncomingEvents,
-        includeSentEvents
+        includeSentEvents,
+        evId
     }
 
     private BrainCloudClient _client;
@@ -31,34 +32,30 @@ public class EventService {
     /**
      * Sends an event to the designated player id with the attached json data.
      * Any events that have been sent to a player will show up in their incoming
-     * event mailbox. If the in_recordLocally flag is set to true, a copy of
+     * event mailbox. If the recordLocally flag is set to true, a copy of
      * this event (with the exact same event id) will be stored in the sending
      * player's "sent" event mailbox.
      *
      * Note that the list of sent and incoming events for a player is returned
      * in the "ReadPlayerState" call (in the BrainCloudPlayer module).
      *
-     * Service Name - Event Service Operation - Send
+     * Service Name - event
+     * Service Operation - SEND
      *
-     * @param in_toPlayerId The id of the player who is being sent the event
-     * @param in_eventType The user-defined type of the event.
-     * @param in_jsonEventData The user-defined data for this event encoded in
-     *            JSON.
-     * @param in_recordLocally If true, a copy of this event will be saved in
-     *            the user's sent events mailbox.
+     * @param toPlayerId The id of the player who is being sent the event
+     * @param eventType The user-defined type of the event.
+     * @param jsonEventData The user-defined data for this event encoded in JSON.
      * @param callback The callback.
      */
-    public void sendEvent(String in_toPlayerId, String in_eventType, String in_jsonEventData, boolean in_recordLocally, IServerCallback callback) {
+    public void sendEvent(String toPlayerId, String eventType, String jsonEventData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
 
-            data.put(Parameter.toId.name(), in_toPlayerId);
-            data.put(Parameter.eventType.name(), in_eventType);
+            data.put(Parameter.toId.name(), toPlayerId);
+            data.put(Parameter.eventType.name(), eventType);
 
-            JSONObject jsonData = new JSONObject(in_jsonEventData);
+            JSONObject jsonData = new JSONObject(jsonEventData);
             data.put(Parameter.eventData.name(), jsonData);
-
-            data.put(Parameter.recordLocally.name(), in_recordLocally);
 
             ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.SEND, data, callback);
             _client.sendRequest(sc);
@@ -70,21 +67,19 @@ public class EventService {
     /**
      * Updates an event in the player's incoming event mailbox.
      *
-     * Service Name - Event Service Operation - UpdateEventData
+     * Service Name - event
+     * Service Operation - UPDATE_EVENT_DATA
      *
-     * @param in_fromPlayerId The id of the player who sent the event
-     * @param in_eventId The event id
-     * @param in_jsonEventData The user-defined data for this event encoded in
-     *            JSON.
+     * @param eventId The event id
+     * @param jsonEventData The user-defined data for this event encoded in JSON.
      * @param callback The  callback.
      */
-    public void updateIncomingEventData(String in_fromPlayerId, long in_eventId, String in_jsonEventData, IServerCallback callback) {
+    public void updateIncomingEventData(String eventId, String jsonEventData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.fromId.name(), in_fromPlayerId);
-            data.put(Parameter.eventId.name(), in_eventId);
+            data.put(Parameter.evId.name(), eventId);
 
-            JSONObject jsonData = new JSONObject(in_jsonEventData);
+            JSONObject jsonData = new JSONObject(jsonEventData);
             data.put(Parameter.eventData.name(), jsonData);
 
             ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.UPDATE_EVENT_DATA, data, callback);
@@ -97,17 +92,16 @@ public class EventService {
     /**
      * Delete an event out of the player's incoming mailbox.
      *
-     * Service Name - Event Service Operation - DeleteIncoming
+     * Service Name - event
+     * Service Operation - DELETE_INCOMING
      *
-     * @param in_fromPlayerId The id of the player who sent the event
-     * @param in_eventId The event id
+     * @param eventId The event id
      * @param callback The callback.
      */
-    public void deleteIncomingEvent(String in_fromPlayerId, long in_eventId, IServerCallback callback) {
+    public void deleteIncomingEvent(String eventId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.fromId.name(), in_fromPlayerId);
-            data.put(Parameter.eventId.name(), in_eventId);
+            data.put(Parameter.evId.name(), eventId);
 
             ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.DELETE_INCOMING, data, callback);
             _client.sendRequest(sc);
@@ -117,22 +111,87 @@ public class EventService {
     }
 
     /**
-     * Delete an event from the player's sent mailbox.
+     * Get the events currently queued for the player.
      *
-     * Note that only events sent with the "recordLocally" flag set to true will
-     * be added to a player's sent mailbox.
+     * Service Name - event
+     * Service Operation - GET_EVENTS
      *
-     * Service Name - Event Service Operation - DeleteSent
-     *
-     * @param in_toPlayerId The id of the player who is being sent the event
-     * @param in_eventId The event id
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
-    public void deleteSentEvent(String in_toPlayerId, long in_eventId, IServerCallback callback) {
+    public void getEvents(IServerCallback callback) {
+        ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.GET_EVENTS, null, callback);
+        _client.sendRequest(sc);
+    }
+
+    /**
+     * @deprecated Use method with new signature - removal after March 22 2016
+     */
+    @Deprecated
+    public void sendEvent(String toPlayerId, String eventType, String jsonEventData, boolean recordLocally, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toId.name(), in_toPlayerId);
-            data.put(Parameter.eventId.name(), in_eventId);
+
+            data.put(Parameter.toId.name(), toPlayerId);
+            data.put(Parameter.eventType.name(), eventType);
+
+            JSONObject jsonData = new JSONObject(jsonEventData);
+            data.put(Parameter.eventData.name(), jsonData);
+
+            data.put(Parameter.recordLocally.name(), recordLocally);
+
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.SEND, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException e) {
+        }
+    }
+
+    /**
+     * @deprecated Use method with new signature - removal after March 22 2016
+     */
+    @Deprecated
+    public void updateIncomingEventData(String fromPlayerId, long eventId, String jsonEventData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.fromId.name(), fromPlayerId);
+            data.put(Parameter.eventId.name(), eventId);
+
+            JSONObject jsonData = new JSONObject(jsonEventData);
+            data.put(Parameter.eventData.name(), jsonData);
+
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.UPDATE_EVENT_DATA, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException e) {
+        }
+    }
+
+    /**
+     * @deprecated Use method with new signature - removal after March 22 2016
+     */
+    @Deprecated
+    public void deleteIncomingEvent(String fromPlayerId, long eventId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.fromId.name(), fromPlayerId);
+            data.put(Parameter.eventId.name(), eventId);
+
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.DELETE_INCOMING, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException e) {
+        }
+    }
+
+    /**
+     * @deprecated Removal after March 22 2016
+     */
+    @Deprecated
+    public void deleteSentEvent(String toPlayerId, long eventId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toId.name(), toPlayerId);
+            data.put(Parameter.eventId.name(), eventId);
 
             ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.DELETE_SENT, data, callback);
             _client.sendRequest(sc);
@@ -141,25 +200,18 @@ public class EventService {
     }
 
     /**
-     * Get the events currently queued for the player.
-     *
-     * Service Name - Event
-     * Service Operation - GetEvents
-     *
-     * @param in_includeIncomingEvents Get events sent to the player
-     * @param in_includeSentEvents Get events sent from the player
-     * @param in_callback The method to be invoked when the server response is received
+     * @deprecated Use method with new signature - removal after March 22 2016
      */
-    public void getEvents(boolean in_includeIncomingEvents, boolean in_includeSentEvents, IServerCallback in_callback) {
+    @Deprecated
+    public void getEvents(boolean includeIncomingEvents, boolean includeSentEvents, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.includeIncomingEvents.name(), in_includeIncomingEvents);
-            data.put(Parameter.includeSentEvents.name(), in_includeSentEvents);
+            data.put(Parameter.includeIncomingEvents.name(), includeIncomingEvents);
+            data.put(Parameter.includeSentEvents.name(), includeSentEvents);
 
-            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.GET_EVENTS, data, in_callback);
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.GET_EVENTS, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException e) {
         }
     }
-
 }
