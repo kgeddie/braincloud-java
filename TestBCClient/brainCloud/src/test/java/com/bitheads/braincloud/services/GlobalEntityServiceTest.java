@@ -218,6 +218,35 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
         tr.Run();
     }
 
+    @Test
+    public void testUpdateEntityOwnerAndAcl() throws Exception {
+        TestResult tr = new TestResult();
+
+        String entityId = createDefaultGlobalEntity();
+
+        BrainCloudClient.getInstance().getGlobalEntityService().updateEntityOwnerAndAcl(
+                entityId,
+                getUser(Users.UserA).profileId,
+                -1,
+                ACL.readWriteOther().toJsonString(),
+                tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testMakeSystemEntity() throws Exception {
+        TestResult tr = new TestResult();
+
+        String entityId = createDefaultGlobalEntity();
+
+        BrainCloudClient.getInstance().getGlobalEntityService().makeSystemEntity(
+                entityId,
+                -1,
+                ACL.readWriteOther().toJsonString(),
+                tr);
+        tr.Run();
+    }
+
 
     ////// helpers
 
@@ -303,5 +332,4 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
             createDefaultGlobalEntity(ACL.Access.ReadWrite);
         }
     }
-
 }
