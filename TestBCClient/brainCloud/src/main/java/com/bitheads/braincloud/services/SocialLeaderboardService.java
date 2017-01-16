@@ -86,7 +86,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.replaceName.name(), replaceName);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_SOCIAL_LEADERBOARD, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
@@ -113,7 +113,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardResultCount.name(), leaderboardResultCount);
             data.put(Parameter.replaceName.name(), replaceName);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_MULTI_SOCIAL_LEADERBOARD, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
@@ -140,7 +140,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -177,7 +177,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.startIndex.name(), startIndex);
             data.put(Parameter.endIndex.name(), endIndex);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -206,7 +206,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -243,7 +243,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -270,7 +270,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -307,7 +307,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.beforeCount.name(), beforeCount);
             data.put(Parameter.afterCount.name(), afterCount);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -336,7 +336,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -376,7 +376,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -399,7 +399,7 @@ public class SocialLeaderboardService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VERSIONS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VERSIONS, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -423,7 +423,7 @@ public class SocialLeaderboardService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -450,7 +450,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -482,7 +482,7 @@ public class SocialLeaderboardService {
                 data.put(Parameter.data.name(), new JSONObject(jsonData));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_SCORE, data, callback);
             _client.sendRequest(sc);
 
@@ -531,7 +531,7 @@ public class SocialLeaderboardService {
 
             data.put(Parameter.retainedCount.name(), retainedCount);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
@@ -580,7 +580,7 @@ public class SocialLeaderboardService {
 
             data.put(Parameter.retainedCount.name(), retainedCount);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
@@ -600,7 +600,7 @@ public class SocialLeaderboardService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.RESET, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
@@ -624,7 +624,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.groupId.name(), groupId);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_GROUP_SOCIAL_LEADERBOARD, data, callback);
             _client.sendRequest(sc);
 
@@ -649,7 +649,7 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.profileIds.name(), profileIds);
 
-            ServerCall sc = new ServerCall(ServiceName.socialLeaderboard,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_PLAYERS_SOCIAL_LEADERBOARD, data, callback);
             _client.sendRequest(sc);
 

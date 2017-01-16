@@ -31,7 +31,6 @@ public enum ServiceName {
     redemptionCode,
     s3Handling,
     script,
-    socialLeaderboard,
     leaderboard,
     time,
     tournament
