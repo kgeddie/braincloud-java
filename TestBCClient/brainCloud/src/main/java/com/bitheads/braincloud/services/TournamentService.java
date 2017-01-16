@@ -24,7 +24,10 @@ public class TournamentService {
         initialScore,
         data,
         roundStartedEpoch,
-        score
+        score,
+        sort,
+        beforeCount,
+        afterCount,
     }
 
     private BrainCloudClient _client;
@@ -90,7 +93,8 @@ public class TournamentService {
      *
      * @param leaderboardId The leaderboard for the tournament
      * @param tournamentCode Tournament to join
-     * @param initialScore Initial score for the user
+     * @param initialScore The initial score for players first joining a tournament
+     *						  Usually 0, unless leaderboard is LOW_VALUE
      * @param callback The method to be invoked when the server response is received
      */
     public void joinTournament(String leaderboardId, String tournamentCode, int initialScore, IServerCallback callback) {
@@ -142,7 +146,7 @@ public class TournamentService {
      * @param roundStartedTime Time the user started the match resulting in the score being posted in UTC.
      * @param callback The method to be invoked when the server response is received
      */
-    public void postTournamentScore(String leaderboardId, int score, String jsonData, Date roundStartedTime, IServerCallback callback) {
+    public void postTournamentScore(String leaderboardId, long score, String jsonData, Date roundStartedTime, IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
@@ -157,6 +161,56 @@ public class TournamentService {
             data.put(Parameter.roundStartedEpoch.name(), roundStartedTime.getTime());
 
             ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Post the users score to the leaderboard
+     *
+     * Service Name - tournament
+     * Service Operation - POST_TOURNAMENT_SCORE_WITH_RESULTS
+     *
+     * @param leaderboardId The leaderboard for the tournament
+     * @param score The score to post
+     * @param jsonData Optional data attached to the leaderboard entry
+     * @param roundStartedTime Time the user started the match resulting in the score being posted in UTC.
+     * @param sort Sort key Sort order of page.
+     * @param beforeCount The count of number of players before the current player to include.
+     * @param afterCount The count of number of players after the current player to include.
+     * @param initialScore The initial score for players first joining a tournament
+     *						  Usually 0, unless leaderboard is LOW_VALUE
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void postTournamentScoreWithResults(
+            String leaderboardId,
+            long score,
+            String jsonData,
+            Date roundStartedTime,
+            SocialLeaderboardService.SortOrder sort,
+            int beforeCount,
+            int afterCount,
+            int initialScore,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.score.name(), score);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
+            data.put(Parameter.initialScore.name(), initialScore);
+
+            if (StringUtil.IsOptionalParameterValid(jsonData)) {
+                JSONObject jsonObj = new JSONObject(jsonData);
+                data.put(Parameter.data.name(), jsonObj);
+            }
+
+            data.put(Parameter.roundStartedEpoch.name(), roundStartedTime.getTime());
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE_WITH_RESULTS, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

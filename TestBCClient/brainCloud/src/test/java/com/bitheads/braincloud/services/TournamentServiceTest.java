@@ -78,6 +78,25 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void postTournamentScoreWithResults() throws Exception {
+        joinTestTournament();
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getTournamentService().postTournamentScoreWithResults(
+                _leaderboardId,
+                200,
+                Helpers.createJsonPair("test", 1),
+                new Date(),
+                SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                10,
+                10,
+                0,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void viewCurrentReward() throws Exception {
         joinTestTournament();
         TestResult tr = new TestResult();
