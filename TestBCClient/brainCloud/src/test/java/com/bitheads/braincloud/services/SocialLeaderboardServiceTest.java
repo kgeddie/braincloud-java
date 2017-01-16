@@ -351,6 +351,20 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testRemovePlayerScore() throws Exception
+    {
+        postScoreToNonDynamicLeaderboard();
+
+        TestResult tr = new TestResult();
+        BrainCloudClient.getInstance().getSocialLeaderboardService().removePlayerScore(
+                _globalLeaderboardId,
+                -1,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testGetPlayerScoresFromLeaderboards() throws Exception
     {
         postScoreToDynamicLeaderboard();
