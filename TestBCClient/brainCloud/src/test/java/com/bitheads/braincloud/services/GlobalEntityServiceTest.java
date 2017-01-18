@@ -226,8 +226,8 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
         BrainCloudClient.getInstance().getGlobalEntityService().updateEntityOwnerAndAcl(
                 entityId,
-                getUser(Users.UserA).profileId,
                 -1,
+                getUser(Users.UserA).profileId,
                 ACL.readWriteOther().toJsonString(),
                 tr);
         tr.Run();

@@ -398,7 +398,7 @@ public class GlobalEntityService {
      * @param jsonEntityAcl The entity's access control list as JSON.
      * @param callback The callback object
      */
-    public void updateEntityOwnerAndAcl(String entityId, String ownerId, int version, String jsonEntityAcl, IServerCallback callback) {
+    public void updateEntityOwnerAndAcl(String entityId, int version, String ownerId, String jsonEntityAcl, IServerCallback callback) {
         try {
 
             JSONObject data = new JSONObject();
