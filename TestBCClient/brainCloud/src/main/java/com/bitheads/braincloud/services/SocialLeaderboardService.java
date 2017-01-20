@@ -613,11 +613,9 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Reset the player's score for the given social leaderboard id.
-     *
-     * @param leaderboardId The leaderboard to post to
-     * @param callback The callback.
+     * @deprecated Use removePlayerScore instead - removal after March 22 2016
      */
+    @Deprecated
     public void resetLeaderboardScore(String leaderboardId,
                                       IServerCallback callback) {
         try {
