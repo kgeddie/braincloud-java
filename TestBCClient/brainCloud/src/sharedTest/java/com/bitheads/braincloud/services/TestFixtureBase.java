@@ -178,7 +178,7 @@ public class TestFixtureBase {
         TestUser testUser = getUser(user);
         TestResult tr = new TestResult();
         BrainCloudClient.getInstance().getIdentityService().attachPeerProfile(
-                testUser.id + "_peer", testUser.password, AuthenticationType.Universal, true, null, m_peerName, tr);
+                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal,null,  true, tr);
         return tr.Run();
     }
 

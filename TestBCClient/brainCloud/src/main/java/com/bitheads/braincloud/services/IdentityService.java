@@ -661,12 +661,12 @@ public class IdentityService {
      * @param externalId The users id for the new credentials
      * @param authenticationToken The password/token
      * @param authenticationType Type of identity
-     * @param forceCreate Should a new profile be created if it does not exist?
      * @param externalAuthName Optional - if attaching an external identity
+     * @param forceCreate Should a new profile be created if it does not exist?
      * @param callback The method to be invoked when the server response is received
      */
     public void attachParentWithIdentity(String externalId, String authenticationToken, AuthenticationType authenticationType,
-                                         boolean forceCreate, String externalAuthName, IServerCallback callback) {
+                                         String externalAuthName, boolean forceCreate, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.externalId.name(), externalId);
@@ -701,16 +701,16 @@ public class IdentityService {
      * Service Name - identity
      * Service Operation - ATTACH_PEER_PROFILE
      *
+     * @param peer Name of the peer to connect to
      * @param externalId The users id for the new credentials
      * @param authenticationToken The password/token
      * @param authenticationType Type of identity
-     * @param forceCreate Should a new profile be created if it does not exist?
      * @param externalAuthName Optional - if attaching an external identity
-     * @param peer Name of the peer to connect to
+     * @param forceCreate Should a new profile be created if it does not exist?
      * @param callback The method to be invoked when the server response is received
      */
-    public void attachPeerProfile(String externalId, String authenticationToken, AuthenticationType authenticationType,
-                                  boolean forceCreate, String externalAuthName, String peer, IServerCallback callback) {
+    public void attachPeerProfile(String peer, String externalId, String authenticationToken, AuthenticationType authenticationType,
+                                  String externalAuthName, boolean forceCreate, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.externalId.name(), externalId);

@@ -76,7 +76,7 @@ public class IdentityServiceTest extends TestFixtureBase {
 
         TestUser testUser = getUser(Users.UserA);
         BrainCloudClient.getInstance().getIdentityService().attachParentWithIdentity(
-                testUser.id, testUser.password, AuthenticationType.Universal, true, null, tr);
+                testUser.id, testUser.password, AuthenticationType.Universal, null, true, tr);
         tr.Run();
     }
 
@@ -118,7 +118,7 @@ public class IdentityServiceTest extends TestFixtureBase {
 
         TestUser testUser = getUser(Users.UserA);
         BrainCloudClient.getInstance().getIdentityService().attachPeerProfile(
-                testUser.id + "_peer", testUser.password, AuthenticationType.Universal, true, null, m_peerName, tr);
+                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal, null, true, tr);
 
         if (tr.Run()) detachPeer();
     }
