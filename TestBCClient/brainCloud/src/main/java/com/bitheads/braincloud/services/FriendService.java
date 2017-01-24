@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.ServiceName;
@@ -23,7 +24,8 @@ public class FriendService {
         entityId,
         entityType,
         friendPlatform,
-        profileIds
+        profileIds,
+        externalAuthType
     }
 
     private BrainCloudClient _client;
@@ -39,14 +41,9 @@ public class FriendService {
     }
 
     /**
-     * Retrieves profile information for the specified user.
-     *
-     * Service Name - Friend
-     * Service Operation - GetFriendProfileInfoForExternalId
-     *
-     * @param externalId The friend's external id e.g. Facebook id
-     * @param authenticationType The authentication type of the friend id e.g. Facebook
+     * @deprecated  Use getProfileInfoForCredential instead - removal after March 22 2017
      */
+    @Deprecated
     public void getFriendProfileInfoForExternalId(String externalId, String authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -57,6 +54,50 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_FRIEND_PROFILE_INFO_FOR_EXTERNAL_ID, data, callback);
+        BrainCloudClient.getInstance().sendRequest(sc);
+    }
+
+    /**
+     * Retrieves profile information for the specified user.
+     *
+     * Service Name - friend
+     * Service Operation - GET_PROFILE_INFO_FOR_CREDENTIAL
+     *
+     * @param externalId The users's external ID
+     * @param authenticationType The authentication type of the user ID
+     */
+    public void getProfileInfoForCredential(String externalId, AuthenticationType authenticationType, IServerCallback callback) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.authenticationType.name(), authenticationType.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_CREDENTIAL, data, callback);
+        BrainCloudClient.getInstance().sendRequest(sc);
+    }
+
+    /**
+     * Retrieves profile information for the specified external auth user.
+     *
+     * Service Name - friend
+     * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID
+     *
+     * @param externalId External ID of the friend to find
+     * @param externalAuthType The external authentication type used for this friend's external ID
+     */
+    public void getProfileInfoForExternalAuthId(String externalId, String externalAuthType, IServerCallback callback) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.externalAuthType.name(), externalAuthType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID, data, callback);
         BrainCloudClient.getInstance().sendRequest(sc);
     }
 

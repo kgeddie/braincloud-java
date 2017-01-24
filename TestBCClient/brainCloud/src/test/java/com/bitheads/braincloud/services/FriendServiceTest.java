@@ -1,6 +1,8 @@
 package com.bitheads.braincloud.services;
 
+import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 import org.junit.Test;
 
@@ -80,6 +82,31 @@ public class FriendServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    @Test
+    public void testGetProfileInfoForCredential() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getFriendService().getProfileInfoForCredential(
+                getUser(Users.UserA).id,
+                AuthenticationType.Universal,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testGetProfileInfoForExternalAuthId() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getFriendService().getProfileInfoForExternalAuthId(
+                getUser(Users.UserA).id,
+                "failType",
+                tr);
+
+        tr.RunExpectFail(400, ReasonCodes.INVALID_CREDENTIAL);
+    }
 
     @Test
     public void testListFriends() throws Exception
