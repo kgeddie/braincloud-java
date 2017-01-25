@@ -70,14 +70,14 @@ public class EventService {
      * Service Name - event
      * Service Operation - UPDATE_EVENT_DATA
      *
-     * @param eventId The event id
+     * @param evId The event id
      * @param jsonEventData The user-defined data for this event encoded in JSON.
      * @param callback The  callback.
      */
-    public void updateIncomingEventData(String eventId, String jsonEventData, IServerCallback callback) {
+    public void updateIncomingEventData(String evId, String jsonEventData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.evId.name(), eventId);
+            data.put(Parameter.evId.name(), evId);
 
             JSONObject jsonData = new JSONObject(jsonEventData);
             data.put(Parameter.eventData.name(), jsonData);
@@ -95,13 +95,13 @@ public class EventService {
      * Service Name - event
      * Service Operation - DELETE_INCOMING
      *
-     * @param eventId The event id
+     * @param evId The event id
      * @param callback The callback.
      */
-    public void deleteIncomingEvent(String eventId, IServerCallback callback) {
+    public void deleteIncomingEvent(String evId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.evId.name(), eventId);
+            data.put(Parameter.evId.name(), evId);
 
             ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.DELETE_INCOMING, data, callback);
             _client.sendRequest(sc);
