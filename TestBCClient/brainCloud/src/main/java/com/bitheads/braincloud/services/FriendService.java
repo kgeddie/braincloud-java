@@ -85,8 +85,8 @@ public class FriendService {
      * Service Name - friend
      * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID
      *
-     * @param externalId External ID of the friend to find
-     * @param externalAuthType The external authentication type used for this friend's external ID
+     * @param externalId External ID of the user to find
+     * @param externalAuthType The external authentication type used for this users's external ID
      */
     public void getProfileInfoForExternalAuthId(String externalId, String externalAuthType, IServerCallback callback) {
         JSONObject data = new JSONObject();
