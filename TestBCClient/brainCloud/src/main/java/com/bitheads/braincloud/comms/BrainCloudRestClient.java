@@ -70,6 +70,13 @@ public class BrainCloudRestClient implements Runnable {
     private int _retryCount;
     private ArrayList<Integer> _packetTimeouts = new ArrayList<>();
 
+    //kill switch
+    private int _killSwitchThreshold = 11;
+    private boolean _killSwitchEngaged;
+    private int _killSwitchErrorCount;
+    private String _killSwitchService;
+    private String _killSwitchOperation;
+
     private LinkedBlockingQueue<ServerCall> _waitingQueue = new LinkedBlockingQueue<>();
     private LinkedBlockingQueue<ServerCall> _messageQueue = new LinkedBlockingQueue<>();
     private LinkedBlockingQueue<ServerCall> _bundleQueue = new LinkedBlockingQueue<>();
@@ -477,76 +484,61 @@ public class BrainCloudRestClient implements Runnable {
                         }
                     }
 
-                    if (!isAuth) {
-                        handleNoAuth();
-                    } else {
-                        _retryCount = 0;
-                        for (; ; ) {
-                            // do this before as retry count will be incremented inside sendBundle()
-                            long timeoutMillis = System.currentTimeMillis() + getRetryTimeoutMillis(_retryCount);
+                    if(!_killSwitchEngaged) {
+                        if (!isAuth) {
+                            fakeErrorResponse(_statusCodeCache, _reasonCodeCache, _statusMessageCache);
+                        } else {
+                            _retryCount = 0;
+                            for (; ; ) {
+                                // do this before as retry count will be incremented inside sendBundle()
+                                long timeoutMillis = System.currentTimeMillis() + getRetryTimeoutMillis(_retryCount);
 
-                            if (sendBundle()) {
-                                break;
-                            }
+                                if (sendBundle()) {
+                                    break;
+                                }
 
-                            long endMillis = System.currentTimeMillis();
-                            if (endMillis < timeoutMillis) {
-                                try {
-                                    Thread.sleep(timeoutMillis - endMillis);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                long endMillis = System.currentTimeMillis();
+                                if (endMillis < timeoutMillis) {
+                                    try {
+                                        Thread.sleep(timeoutMillis - endMillis);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        fakeErrorResponse(StatusCodes.CLIENT_NETWORK_ERROR, ReasonCodes.CLIENT_DISABLED,
+                                "Client has been disabled due to repeated errors from a single API call");
                     }
                 }
             }
         }
     }
 
-    private void handleNoAuth() {
-        // to avoid taking the json parsing hit even when logging is disabled
+    private void fakeErrorResponse(int statusCode, int reasonCode, String statusMessage)
+    {
         if (_loggingEnabled) {
             try {
                 String body = getDataString();
                 JSONObject jlog = new JSONObject(body);
                 LogString("OUTGOING" + (_retryCount > 0 ? " retry(" + _retryCount + "): " : ": ") + jlog.toString(2));
             } catch (JSONException e) {
-                // should never happen
                 e.printStackTrace();
             }
         }
 
-        JSONArray responses = new JSONArray();
+        fillWithError(statusCode, reasonCode, statusMessage);
 
-        synchronized (_lock) {
-            for (ServerCall serverCall : _bundleQueue) {
-                ServerResponse response = new ServerResponse();
-                response._serverCall = serverCall;
-                response._isError = true;
-                response._statusCode = _statusCodeCache;
-                response._reasonCode = _reasonCodeCache;
-                response._statusMessage = "INTERNAL | " + _statusMessageCache;
-
-                JSONObject jsonError = new JSONObject();
-                try {
-                    jsonError.put("status", _statusCodeCache);
-                    jsonError.put("reason_code", _reasonCodeCache);
-                    jsonError.put("severity", "ERROR");
-                    jsonError.put("status_message", "INTERNAL | " + _statusMessageCache);
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
-                response._data = jsonError;
-                responses.put(jsonError);
-
-                _serverResponses.push(response);
-            }
-            _bundleQueue.clear();
-        }
-
-        // to avoid taking the json parsing hit even when logging is disabled
         if (_loggingEnabled) {
+            ArrayList<JSONObject> responses = new ArrayList<>(_serverResponses.size());
+
+            for (ServerResponse response : _serverResponses) {
+                responses.add(response._data);
+            }
+
             try {
                 JSONObject responseBody = new JSONObject();
                 responseBody.put("packetId", _expectedPacketId);
@@ -610,6 +602,16 @@ public class BrainCloudRestClient implements Runnable {
 
     private void fillWithError(int statusCode, int reasonCode, String statusMessage) {
         synchronized (_lock) {
+            JSONObject jsonError = new JSONObject();
+            try {
+                jsonError.put("status", statusCode);
+                jsonError.put("reason_code", reasonCode);
+                jsonError.put("severity", "ERROR");
+                jsonError.put("status_message", statusMessage);
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
+
             for (ServerCall serverCall : _bundleQueue) {
                 ServerResponse response = new ServerResponse();
                 response._serverCall = serverCall;
@@ -617,16 +619,6 @@ public class BrainCloudRestClient implements Runnable {
                 response._statusCode = statusCode;
                 response._reasonCode = reasonCode;
                 response._statusMessage = statusMessage;
-
-                JSONObject jsonError = new JSONObject();
-                try {
-                    jsonError.put("status", statusCode);
-                    jsonError.put("reason_code", reasonCode);
-                    jsonError.put("severity", "ERROR");
-                    jsonError.put("status_message", statusMessage);
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
                 response._data = jsonError;
 
                 _serverResponses.push(response);
@@ -778,6 +770,33 @@ public class BrainCloudRestClient implements Runnable {
         _statusMessageCache = "No session";
     }
 
+    private void updateKillSwitch(int statusCode, String service, String operation)
+    {
+        if (statusCode == StatusCodes.CLIENT_NETWORK_ERROR) return;
+
+        if (_killSwitchService == null)
+        {
+            _killSwitchService = service;
+            _killSwitchOperation = operation;
+            _killSwitchErrorCount++;
+        }
+        else if (service == _killSwitchService && operation == _killSwitchOperation)
+            _killSwitchErrorCount++;
+
+        if (!_killSwitchEngaged && _killSwitchErrorCount >= _killSwitchThreshold)
+        {
+            _killSwitchEngaged = true;
+            LogString("Client disabled due to repeated errors from a single API call: " + service + " | " + operation);
+        }
+    }
+
+    private void resetKillSwitch()
+    {
+        _killSwitchErrorCount = 0;
+        _killSwitchService = null;
+        _killSwitchOperation = null;
+    }
+
     private void handleBundle(JSONObject root) throws JSONException {
         JSONArray messages = root.getJSONArray("responses");
 
@@ -792,6 +811,8 @@ public class BrainCloudRestClient implements Runnable {
                     serverResponse._statusCode = status;
 
                     if (status == 200) {
+                        resetKillSwitch();
+
                         if (sc.getServiceName().equals(ServiceName.authenticationV2)
                                 && sc.getServiceOperation().equals(ServiceOperation.AUTHENTICATE)) {
                             JSONObject data = message.getJSONObject("data");
@@ -896,6 +917,8 @@ public class BrainCloudRestClient implements Runnable {
                         serverResponse._reasonCode = reasonCode;
                         serverResponse._statusMessage = statusMessage;
                         serverResponse._data = message;
+
+                        updateKillSwitch(status, sc.getServiceName().toString(), sc.getServiceOperation().toString());
                     }
 
                     _serverResponses.addLast(serverResponse);

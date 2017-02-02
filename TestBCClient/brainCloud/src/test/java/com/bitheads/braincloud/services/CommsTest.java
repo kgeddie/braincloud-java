@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.StatusCodes;
@@ -243,5 +244,35 @@ public class CommsTest extends TestFixtureNoAuth
 
 
         tr.setMaxWait(30);
+    }
+
+    //@Test
+    public void testKillSwitch() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(
+                getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        tr.Run();
+
+        for (int i  = 0; i < 3; i++)
+        {
+            BrainCloudClient.getInstance().getIdentityService().refreshIdentity(
+                    "fail", "fail", AuthenticationType.Universal, tr);
+            tr.Run(true);
+        }
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.Run();
+
+        for (int i  = 0; i < 12; i++)
+        {
+            BrainCloudClient.getInstance().getIdentityService().refreshIdentity(
+                    "fail", "fail", AuthenticationType.Universal, tr);
+            tr.Run(true);
+        }
+
+        BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
+        tr.RunExpectFail(900, ReasonCodes.CLIENT_DISABLED);
     }
 }
