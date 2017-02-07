@@ -827,6 +827,9 @@ public class BrainCloudRestClient implements Runnable {
                             _heartbeatIntervalMillis = (long)(sessionExpiry * 1000 * 0.85);
                             _maxBundleSize = data.getInt("maxBundleMsgs");
 
+                            if(data.has("maxKillCount"))
+                                _killSwitchThreshold = data.getInt("maxKillCount");
+
                         } else if (sc.getServiceName().equals(ServiceName.playerState)
                                 && sc.getServiceOperation().equals(ServiceOperation.LOGOUT)) {
                             _isAuthenticated = false;
