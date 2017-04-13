@@ -41,23 +41,6 @@ public class FriendService {
     }
 
     /**
-     * @deprecated  Use getProfileInfoForCredential instead - removal after March 22 2017
-     */
-    @Deprecated
-    public void getFriendProfileInfoForExternalId(String externalId, String authenticationType, IServerCallback callback) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put(Parameter.externalId.name(), externalId);
-            data.put(Parameter.authenticationType.name(), authenticationType);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_FRIEND_PROFILE_INFO_FOR_EXTERNAL_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
-    }
-
-    /**
      * Retrieves profile information for the specified user.
      *
      * Service Name - friend

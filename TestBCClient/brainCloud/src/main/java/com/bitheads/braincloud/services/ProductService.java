@@ -54,49 +54,6 @@ public class ProductService {
     }
 
     /**
-     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
-     */
-    @Deprecated
-    public void awardCurrency(String in_currencyType, long in_amount, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.vc_id.name(), in_currencyType);
-            data.put(Parameter.vc_amount.name(), in_amount);
-
-            ServerCall sc = new ServerCall(ServiceName.product, ServiceOperation.AWARD_VC, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
-     */
-    @Deprecated
-    public void consumeCurrency(String in_currencyType, long in_amount, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.vc_id.name(), in_currencyType);
-            data.put(Parameter.vc_amount.name(), in_amount);
-
-            ServerCall sc = new ServerCall(ServiceName.product, ServiceOperation.CONSUME_VC, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Method is now available in Cloud Code only for security - removal after March 22 2016
-     */
-    @Deprecated
-    public void resetCurrency(IServerCallback callback) {
-        ServerCall sc = new ServerCall(ServiceName.product, ServiceOperation.RESET_PLAYER_VC, null, callback);
-        _client.sendRequest(sc);
-    }
-
-    /**
      * Method gets the active sales inventory for the passed-in
      * currency type.
      *
