@@ -57,27 +57,27 @@ public class BrainCloudWrapper implements IServerCallback {
      * Method initializes the BrainCloudClient.
      *
      * @param ctx The application context
-     * @param gameId The game id
-     * @param secretKey The secret key for your game
-     * @param gameVersion The game version
+     * @param appId The app id
+     * @param secretKey The secret key for your app
+     * @param version The version
      */
-    public void initialize(Context ctx, String gameId, String secretKey, String gameVersion) {
+    public void initialize(Context ctx, String appId, String secretKey, String version) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(gameId, secretKey, gameVersion, _DEFAULT_URL);
+        BrainCloudClient.getInstance().initialize(appId, secretKey, version, _DEFAULT_URL);
     }
 
     /**
      * Method initializes the BrainCloudClient.
      *
      * @param ctx The application context
-     * @param gameId The game id
-     * @param secretKey The secret key for your game
-     * @param gameVersion The game version
+     * @param appId The app id
+     * @param secretKey The secret key for your app
+     * @param version The version
      * @param serverUrl The url to the brainCloud server
      */
-    public void initialize(Context ctx, String gameId, String secretKey, String gameVersion, String serverUrl) {
+    public void initialize(Context ctx, String appId, String secretKey, String version, String serverUrl) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(gameId, secretKey, gameVersion, serverUrl);
+        BrainCloudClient.getInstance().initialize(appId, secretKey, version, serverUrl);
     }
 
 
@@ -85,13 +85,13 @@ public class BrainCloudWrapper implements IServerCallback {
      * Method initializes the BrainCloudClient. Make sure to
      * set the context via setContext() if you're using this method.
      *
-     * @param gameId The game id
-     * @param secretKey The secret key for your game
-     * @param gameVersion The game version
+     * @param appId The id
+     * @param secretKey The secret key for your app
+     * @param version The version
      * @param serverUrl The url to the brainCloud server
      */
-    public void initialize(String gameId, String secretKey, String gameVersion, String serverUrl) {
-        BrainCloudClient.getInstance().initialize(gameId, secretKey, gameVersion, serverUrl);
+    public void initialize(String appId, String secretKey, String version, String serverUrl) {
+        BrainCloudClient.getInstance().initialize(appId, secretKey, version, serverUrl);
     }
 
     protected void initializeIdentity(boolean isAnonymousAuth) {

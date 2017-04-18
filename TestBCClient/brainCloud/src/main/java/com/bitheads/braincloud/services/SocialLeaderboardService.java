@@ -122,33 +122,6 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
-     */
-    @Deprecated
-    public void getGlobalLeaderboardPage(
-            String leaderboardId,
-            SortOrder sort,
-            int startIndex,
-            int endIndex,
-            boolean includeLeaderboardSize,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.sort.name(), sort.name());
-            data.put(Parameter.startIndex.name(), startIndex);
-            data.put(Parameter.endIndex.name(), endIndex);
-            data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Method returns a page of results of the global leaderboard.
      *
      * Leaderboards entries contain the player's score and optionally, some user-defined
@@ -176,35 +149,6 @@ public class SocialLeaderboardService {
             data.put(Parameter.sort.name(), sort.name());
             data.put(Parameter.startIndex.name(), startIndex);
             data.put(Parameter.endIndex.name(), endIndex);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
-     */
-    @Deprecated
-    public void getGlobalLeaderboardPageByVersion(
-            String leaderboardId,
-            SortOrder sort,
-            int startIndex,
-            int endIndex,
-            boolean includeLeaderboardSize,
-            int versionId,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.sort.name(), sort.name());
-            data.put(Parameter.startIndex.name(), startIndex);
-            data.put(Parameter.endIndex.name(), endIndex);
-            data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
-            data.put(Parameter.versionId.name(), versionId);
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
             _client.sendRequest(sc);
@@ -252,33 +196,6 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
-     */
-    @Deprecated
-    public void getGlobalLeaderboardView(
-            String leaderboardId,
-            SortOrder sort,
-            int beforeCount,
-            int afterCount,
-            boolean includeLeaderboardSize,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.sort.name(), sort.name());
-            data.put(Parameter.beforeCount.name(), beforeCount);
-            data.put(Parameter.afterCount.name(), afterCount);
-            data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Method returns a page of results of the global leaderboard.
      *
      * Leaderboards entries contain the player's score and optionally, some user-defined
@@ -306,35 +223,6 @@ public class SocialLeaderboardService {
             data.put(Parameter.sort.name(), sort.name());
             data.put(Parameter.beforeCount.name(), beforeCount);
             data.put(Parameter.afterCount.name(), afterCount);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
-            _client.sendRequest(sc);
-
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Use method without includeLeaderboardSize parameter - removal after March 22 2016
-     */
-    @Deprecated
-    public void getGlobalLeaderboardViewByVersion(
-            String leaderboardId,
-            SortOrder sort,
-            int beforeCount,
-            int afterCount,
-            boolean includeLeaderboardSize,
-            int versionId,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.sort.name(), sort.name());
-            data.put(Parameter.beforeCount.name(), beforeCount);
-            data.put(Parameter.afterCount.name(), afterCount);
-            data.put(Parameter.includeLeaderboardSize.name(), includeLeaderboardSize);
-            data.put(Parameter.versionId.name(), versionId);
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
             _client.sendRequest(sc);
@@ -606,24 +494,6 @@ public class SocialLeaderboardService {
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.REMOVE_PLAYER_SCORE, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * @deprecated Use removePlayerScore instead - removal after March 22 2016
-     */
-    @Deprecated
-    public void resetLeaderboardScore(String leaderboardId,
-                                      IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard,
-                    ServiceOperation.RESET, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
