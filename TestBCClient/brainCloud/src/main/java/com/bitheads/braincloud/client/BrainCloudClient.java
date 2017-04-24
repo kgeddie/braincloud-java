@@ -217,7 +217,7 @@ public class BrainCloudClient {
      *      "eventId": 3967,
      *      "createdAt": 1441742105908,
      *      "gameId": "123",
-     *      "toProfileId": "178ed06a-d575-4591-8970-e23a5d35f9df",
+     *      "toPlayerId": "178ed06a-d575-4591-8970-e23a5d35f9df",
      *      "eventType": "test",
      *      "eventData": {"testData": 117}
      *    }],
