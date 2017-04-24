@@ -102,10 +102,10 @@ public class CommsTest extends TestFixtureNoAuth
         Thread.sleep(61 * 1000);
 
         BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
-        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.PLAYER_SESSION_EXPIRED);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.USER_SESSION_EXPIRED);
 
         BrainCloudClient.getInstance().getTimeService().readServerTime(tr);
-        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.PLAYER_SESSION_EXPIRED);
+        tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.USER_SESSION_EXPIRED);
 
         BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
         tr.Run();

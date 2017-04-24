@@ -64,10 +64,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 .build();
 
         BrainCloudClient client = BrainCloudClient.getInstance();
-        String gameId = "";
+        String appId = "";
         String secret = "";
         String version = "1.0.0";
-        client.initialize(gameId, secret, version);
+        client.initialize(appId, secret, version);
 
         EditText txtUser = (EditText) findViewById(R.id.txtUser);
         EditText txtPwd = (EditText) findViewById(R.id.txtPassword);

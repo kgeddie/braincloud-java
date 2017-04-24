@@ -38,9 +38,9 @@ import java.util.TimeZone;
 
 public class BrainCloudClient {
 
-    private String _gameId;
+    private String _appId;
     private Platform _releasePlatform;
-    private String _gameVersion;
+    private String _version;
     private String _countryCode;
     private String _languageCode;
     private double _timeZoneOffset;
@@ -99,51 +99,51 @@ public class BrainCloudClient {
     }
 
     /**
-     * Initializes the brainCloud client with your game information. This method
+     * Initializes the brainCloud client with your app information. This method
      * must be called before any API method is invoked.
      *
-     * @param gameId
-     *            The game id
+     * @param appId
+     *            The app id
      * @param secretKey
-     *            The game secret
-     * @param gameVersion
-     *            The game version (e.g. "1.0.0").
+     *            The app secret
+     * @param version
+     *            The app version (e.g. "1.0.0").
      */
-    public void initialize(String gameId, String secretKey, String gameVersion) {
-        initialize(gameId, secretKey, gameVersion, DEFAULT_SERVER_URL);
+    public void initialize(String appId, String secretKey, String version) {
+        initialize(appId, secretKey, version, DEFAULT_SERVER_URL);
     }
 
     /**
-     * Initializes the brainCloud client with your game information. This method
+     * Initializes the brainCloud client with your app information. This method
      * must be called before any API method is invoked.
      *
-     * @param gameId
-     *            The game id
+     * @param appId
+     *            The app id
      * @param secretKey
-     *            The game secret
-     * @param gameVersion
-     *            The game version (e.g. "1.0.0").
+     *            The app secret
+     * @param version
+     *            The app version (e.g. "1.0.0").
      * @param serverUrl
      *              The server url (e.g. "https://sharedprod.braincloudservers.com").
      */
-    public void initialize(String gameId, String secretKey, String gameVersion, String serverUrl) {
+    public void initialize(String appId, String secretKey, String version, String serverUrl) {
         String error = null;
         if (isNullOrEmpty(serverUrl))
             error = "serverUrl was null or empty";
         else if (isNullOrEmpty(secretKey))
             error = "secretKey was null or empty";
-        else if (isNullOrEmpty(gameId))
-            error = "gameId was null or empty";
-        else if (isNullOrEmpty(gameVersion))
-            error = "gameVersion was null or empty";
+        else if (isNullOrEmpty(appId))
+            error = "appId was null or empty";
+        else if (isNullOrEmpty(version))
+            error = "version was null or empty";
 
         if (error != null) {
             System.out.println("ERROR | Failed to initialize brainCloud - " + error);
             return;
         }
 
-        _gameId = gameId;
-        _gameVersion = gameVersion;
+        _appId = appId;
+        _version = version;
         _releasePlatform = Platform.GooglePlayAndroid;
 
         Locale locale = Locale.getDefault();
@@ -155,7 +155,7 @@ public class BrainCloudClient {
 
         _restClient.initialize(
                 serverUrl.endsWith("/dispatcherv2") ? serverUrl : serverUrl + "/dispatcherv2",
-                gameId, secretKey);
+                appId, secretKey);
     }
 
     private static boolean isNullOrEmpty(String param) {
@@ -217,7 +217,7 @@ public class BrainCloudClient {
      *      "eventId": 3967,
      *      "createdAt": 1441742105908,
      *      "gameId": "123",
-     *      "toPlayerId": "178ed06a-d575-4591-8970-e23a5d35f9df",
+     *      "toProfileId": "178ed06a-d575-4591-8970-e23a5d35f9df",
      *      "eventType": "test",
      *      "eventData": {"testData": 117}
      *    }],
@@ -498,12 +498,24 @@ public class BrainCloudClient {
         _restClient.getSessionId();
     }
 
+    /**
+     * @deprecated Use getAppId instead - removal after September 1 2017
+     */
+    @Deprecated
     public String getGameId() {
         if (_restClient == null) {
             return null;
         }
-        return _restClient.getGameId();
+        return _restClient.getAppId();
     }
+
+    public String getAppId() {
+        if (_restClient == null) {
+            return null;
+        }
+        return _restClient.getAppId();
+    }
+
 
     public Platform getReleasePlatform() {
         return _releasePlatform;
@@ -513,12 +525,29 @@ public class BrainCloudClient {
         this._releasePlatform = _releasePlatform;
     }
 
+
+    /**
+     * @deprecated Use getVersion instead - removal after September 1 2017
+     */
+    @Deprecated
     public String getGameVersion() {
-        return _gameVersion;
+        return _version;
     }
 
-    public void setGameVersion(String _gameVersion) {
-        this._gameVersion = _gameVersion;
+    public String getVersion() {
+        return _version;
+    }
+
+
+    /**
+     * @deprecated Use setVersion instead - removal after September 1 2017
+     */
+    public void setGameVersion(String version) {
+        this._version = version;
+    }
+
+    public void setVersion(String version) {
+        this._version = version;
     }
 
     public String getBrainCloudVersion() {
@@ -553,7 +582,7 @@ public class BrainCloudClient {
 
     /**
      * Sets the language code sent to brainCloud when a user authenticates.
-     * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+     * If the language is set to a non-ISO 639-1 standard value the app default will be used instead.
      * Will override any auto detected language.
      * @param languageCode ISO 639-1 two-letter language code
      */
