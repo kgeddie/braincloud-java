@@ -15,14 +15,16 @@ public class PushNotificationService {
     private enum Parameter {
         deviceType,
         deviceToken,
-        toProfileId,
+        toPlayerId,
         message,
         notificationTemplateId,
         substitutions,
         groupId,
         alertContent,
         customData,
-        profileIds
+        profileIds,
+        startDateUTC,
+        minutesFromNow
     }
 
     private BrainCloudClient _client;
@@ -96,7 +98,7 @@ public class PushNotificationService {
     public void sendSimplePushNotification(String toProfileId, String message, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), toProfileId);
+            data.put(Parameter.toPlayerId.name(), toProfileId);
             data.put(Parameter.message.name(), message);
 
             ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_SIMPLE, data, callback);
@@ -131,7 +133,7 @@ public class PushNotificationService {
     public void sendRichPushNotificationWithParams(String toProfileId, int notificationTemplateId, String substitutionJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), toProfileId);
+            data.put(Parameter.toPlayerId.name(), toProfileId);
             data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
             if (StringUtil.IsOptionalParameterValid(substitutionJson)) {
                 JSONObject subJson = new JSONObject(substitutionJson);
@@ -209,13 +211,15 @@ public class PushNotificationService {
                                                       Long startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.toPlayerId.name(), profileId);
             data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
             if (StringUtil.IsOptionalParameterValid(customDataJson)) {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_AT_UTC, data, callback);
+            data.put(Parameter.startDateUTC.name(), startTime);
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -235,13 +239,15 @@ public class PushNotificationService {
                                                       Long minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.toPlayerId.name(), profileId);
             data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
             if (StringUtil.IsOptionalParameterValid(customDataJson)) {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_AFTER_MINUTES, data, callback);
+            data.put(Parameter.minutesFromNow.name(), minutesFromNow);
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -261,13 +267,15 @@ public class PushNotificationService {
                                                 Long startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.toPlayerId.name(), profileId);
             data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
             if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
                 data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RICH_AT_UTC, data, callback);
+            data.put(Parameter.startDateUTC.name(), startTime);
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -288,13 +296,15 @@ public class PushNotificationService {
                                                           Long minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.toPlayerId.name(), profileId);
             data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
             if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
                 data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RICH_AFTER_MINUTES, data, callback);
+            data.put(Parameter.minutesFromNow.name(), minutesFromNow);
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -313,7 +323,7 @@ public class PushNotificationService {
     public void sendNormalizedPushNotification(String toProfileId, String alertContentJson, String customDataJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toProfileId.name(), toProfileId);
+            data.put(Parameter.toPlayerId.name(), toProfileId);
             data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
             if (StringUtil.IsOptionalParameterValid(customDataJson)) {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
