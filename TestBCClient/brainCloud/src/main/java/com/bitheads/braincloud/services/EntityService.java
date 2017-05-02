@@ -229,7 +229,7 @@ public class EntityService {
     }
 
     /**
-     * @deprecated Use getVersion instead - removal after September 1 2017
+     * @deprecated Use getAppVersion instead - removal after September 1 2017
      */
     @Deprecated
     public void getSharedEntitiesForPlayerId(String profileId,

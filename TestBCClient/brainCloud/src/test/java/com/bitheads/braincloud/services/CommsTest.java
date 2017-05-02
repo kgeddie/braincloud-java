@@ -123,7 +123,7 @@ public class CommsTest extends TestFixtureNoAuth
     @Test
     public void testErrorCallback() throws Exception
     {
-        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_version, m_serverUrl);
+        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
         BrainCloudClient.getInstance().enableLogging(true);
 
         TestResult tr = new TestResult();
@@ -137,7 +137,7 @@ public class CommsTest extends TestFixtureNoAuth
         tr.RunExpectFail(-1, -1);
         Assert.assertFalse(tr.m_statusMessage.startsWith("{"));
 
-        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_version, "https://localhost:5432");
+        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_appVersion, "https://localhost:5432");
 
         tr.Reset();
         BrainCloudClient.getInstance().setOldStyleStatusMessageErrorCallback(false);
@@ -160,7 +160,7 @@ public class CommsTest extends TestFixtureNoAuth
         TestResult tr = new TestResult();
         BrainCloudClient bcc = BrainCloudClient.getInstance();
 
-        bcc.initialize(m_appId, m_secret, m_version, m_serverUrl + "failunittest");
+        bcc.initialize(m_appId, m_secret, m_appVersion, m_serverUrl + "failunittest");
         bcc.enableLogging(true);
         bcc.registerNetworkErrorCallback(tr);
         bcc.registerGlobalErrorCallback(tr);
@@ -209,7 +209,7 @@ public class CommsTest extends TestFixtureNoAuth
         tr.setMaxWait(600);
         BrainCloudClient bcc = BrainCloudClient.getInstance();
 
-        //bcc.initialize(m_appId, m_secret, m_version, m_serverUrl);
+        //bcc.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
         //bcc.enableLogging(true);
         BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         BrainCloudClient.getInstance().insertEndOfMessageBundleMarker();

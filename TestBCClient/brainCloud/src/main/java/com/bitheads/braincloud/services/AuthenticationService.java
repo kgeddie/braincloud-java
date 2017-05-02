@@ -272,7 +272,7 @@ public class AuthenticationService {
             message.put(Parameter.anonymousId.name(), _anonymousId);
             message.put(Parameter.appId.name(), _client.getAppId());
             message.put(Parameter.releasePlatform.name(), _client.getReleasePlatform());
-            message.put(Parameter.upgradeAppId.name(), _client.getGameVersion());
+            message.put(Parameter.upgradeAppId.name(), _client.getAppVersion());
             message.put(Parameter.version.name(), _client.getBrainCloudVersion());
 
             if (StringUtil.IsOptionalParameterValid(externalAuthName)) {

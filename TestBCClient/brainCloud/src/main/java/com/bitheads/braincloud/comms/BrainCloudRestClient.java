@@ -360,7 +360,7 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     /**
-     * @deprecated Use getVersion instead - removal after September 1 2017
+     * @deprecated Use getAppId instead - removal after September 1 2017
      */
     @Deprecated
     public String getGameId() {

@@ -40,7 +40,7 @@ public class BrainCloudClient {
 
     private String _appId;
     private Platform _releasePlatform;
-    private String _version;
+    private String _appVersion;
     private String _countryCode;
     private String _languageCode;
     private double _timeZoneOffset;
@@ -106,11 +106,11 @@ public class BrainCloudClient {
      *            The app id
      * @param secretKey
      *            The app secret
-     * @param version
+     * @param appVersion
      *            The app version (e.g. "1.0.0").
      */
-    public void initialize(String appId, String secretKey, String version) {
-        initialize(appId, secretKey, version, DEFAULT_SERVER_URL);
+    public void initialize(String appId, String secretKey, String appVersion) {
+        initialize(appId, secretKey, appVersion, DEFAULT_SERVER_URL);
     }
 
     /**
@@ -121,12 +121,12 @@ public class BrainCloudClient {
      *            The app id
      * @param secretKey
      *            The app secret
-     * @param version
+     * @param appVersion
      *            The app version (e.g. "1.0.0").
      * @param serverUrl
      *              The server url (e.g. "https://sharedprod.braincloudservers.com").
      */
-    public void initialize(String appId, String secretKey, String version, String serverUrl) {
+    public void initialize(String appId, String secretKey, String appVersion, String serverUrl) {
         String error = null;
         if (isNullOrEmpty(serverUrl))
             error = "serverUrl was null or empty";
@@ -134,7 +134,7 @@ public class BrainCloudClient {
             error = "secretKey was null or empty";
         else if (isNullOrEmpty(appId))
             error = "appId was null or empty";
-        else if (isNullOrEmpty(version))
+        else if (isNullOrEmpty(appVersion))
             error = "version was null or empty";
 
         if (error != null) {
@@ -143,7 +143,7 @@ public class BrainCloudClient {
         }
 
         _appId = appId;
-        _version = version;
+        _appVersion = appVersion;
         _releasePlatform = Platform.GooglePlayAndroid;
 
         Locale locale = Locale.getDefault();
@@ -527,27 +527,40 @@ public class BrainCloudClient {
 
 
     /**
-     * @deprecated Use getVersion instead - removal after September 1 2017
+     * @deprecated Use getAppVersion instead - removal after September 1 2017
      */
     @Deprecated
     public String getGameVersion() {
-        return _version;
+        return _appVersion;
     }
-
-    public String getVersion() {
-        return _version;
-    }
-
 
     /**
-     * @deprecated Use setVersion instead - removal after September 1 2017
+     * @deprecated Use getAppVersion instead - removal after September 1 2017
      */
-    public void setGameVersion(String version) {
-        this._version = version;
+    public String getVersion() {
+        return _appVersion;
     }
 
-    public void setVersion(String version) {
-        this._version = version;
+    public String getAppVersion() {
+        return _appVersion;
+    }
+
+    /**
+     * @deprecated Use setAppVersion instead - removal after September 1 2017
+     */
+    public void setGameVersion(String appVersion) {
+        this._appVersion = appVersion;
+    }
+
+    /**
+     * @deprecated Use setAppVersion instead - removal after September 1 2017
+     */
+    public void setVersion(String appVersion) {
+        this._appVersion = appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this._appVersion = appVersion;
     }
 
     public String getBrainCloudVersion() {
