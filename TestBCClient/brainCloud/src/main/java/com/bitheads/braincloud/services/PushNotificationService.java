@@ -16,6 +16,7 @@ public class PushNotificationService {
         deviceType,
         deviceToken,
         toPlayerId,
+        profileId,
         message,
         notificationTemplateId,
         substitutions,
@@ -211,7 +212,7 @@ public class PushNotificationService {
                                                       Long startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toPlayerId.name(), profileId);
+            data.put(Parameter.profileId.name(), profileId);
             data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
             if (StringUtil.IsOptionalParameterValid(customDataJson)) {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
@@ -239,7 +240,7 @@ public class PushNotificationService {
                                                       Long minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toPlayerId.name(), profileId);
+            data.put(Parameter.profileId.name(), profileId);
             data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
             if (StringUtil.IsOptionalParameterValid(customDataJson)) {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
@@ -267,7 +268,7 @@ public class PushNotificationService {
                                                 Long startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toPlayerId.name(), profileId);
+            data.put(Parameter.profileId.name(), profileId);
             data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
             if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
                 data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
@@ -296,7 +297,7 @@ public class PushNotificationService {
                                                           Long minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.toPlayerId.name(), profileId);
+            data.put(Parameter.profileId.name(), profileId);
             data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
             if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
                 data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
