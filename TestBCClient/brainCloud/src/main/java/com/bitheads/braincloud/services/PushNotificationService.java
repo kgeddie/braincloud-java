@@ -197,6 +197,112 @@ public class PushNotificationService {
     }
 
     /**
+     * Schedules a normalized push notification to a user
+     *
+     * @param profileId The profileId of the user to receive the notification
+     * @param alertContentJson Body and title of alert
+     * @param customDataJson Optional custom data
+     * @param startTime Start time of sending the push notification
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void scheduleNormalizedPushNotificationUTC(String profileId, String alertContentJson, String customDataJson,
+                                                      Long startTime, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
+            if (StringUtil.IsOptionalParameterValid(customDataJson)) {
+                data.put(Parameter.customData.name(), new JSONObject(customDataJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_AT_UTC, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Schedules a normalized push notification to a user
+     *
+     * @param profileId The profileId of the user to receive the notification
+     * @param alertContentJson Body and title of alert
+     * @param customDataJson Optional custom data
+     * @param minutesFromNow Minutes from now to send the push notification
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void scheduleNormalizedPushNotificationMinutes(String profileId, String alertContentJson, String customDataJson,
+                                                      Long minutesFromNow, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.alertContent.name(), new JSONObject(alertContentJson));
+            if (StringUtil.IsOptionalParameterValid(customDataJson)) {
+                data.put(Parameter.customData.name(), new JSONObject(customDataJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_AFTER_MINUTES, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Schedules a rich push notification to a user
+     *
+     * @param profileId The profileId of the user to receive the notification
+     * @param notificationTemplateId Body and title of alert
+     * @param substitutionsJson Optional custom data
+     * @param startTime Start time of sending the push notification
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void scheduleRichPushNotificationUTC(String profileId, int notificationTemplateId, String substitutionsJson,
+                                                Long startTime, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
+            if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
+                data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RICH_AT_UTC, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Schedules a rich push notification to a user
+     *
+     * @param profileId The profileId of the user to receive the notification
+     * @param notificationTemplateId Body and title of alert
+     * @param substitutionsJson Optional custom data
+     * @param minutesFromNow Minutes from now to send the push notification
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void scheduleRichPushNotificationMinutes(String profileId, int notificationTemplateId, String substitutionsJson,
+                                                          Long minutesFromNow, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.toProfileId.name(), profileId);
+            data.put(Parameter.notificationTemplateId.name(), notificationTemplateId);
+            if (StringUtil.IsOptionalParameterValid(substitutionsJson)) {
+                data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RICH_AFTER_MINUTES, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+
+    /**
      * Sends a notification to a user consisting of alert content and custom data.
      *
      * @param toProfileId The profileId of the user to receive the notification
