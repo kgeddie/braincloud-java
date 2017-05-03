@@ -260,7 +260,7 @@ public class PushNotificationService {
      *
      * @param profileId The profileId of the user to receive the notification
      * @param notificationTemplateId Body and title of alert
-     * @param substitutionsJson Optional custom data
+     * @param substitutionsJson Map of substitution positions to strings
      * @param startTime Start time of sending the push notification
      * @param callback The method to be invoked when the server response is received
      */
@@ -289,7 +289,7 @@ public class PushNotificationService {
      *
      * @param profileId The profileId of the user to receive the notification
      * @param notificationTemplateId Body and title of alert
-     * @param substitutionsJson Optional custom data
+     * @param substitutionsJson Map of substitution positions to strings
      * @param minutesFromNow Minutes from now to send the push notification
      * @param callback The method to be invoked when the server response is received
      */
