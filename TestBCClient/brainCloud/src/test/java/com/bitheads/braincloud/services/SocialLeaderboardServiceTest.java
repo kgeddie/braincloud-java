@@ -249,18 +249,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testResetLeaderboardScore() throws Exception
-    {
-        TestResult tr = new TestResult();
-
-        BrainCloudClient.getInstance().getSocialLeaderboardService().resetLeaderboardScore(
-                _globalLeaderboardId,
-                tr);
-
-        tr.Run();
-    }
-
-    @Test
     public void testGetGroupSocialLeaderboard() throws Exception
     {
         TestResult tr = new TestResult();
