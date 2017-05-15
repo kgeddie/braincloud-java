@@ -30,7 +30,7 @@ public class OneWayMatchService {
      * Service Operation - StartMatch
      *
      * @param in_otherPlayerId The player to start a match with
-     * @param in_rangeDeltaThe Range delta used for the initial match search
+     * @param in_rangeDelta The Range delta used for the initial match search
      * @param callback The callback.
      */
     public void startMatch(String in_otherPlayerId, long in_rangeDelta, IServerCallback callback) {
