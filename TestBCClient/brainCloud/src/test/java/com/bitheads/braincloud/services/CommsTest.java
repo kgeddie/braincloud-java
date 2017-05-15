@@ -213,10 +213,10 @@ public class CommsTest extends TestFixtureNoAuth
         //bcc.enableLogging(true);
         BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         BrainCloudClient.getInstance().insertEndOfMessageBundleMarker();
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllUserStats(tr);
         BrainCloudClient.getInstance().insertEndOfMessageBundleMarker();
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllPlayerStats(tr);
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllUserStats(tr);
+        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllUserStats(tr);
 
         // messages launch right away so only need to call run twice
 
@@ -232,10 +232,10 @@ public class CommsTest extends TestFixtureNoAuth
         TestResult tr = new TestResult();
         BrainCloudClient bcc = BrainCloudClient.getInstance();
 
-        bcc.getPlayerStatisticsService().readAllPlayerStats(tr);
+        bcc.getPlayerStatisticsService().readAllUserStats(tr);
         bcc.insertEndOfMessageBundleMarker();
 
-        bcc.getPlayerStatisticsService().readAllPlayerStats(tr);
+        bcc.getPlayerStatisticsService().readAllUserStats(tr);
         bcc.getAuthenticationService().authenticateUniversal(user.id, user.password, true, tr);
 
         tr.RunExpectFail(403, ReasonCodes.NO_SESSION);
