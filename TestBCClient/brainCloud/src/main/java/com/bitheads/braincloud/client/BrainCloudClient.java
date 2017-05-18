@@ -127,16 +127,16 @@ public class BrainCloudClient {
      *              The server url (e.g. "https://sharedprod.braincloudservers.com").
      */
     public void initialize(String appId, String secretKey, String appVersion, String serverUrl) {
-     *            The secret
-     * @param version
-     *            The version (e.g. "1.0.0").
-     * @param serverUrl
-     *              The server url (e.g. "https://sharedprod.braincloudservers.com").
-     */
-    public void initialize(String appId, String secretKey, String version, String serverUrl) {
+        String error = null;
+        if (isNullOrEmpty(serverUrl))
+            error = "serverUrl was null or empty";
+        else if (isNullOrEmpty(secretKey))
+            error = "secretKey was null or empty";
+        else if (isNullOrEmpty(appId))
+            error = "appId was null or empty";
         else if (isNullOrEmpty(appVersion))
+            error = "appVersion was null or empty";
 
-            error = "version was null or empty";
 
         if (error != null) {
             System.out.println("ERROR | Failed to initialize brainCloud - " + error);
@@ -145,7 +145,6 @@ public class BrainCloudClient {
 
         _appId = appId;
         _appVersion = appVersion;
-
         _releasePlatform = Platform.GooglePlayAndroid;
 
         Locale locale = Locale.getDefault();
