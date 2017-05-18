@@ -272,6 +272,7 @@ public enum ServiceOperation {
     //mail
     SEND_BASIC_EMAIL,
     SEND_ADVANCED_EMAIL,
+    SEND_ADVANCED_EMAIL_BY_ADDRESS,
 
     //tournament
     CLAIM_TOURNAMENT_REWARD,
