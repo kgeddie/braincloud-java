@@ -209,7 +209,7 @@ public class PushNotificationService {
      * @param callback The method to be invoked when the server response is received
      */
     public void scheduleNormalizedPushNotificationUTC(String profileId, String alertContentJson, String customDataJson,
-                                                      Long startTime, IServerCallback callback) {
+                                                      int startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -237,7 +237,7 @@ public class PushNotificationService {
      * @param callback The method to be invoked when the server response is received
      */
     public void scheduleNormalizedPushNotificationMinutes(String profileId, String alertContentJson, String customDataJson,
-                                                      Long minutesFromNow, IServerCallback callback) {
+                                                          int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -265,7 +265,7 @@ public class PushNotificationService {
      * @param callback The method to be invoked when the server response is received
      */
     public void scheduleRichPushNotificationUTC(String profileId, int notificationTemplateId, String substitutionsJson,
-                                                Long startTime, IServerCallback callback) {
+                                                int startTime, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -294,7 +294,7 @@ public class PushNotificationService {
      * @param callback The method to be invoked when the server response is received
      */
     public void scheduleRichPushNotificationMinutes(String profileId, int notificationTemplateId, String substitutionsJson,
-                                                          Long minutesFromNow, IServerCallback callback) {
+                                                    int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);

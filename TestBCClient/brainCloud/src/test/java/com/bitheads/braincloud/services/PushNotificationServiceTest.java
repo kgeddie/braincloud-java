@@ -165,7 +165,7 @@ public class PushNotificationServiceTest extends TestFixtureBase
 
         BrainCloudClient.getInstance().getPushNotificationService().scheduleRichPushNotificationUTC(
                 getUser(Users.UserA).profileId,
-                "{ \"body\": \"content of message\", \"title\": \"message title\" }",
+                1,
                 Helpers.createJsonPair("1", "asdf"),
                 0,
                 tr);
@@ -180,7 +180,7 @@ public class PushNotificationServiceTest extends TestFixtureBase
 
         BrainCloudClient.getInstance().getPushNotificationService().scheduleRichPushNotificationMinutes(
                 getUser(Users.UserA).profileId,
-                "{ \"body\": \"content of message\", \"title\": \"message title\" }",
+                1,
                 Helpers.createJsonPair("1", "asdf"),
                 42,
                 tr);
