@@ -45,7 +45,7 @@ public class BrainCloudClient {
     private String _languageCode;
     private double _timeZoneOffset;
 
-    private final static String BRAINCLOUD_VERSION = "3.4.0";
+    private final static String BRAINCLOUD_VERSION = "3.5.0";
 
     private BrainCloudRestClient _restClient;
 
