@@ -27,11 +27,11 @@ public class PlayerStatisticsEventService {
     /**
      * @deprecated Use triggerUserStatsEvent() instead - Removal after September 1 2017
      */
-    public void triggerPlayerStatisticsEvent(String in_eventName, int in_eventMultiplier, IServerCallback callback) {
+    public void triggerPlayerStatisticsEvent(String eventName, int eventMultiplier, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.eventName.name(), in_eventName);
-            data.put(Parameter.eventMultiplier.name(), in_eventMultiplier);
+            data.put(Parameter.eventName.name(), eventName);
+            data.put(Parameter.eventMultiplier.name(), eventMultiplier);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER, data, callback);
             _client.sendRequest(sc);
@@ -55,11 +55,11 @@ public class PlayerStatisticsEventService {
      *
      * @see PlayerStatisticsService
      */
-    public void triggerUserStatsEvent(String in_eventName, int in_eventMultiplier, IServerCallback callback) {
+    public void triggerUserStatsEvent(String eventName, int eventMultiplier, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.eventName.name(), in_eventName);
-            data.put(Parameter.eventMultiplier.name(), in_eventMultiplier);
+            data.put(Parameter.eventName.name(), eventName);
+            data.put(Parameter.eventMultiplier.name(), eventMultiplier);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER, data, callback);
             _client.sendRequest(sc);
@@ -71,10 +71,10 @@ public class PlayerStatisticsEventService {
     /**
      * @deprecated Use triggerUserStatsEvents() instead - Removal after September 1 2017
      */
-    public void triggerPlayerStatisticsEvents(String in_jsonData, IServerCallback callback) {
+    public void triggerPlayerStatisticsEvents(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            JSONArray jsonData = new JSONArray(in_jsonData);
+            JSONArray jsonData = new JSONArray(jsonData);
             data.put(Parameter.events.name(), jsonData);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data, callback);
@@ -90,7 +90,7 @@ public class PlayerStatisticsEventService {
      * Service Name - PlayerStatisticsEvent
      * Service Operation - TriggerMultiple
      *
-     * @param in_jsonData
+     * @param jsonData
      *   [
      *     {
      *       "eventName": "event1",
@@ -102,10 +102,10 @@ public class PlayerStatisticsEventService {
      *     }
      *   ]
      */
-    public void triggerUserStatsEvents(String in_jsonData, IServerCallback callback) {
+    public void triggerUserStatsEvents(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            JSONArray jsonData = new JSONArray(in_jsonData);
+            JSONArray jsonData = new JSONArray(jsonData);
             data.put(Parameter.events.name(), jsonData);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data, callback);
