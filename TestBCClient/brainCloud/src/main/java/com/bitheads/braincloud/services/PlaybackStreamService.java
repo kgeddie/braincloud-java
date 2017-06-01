@@ -173,7 +173,7 @@ public class PlaybackStreamService {
      * Service Name - PlaybackStream
      * Service Operation - GetStreamSummariesForTargetPlayer
      *
-     * @param targetPlayerId The player that started the stream
+     * @param targetPlayerId The player that was target of the stream
      * @param callback The callback.
      */
     public void getStreamSummariesForTargetPlayer(
@@ -184,6 +184,55 @@ public class PlaybackStreamService {
             data.put(Parameter.targetPlayerId.name(), targetPlayerId);
 
             ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_STREAM_SUMMARIES_FOR_TARGET_PLAYER, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+        }
+    }
+
+
+    /**
+     * Gets recent stream summaries for target player
+     *
+     * Service Name - PlaybackStream
+     * Service Operation - GetRecentStreamsForInitiatingPlayer
+     *
+     * @param targetPlayerId The player that started the stream
+     * @param maxNumStreams The max number of streams to query
+     * @param callback The callback.
+     */
+    public void getRecentStreamsForInitiatingPlayer(
+            String targetPlayerId,
+            int maxNumStreams,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.targetPlayerId.name(), targetPlayerId);
+
+            ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_INITIATING_PLAYER, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+        }
+    }
+
+    /**
+     * Gets recent stream summaries for target player
+     *
+     * Service Name - PlaybackStream
+     * Service Operation - GetRecentStreamsForTargetPlayer
+     *
+     * @param targetPlayerId The player that was target of the stream
+     * @param maxNumStreams The max number of streams to query
+     * @param callback The callback.
+     */
+    public void getRecentStreamsForTargetPlayer(
+            String targetPlayerId,
+            int maxNumStreams,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.targetPlayerId.name(), targetPlayerId);
+
+            ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_TARGET_PLAYER, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
         }

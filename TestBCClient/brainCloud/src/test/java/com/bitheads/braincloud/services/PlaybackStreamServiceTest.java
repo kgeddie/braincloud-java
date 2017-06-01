@@ -121,6 +121,40 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         tr.Run();
         endStream(streamId);
     }
+
+    @Test
+    public void testGetRecentStreamsForInitiatingPlayer() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        String streamId = startStream();
+        int maxStream = 10;
+
+        BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForInitiatingPlayer(
+                streamId,
+                maxStream,
+                tr);
+
+        tr.Run();
+        endStream(streamId);
+    }
+
+    @Test
+    public void testGetRecentStreamsForTargetPlayer() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        String streamId = startStream();
+        int maxStream = 10;
+
+        BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForTargetPlayer(
+                streamId,
+                maxStream,
+                tr);
+
+        tr.Run();
+        endStream(streamId);
+    }
     
     ///// helpers
 
