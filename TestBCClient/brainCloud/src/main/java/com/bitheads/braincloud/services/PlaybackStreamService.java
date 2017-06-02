@@ -197,7 +197,7 @@ public class PlaybackStreamService {
      * Service Name - PlaybackStream
      * Service Operation - GetRecentStreamsForInitiatingPlayer
      *
-     * @param targetPlayerId The player that started the stream
+     * @param initiatingPlayerId The player that started the stream
      * @param maxNumStreams The max number of streams to query
      * @param callback The callback.
      */
