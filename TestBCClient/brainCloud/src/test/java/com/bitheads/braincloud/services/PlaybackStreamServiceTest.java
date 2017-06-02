@@ -100,7 +100,7 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         String streamId = startStream();
 
         BrainCloudClient.getInstance().getPlaybackStreamService().getStreamSummariesForInitiatingPlayer(
-                streamId,
+                getUser(Users.UserA).profileId,
                 tr);
 
         tr.Run();
@@ -115,7 +115,7 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         String streamId = startStream();
 
         BrainCloudClient.getInstance().getPlaybackStreamService().getStreamSummariesForTargetPlayer(
-                streamId,
+                getUser(Users.UserB).profileId,
                 tr);
 
         tr.Run();
@@ -131,7 +131,7 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         int maxStream = 10;
 
         BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForInitiatingPlayer(
-                streamId,
+                getUser(Users.UserA).profileId,
                 maxStream,
                 tr);
 
@@ -148,7 +148,7 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         int maxStream = 10;
 
         BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForTargetPlayer(
-                streamId,
+                getUser(Users.UserB).profileId,
                 maxStream,
                 tr);
 

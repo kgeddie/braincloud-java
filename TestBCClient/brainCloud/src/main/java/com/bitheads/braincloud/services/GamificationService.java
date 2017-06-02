@@ -247,7 +247,7 @@ public class GamificationService {
 
             if (!incomingData.isNull(Parameter.data.name())) {
 
-                JSONArray data = incomingData.optJSONArray(Parameter.data.name());
+                JSONArray josnData = incomingData.optJSONArray(Parameter.data.name());
                 if (data != null) {
                     // TODO
                 }

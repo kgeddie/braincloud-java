@@ -74,8 +74,8 @@ public class PlayerStatisticsEventService {
     public void triggerPlayerStatisticsEvents(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            JSONArray jsonData = new JSONArray(jsonData);
-            data.put(Parameter.events.name(), jsonData);
+            JSONArray jsonArray = new JSONArray(jsonData);
+            data.put(Parameter.events.name(), jsonArray);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data, callback);
             _client.sendRequest(sc);
@@ -105,8 +105,8 @@ public class PlayerStatisticsEventService {
     public void triggerUserStatsEvents(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            JSONArray jsonData = new JSONArray(jsonData);
-            data.put(Parameter.events.name(), jsonData);
+            JSONArray jsonArray = new JSONArray(jsonData);
+            data.put(Parameter.events.name(), jsonArray);
 
             ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data, callback);
             _client.sendRequest(sc);

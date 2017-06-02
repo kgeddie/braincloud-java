@@ -13,11 +13,12 @@ public class PlaybackStreamService {
 
     private enum Parameter {
         targetPlayerId,
+        initiatingPlayerId,
+        maxNumStreams,
         includeSharedData,
         playbackStreamId,
         eventData,
-        summary,
-        initiatingPlayerId
+        summary
     }
 
     private BrainCloudClient _client;
@@ -191,7 +192,7 @@ public class PlaybackStreamService {
 
 
     /**
-     * Gets recent stream summaries for target player
+     * Gets recent stream summaries for initiating player
      *
      * Service Name - PlaybackStream
      * Service Operation - GetRecentStreamsForInitiatingPlayer
@@ -201,12 +202,13 @@ public class PlaybackStreamService {
      * @param callback The callback.
      */
     public void getRecentStreamsForInitiatingPlayer(
-            String targetPlayerId,
+            String initiatingPlayerId,
             int maxNumStreams,
             IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.targetPlayerId.name(), targetPlayerId);
+            data.put(Parameter.initiatingPlayerId.name(), initiatingPlayerId);
+            data.put(Parameter.maxNumStreams.name(), maxNumStreams);
 
             ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_INITIATING_PLAYER, data, callback);
             _client.sendRequest(sc);
@@ -231,6 +233,7 @@ public class PlaybackStreamService {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.targetPlayerId.name(), targetPlayerId);
+            data.put(Parameter.maxNumStreams.name(), maxNumStreams);
 
             ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_TARGET_PLAYER, data, callback);
             _client.sendRequest(sc);
