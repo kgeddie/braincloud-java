@@ -375,6 +375,11 @@ public class BrainCloudRestClient implements Runnable {
         return _sessionId;
     }
 
+    public void setSessionId(String sessionId) {
+        _sessionId = sessionId;
+    }
+
+
     public long getHeartbeatInterval() {
         return _heartbeatIntervalMillis;
     }
@@ -385,6 +390,10 @@ public class BrainCloudRestClient implements Runnable {
 
     public boolean isAuthenticated() {
         return _isAuthenticated;
+    }
+
+    public void setAuthenticated() {
+        _isAuthenticated = true;
     }
 
     public boolean isInitialized() {
