@@ -226,7 +226,7 @@ public class BrainCloudClient {
         }
 
         _restClient.setSessionId(sessionId);
-        _restClient.isAuthenticated();
+        _restClient.setAuthenticated();
     };
 
     /**
