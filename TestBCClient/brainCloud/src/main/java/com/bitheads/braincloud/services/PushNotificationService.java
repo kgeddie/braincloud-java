@@ -204,8 +204,7 @@ public class PushNotificationService {
 
 
     /**
-     * Sends a notification to a "group" of user consisting of alert content and custom data.
-     * See the Portal documentation for more info.
+     * Schedules raw notifications based on user local time.
      *
      * @param profileId The profileId of the user to receive the notification
      * @param fcmContent Valid Fcm data content
@@ -241,8 +240,7 @@ public class PushNotificationService {
     }
 
     /**
-     * Sends a notification to a "group" of user consisting of alert content and custom data.
-     * See the Portal documentation for more info.
+     * Schedules raw notifications based on user local time.
      *
      * @param profileId The profileId of the user to receive the notification
      * @param fcmContent Valid Fcm data content
