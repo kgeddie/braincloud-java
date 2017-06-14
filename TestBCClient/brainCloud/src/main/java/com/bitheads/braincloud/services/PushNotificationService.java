@@ -249,7 +249,7 @@ public class PushNotificationService {
      * @param minutesFromNow Minutes from now to send the push notification
      * @param callback The method to be invoked when the server response is received
      */
-    public void ScheduleRawPushNotificationMinutes(String profileId, String fcmContent, String iosContent, String facebookContent, int minutesFromNow, IServerCallback callback) {
+    public void scheduleRawPushNotificationMinutes(String profileId, String fcmContent, String iosContent, String facebookContent, int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -284,7 +284,7 @@ public class PushNotificationService {
      * @param facebookContent Facebook template string
      * @param callback The method to be invoked when the server response is received
      */
-    public void SendRawPushNotification(String toProfileId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotification(String toProfileId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.toPlayerId.name(), toProfileId);
@@ -317,7 +317,7 @@ public class PushNotificationService {
      * @param facebookContent Facebook template string
      * @param callback The method to be invoked when the server response is received
      */
-    public void SendRawPushNotificationBatch(String[] profileIds, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotificationBatch(String[] profileIds, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileIds);
@@ -350,7 +350,7 @@ public class PushNotificationService {
      * @param facebookContent Facebook template string
      * @param callback The method to be invoked when the server response is received
      */
-    public void SendRawPushNotificationToGroup(String groupId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotificationToGroup(String groupId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
