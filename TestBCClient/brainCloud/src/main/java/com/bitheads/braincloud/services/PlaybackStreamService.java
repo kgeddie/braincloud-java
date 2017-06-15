@@ -147,13 +147,7 @@ public class PlaybackStreamService {
     }
 
     /**
-     * Gets stream summaries for initiating player
-     *
-     * Service Name - PlaybackStream
-     * Service Operation - GetStreamSummariesForInitiatingPlayer
-     *
-     * @param initiatingPlayerId The player that started the stream
-     * @param callback The callback.
+     * @deprecated Use getRecentStreamsForInitiatingPlayer() instead - Removal after September 1 2017
      */
     public void getStreamSummariesForInitiatingPlayer(
             String initiatingPlayerId,
@@ -169,13 +163,7 @@ public class PlaybackStreamService {
     }
 
     /**
-     * Gets stream summaries for target player
-     *
-     * Service Name - PlaybackStream
-     * Service Operation - GetStreamSummariesForTargetPlayer
-     *
-     * @param targetPlayerId The player that was target of the stream
-     * @param callback The callback.
+     * @deprecated Use getRecentStreamsForTargetPlayer() instead - Removal after September 1 2017
      */
     public void getStreamSummariesForTargetPlayer(
             String targetPlayerId,
