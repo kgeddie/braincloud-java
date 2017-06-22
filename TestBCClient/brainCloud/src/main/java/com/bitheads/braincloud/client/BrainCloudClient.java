@@ -45,7 +45,7 @@ public class BrainCloudClient {
     private String _languageCode;
     private double _timeZoneOffset;
 
-    private final static String BRAINCLOUD_VERSION = "3.5.0";
+    private final static String BRAINCLOUD_VERSION = "3.5.2";
 
     private BrainCloudRestClient _restClient;
 
@@ -205,29 +205,6 @@ public class BrainCloudClient {
     public void enableLogging(boolean shouldEnable) {
         _restClient.enableLogging(shouldEnable);
     }
-
-    /**
-     * The brainCloud client considers itself reauthenticated
-     * with the given session
-     *
-     * Warning: ensure the user is within your session expiry (set on the dashboard)
-     * before using this call. This optional method exists to reduce
-     * authentication calls, in event the user needs to restart the app
-     * in rapid succession.
-     *
-     * @param sessionId
-     *            {string} - A recently returned session Id
-     */
-    public void  restoreRecentSession(String sessionId) {
-        if (sessionId.equals("")) {
-            // Cannot use a blank session Id. Authenticate once,
-            // and save that session for short-term use
-            return;
-        }
-
-        _restClient.setSessionId(sessionId);
-        _restClient.setAuthenticated();
-    };
 
     /**
      * Sets a callback handler for any out of band event messages that come from
