@@ -117,6 +117,17 @@ public class PlayerStateServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    @Test
+    public void testUpdatePlayerNameWithEmoji() throws Exception
+    {
+        TestResult tr = new TestResult();
+
+        BrainCloudClient.getInstance().getPlayerStateService().updateUserName(
+                "\uD83D\uDE0A \uD83D\uDE0A \uD83D\uDE0A",
+                tr);
+
+        tr.Run();
+    }
 
     @Test
     public void testUpdateSummaryFriendData() throws Exception
