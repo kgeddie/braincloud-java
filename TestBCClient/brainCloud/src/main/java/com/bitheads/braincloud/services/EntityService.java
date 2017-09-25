@@ -297,7 +297,7 @@ public class EntityService {
 
             ServerCall serverCall = new ServerCall(ServiceName.entity,
                     ServiceOperation.READ_SHARED_ENTITIES_LIST, data, callback);
-            BrainCloudClient.getInstance().sendRequest(serverCall);
+            _client.sendRequest(serverCall);
         } catch (JSONException ignored) {
         }
     }
@@ -330,7 +330,7 @@ public class EntityService {
 
             ServerCall serverCall = new ServerCall(ServiceName.entity,
                     ServiceOperation.READ_SHARED_ENTITIES_LIST, data, callback);
-            BrainCloudClient.getInstance().sendRequest(serverCall);
+            _client.sendRequest(serverCall);
         } catch (JSONException ignored) {
         }
     }
@@ -480,7 +480,7 @@ public class EntityService {
 
             ServerCall serverCall = new ServerCall(ServiceName.entity,
                     ServiceOperation.GET_LIST, data, callback);
-            BrainCloudClient.getInstance().sendRequest(serverCall);
+            _client.sendRequest(serverCall);
         } catch (JSONException ignored) {
         }
     }
@@ -501,7 +501,7 @@ public class EntityService {
 
             ServerCall serverCall = new ServerCall(ServiceName.entity,
                     ServiceOperation.GET_LIST_COUNT, data, callback);
-            BrainCloudClient.getInstance().sendRequest(serverCall);
+            _client.sendRequest(serverCall);
 
         } catch (JSONException ignored) {
         }

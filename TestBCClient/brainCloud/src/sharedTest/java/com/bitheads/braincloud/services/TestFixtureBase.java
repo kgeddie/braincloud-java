@@ -2,6 +2,7 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,16 +24,27 @@ public class TestFixtureBase {
     static protected String m_childAppId = "";
     static protected String m_peerName = "";
 
+    public static BrainCloudWrapper _wrapper;
+    public static BrainCloudClient _client;
+
     @Before
     public void setUp() throws Exception {
+
         LoadIds();
 
         BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
         BrainCloudClient.getInstance().enableLogging(true);
+        _wrapper = new BrainCloudWrapper();
+        _client = _wrapper.getClient();
+
+
+        _client.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _client.enableLogging(true);
 
         if (shouldAuthenticate()) {
             TestResult tr = new TestResult();
             BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+            _client.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
             if (!tr.Run()) {
                 // what do we do on error?
             }
@@ -44,6 +56,9 @@ public class TestFixtureBase {
         BrainCloudClient.getInstance().resetCommunication();
         BrainCloudClient.getInstance().deregisterEventCallback();
         BrainCloudClient.getInstance().deregisterRewardCallback();
+        _client.resetCommunication();
+        _client.deregisterEventCallback();
+        _client.deregisterRewardCallback();
     }
 
     /// <summary>
@@ -60,7 +75,7 @@ public class TestFixtureBase {
     /// in a platform agnostic way.
     /// </summary>
     private void LoadIds() {
-        if(m_serverUrl.length() > 0) return;
+        if (m_serverUrl.length() > 0) return;
 
         File idsFile = new File("ids.txt");
         try {
@@ -69,7 +84,7 @@ public class TestFixtureBase {
             e.printStackTrace();
         }
 
-        if(idsFile.exists()) System.out.println("Found ids.txt file");
+        if (idsFile.exists()) System.out.println("Found ids.txt file");
 
         List<String> lines = new ArrayList<>();
         BufferedReader reader = null;

@@ -70,7 +70,7 @@ public class MatchMakingService {
      * @param callback The callback.
      */
     public void resetPlayerRating(IServerCallback callback) {
-        BrainCloudClient braincloudClient = BrainCloudClient.getInstance();
+        BrainCloudClient braincloudClient = _client;
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.RESET_PLAYER_RATING, null, callback);
         _client.sendRequest(sc);
     }

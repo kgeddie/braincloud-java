@@ -23,9 +23,28 @@ public class BrainCloudWrapper implements IServerCallback {
     public static String AUTHENTICATION_ANONYMOUS = "anonymous";
     protected static String _SHARED_PREFERENCES = "bcprefs";
     private static String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
+
     private static BrainCloudWrapper _instance = new BrainCloudWrapper();
 
-    protected BrainCloudWrapper() {
+    private BrainCloudClient _client = null;
+
+    /**
+     * Returns a singleton instance of the BrainCloudClient, if this is the BrainCloudWrapper Singleton.
+     * Otherwise, return an instance of the BrainCloudClient, if this is an instance of the BrainCloudWrapper.
+     * @return A singleton instance of the BrainCloudClient.
+     */
+    public BrainCloudClient getClient() {
+        if(this == _instance) {
+            return getBC();
+        } else if(_client == null) {
+            _client = new BrainCloudClient();
+        }
+
+        return _client;
+    }
+
+    public BrainCloudWrapper() {
+
     }
 
     /**
@@ -56,28 +75,28 @@ public class BrainCloudWrapper implements IServerCallback {
     /**
      * Method initializes the BrainCloudClient.
      *
-     * @param ctx The application context
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param ctx        The application context
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
      */
     public void initialize(Context ctx, String appId, String secretKey, String appVersion) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, _DEFAULT_URL);
+        getClient().initialize(appId, secretKey, appVersion, _DEFAULT_URL);
     }
 
     /**
      * Method initializes the BrainCloudClient.
      *
-     * @param ctx The application context
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param ctx        The application context
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
-     * @param serverUrl The url to the brainCloud server
+     * @param serverUrl  The url to the brainCloud server
      */
     public void initialize(Context ctx, String appId, String secretKey, String appVersion, String serverUrl) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, serverUrl);
+        getClient().initialize(appId, secretKey, appVersion, serverUrl);
     }
 
 
@@ -85,23 +104,24 @@ public class BrainCloudWrapper implements IServerCallback {
      * Method initializes the BrainCloudClient. Make sure to
      * set the context via setContext() if you're using this method.
      *
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
-     * @param serverUrl The url to the brainCloud server
+     * @param serverUrl  The url to the brainCloud server
      */
     public void initialize(String appId, String secretKey, String appVersion, String serverUrl) {
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, serverUrl);
+        getClient().initialize(appId, secretKey, appVersion, serverUrl);
     }
 
     protected void initializeIdentity(boolean isAnonymousAuth) {
+
         // check if we already have saved IDs
         String profileId = getStoredProfileId();
         String anonymousId = getStoredAnonymousId();
 
         // create an anonymous ID if necessary
         if ((!anonymousId.isEmpty() && profileId.isEmpty()) || anonymousId.isEmpty()) {
-            anonymousId = BrainCloudClient.getInstance().getAuthenticationService().generateAnonymousId();
+            anonymousId = getClient().getAuthenticationService().generateAnonymousId();
             profileId = "";
             setStoredAnonymousId(anonymousId);
             setStoredProfileId(profileId);
@@ -114,11 +134,12 @@ public class BrainCloudWrapper implements IServerCallback {
         setStoredAuthenticationType(isAnonymousAuth ? AUTHENTICATION_ANONYMOUS : "");
 
         // send our IDs to brainCloud
-        BrainCloudClient.getInstance().initializeIdentity(profileIdToAuthenticateWith, anonymousId);
+        getClient().initializeIdentity(profileIdToAuthenticateWith, anonymousId);
     }
 
     /**
      * Returns the stored profile id
+     *
      * @return The stored profile id
      */
     public String getStoredProfileId() {
@@ -128,6 +149,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Sets the stored profile id
+     *
      * @param profileId The profile id to set
      */
     public void setStoredProfileId(String profileId) {
@@ -146,6 +168,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Returns the stored anonymous id
+     *
      * @return The stored anonymous id
      */
     String getStoredAnonymousId() {
@@ -155,6 +178,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Sets the stored anonymous id
+     *
      * @param anonymousId The anonymous id to set
      */
     public void setStoredAnonymousId(String anonymousId) {
@@ -178,7 +202,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * authentication credentials. By default, this value is true.
      *
      * @param alwaysAllow Controls whether the profile id is passed in with
-     * non-anonymous authentications.
+     *                    non-anonymous authentications.
      */
     public void setAlwaysAllowProfileSwitch(boolean alwaysAllow) {
         _alwaysAllowProfileSwitch = alwaysAllow;
@@ -186,6 +210,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Returns the value for always allow profile switch
+     *
      * @return Whether to always allow profile switches
      */
     public boolean getAlwaysAllowProfileSwitch() {
@@ -214,14 +239,14 @@ public class BrainCloudWrapper implements IServerCallback {
      * don't want to bother the user to login, or for users who are sensitive to
      * their privacy
      *
-     * @param callback    The callback handler
+     * @param callback The callback handler
      */
     public void authenticateAnonymous(IServerCallback callback) {
         _authenticateCallback = callback;
 
         initializeIdentity(true);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateAnonymous(true, this);
+        getClient().getAuthenticationService().authenticateAnonymous(true, this);
     }
 
     /**
@@ -230,7 +255,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * potentially password (for convenience) in the client data. For the
      * greatest security, force the user to re-enter their * password at each
      * login. (Or at least give them that option).
-     *
+     * <p>
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
@@ -248,13 +273,13 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateEmailPassword(email, password, forceCreate, this);
+        getClient().getAuthenticationService().authenticateEmailPassword(email, password, forceCreate, this);
     }
 
     /**
      * Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
      * This allows the developer to extend brainCloud authentication to support other backend authentication systems.
-     *
+     * <p>
      * Service Name - Authenticate
      * Server Operation - Authenticate
      *
@@ -274,7 +299,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateExternal(userId, token, externalAuthName, forceCreate, this);
+        getClient().getAuthenticationService().authenticateExternal(userId, token, externalAuthName, forceCreate, this);
     }
 
     /**
@@ -295,7 +320,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateFacebook(fbUserId, fbAuthToken, forceCreate, this);
+        getClient().getAuthenticationService().authenticateFacebook(fbUserId, fbAuthToken, forceCreate, this);
     }
 
     /**
@@ -316,7 +341,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateGoogle(googleUserId, googleAuthToken, forceCreate, this);
+        getClient().getAuthenticationService().authenticateGoogle(googleUserId, googleAuthToken, forceCreate, this);
     }
 
     /**
@@ -337,23 +362,21 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateSteam(steamUserId, steamSessionTicket, forceCreate, this);
+        getClient().getAuthenticationService().authenticateSteam(steamUserId, steamSessionTicket, forceCreate, this);
     }
 
     /**
      * Authenticate the user using a Twitter userid, authentication token, and secret from Twitter.
-     *
+     * <p>
      * Service Name - Authenticate
      * Service Operation - Authenticate
      *
-     * @param userId String representation of Twitter userid
-     * @param token The authentication token derived via the Twitter apis.
-     * @param secret The secret given when attempting to link with Twitter
+     * @param userId      String representation of Twitter userid
+     * @param token       The authentication token derived via the Twitter apis.
+     * @param secret      The secret given when attempting to link with Twitter
      * @param forceCreate Should a new profile be created for this user if the account does not exist?
-     * @param callback The callback handler
-     *
+     * @param callback    The callback handler
      * @returns performs the in_success callback on success, in_failure callback on failure
-     *
      */
     public void authenticateTwitter(String userId,
                                     String token,
@@ -364,7 +387,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateTwitter(userId, token, secret, forceCreate, this);
+        getClient().getAuthenticationService().authenticateTwitter(userId, token, secret, forceCreate, this);
     }
 
 
@@ -388,7 +411,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(userId, userPassword, forceCreate, this);
+        getClient().getAuthenticationService().authenticateUniversal(userId, userPassword, forceCreate, this);
     }
 
     /**
@@ -404,7 +427,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * Run callbacks, to be called once per frame from your main thread
      */
     public void runCallbacks() {
-        BrainCloudClient.getInstance().runCallbacks();
+        getClient().runCallbacks();
     }
 
 
@@ -412,9 +435,9 @@ public class BrainCloudWrapper implements IServerCallback {
      * The serverCallback() method returns server data back to the layer
      * interfacing with the BrainCloud library.
      *
-     * @param serviceName - name of the requested service
+     * @param serviceName      - name of the requested service
      * @param serviceOperation - requested operation
-     * @param jsonData - returned data from the server
+     * @param jsonData         - returned data from the server
      */
     public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData) {
         if (serviceName.equals(ServiceName.authenticationV2) && serviceOperation.equals(ServiceOperation.AUTHENTICATE)) {
@@ -436,19 +459,20 @@ public class BrainCloudWrapper implements IServerCallback {
     /**
      * Errors are returned back to the layer which is interfacing with the
      * BrainCloud library through the serverError() callback.
-     *
+     * <p>
      * A server error might indicate a failure of the client to communicate
      * with the server after N retries.
      *
-     * @param serviceName - name of the requested service
+     * @param serviceName      - name of the requested service
      * @param serviceOperation - requested operation
-     * @param statusCode The error status return code (400, 403, 500, etc)
-     * @param reasonCode The brainCloud reason code (see reason codes on apidocs site)
-     * @param jsonError The error json string
+     * @param statusCode       The error status return code (400, 403, 500, etc)
+     * @param reasonCode       The brainCloud reason code (see reason codes on apidocs site)
+     * @param jsonError        The error json string
      */
     public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError) {
         if (_authenticateCallback != null) {
             _authenticateCallback.serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
         }
     }
+
 }

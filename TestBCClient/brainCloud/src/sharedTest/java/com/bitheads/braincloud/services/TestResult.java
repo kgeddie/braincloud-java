@@ -157,6 +157,7 @@ public class TestResult implements IServerCallback, IGlobalErrorCallback, INetwo
         long maxWait = m_maxWait;
         while(!m_done && maxWait > 0)
         {
+            TestFixtureBase._client.runCallbacks();
             BrainCloudClient.getInstance().runCallbacks();
             try
             {

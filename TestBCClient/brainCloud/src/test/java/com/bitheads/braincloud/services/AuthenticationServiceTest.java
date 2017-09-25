@@ -1,6 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,11 +22,21 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
     }
 
     @Test
+    public void testAuthenticateUniversalInstance() throws Exception
+    {
+
+        TestResult tr = new TestResult();
+        _client.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testAuthenticateEmailPassword() throws Exception
     {
         TestResult tr = new TestResult();
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateEmailPassword(
+        BrainCloudWrapper.getInstance().getClient().getAuthenticationService().authenticateEmailPassword(
                 getUser(Users.UserA).email,
                 getUser(Users.UserA).password,
                 true,
