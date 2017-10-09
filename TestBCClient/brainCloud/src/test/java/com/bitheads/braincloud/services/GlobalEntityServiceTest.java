@@ -219,6 +219,14 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void testGetRandomEntitiesMatching() throws Exception {
+        TestResult tr = new TestResult();
+        String entityId = getEntityId(tr.m_response);
+        BrainCloudClient.getInstance().getGlobalEntityService().getRandomEntitiesMatching(entityId, 2,tr);
+        tr.Run();
+    }
+
+    @Test
     public void testUpdateEntityOwnerAndAcl() throws Exception {
         TestResult tr = new TestResult();
 
