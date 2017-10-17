@@ -387,6 +387,30 @@ public class GlobalEntityService {
     }
 
     /**
+     * Gets a list of up to randomCount randomly selected
+     entities from the server based on the where condition and
+     specified maximum return count.
+     *
+     * Service Name - globalEntity
+     * Service Operation - GET_RANDOM_ENTITIES_MATCHING
+     *
+     * @param where Mongo style query string
+     * @param maxReturn The maximum number of entities to return
+     * @param callback The callback object
+     */
+    public void getRandomEntitiesMatching(String where, int maxReturn, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            if (StringUtil.IsOptionalParameterValid(where)) { JSONObject whereObj = new JSONObject(where); data.put(Parameter.where.name(), whereObj);
+            }
+            data.put(Parameter.maxReturn.name(), maxReturn);
+            ServerCall serverCall = new ServerCall(ServiceName.globalEntity,
+                    ServiceOperation.GET_RANDOM_ENTITIES_MATCHING, data, callback); _client.sendRequest(serverCall);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
      * Method updates an existing entity's Owner and ACL on the server.
      *
      * Service Name - globalEntity
