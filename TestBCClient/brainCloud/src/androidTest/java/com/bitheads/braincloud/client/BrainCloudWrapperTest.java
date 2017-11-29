@@ -36,7 +36,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
         BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
         bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         bcw.authenticateAnonymous(tr);
         tr.Run();
 
@@ -64,7 +64,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
         String email = getUser(Users.UserA).email;
         email += "_wrapper";
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         bcw.authenticateEmailPassword(email, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
@@ -77,7 +77,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
         BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
         bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String uid = getUser(Users.UserA).id;
         uid += "_wrapper";
         bcw.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
@@ -92,7 +92,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
         BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
         bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String uid = getUser(Users.UserA).id;
         uid += "_wrapper";
         bcw.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
@@ -118,7 +118,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
         bcw.setStoredAnonymousId("");
         bcw.setStoredProfileId("");
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         bcw.authenticateAnonymous(tr);
         tr.Run();
 

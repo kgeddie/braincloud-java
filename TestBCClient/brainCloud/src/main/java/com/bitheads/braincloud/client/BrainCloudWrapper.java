@@ -3,13 +3,43 @@ package com.bitheads.braincloud.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.bitheads.braincloud.services.AsyncMatchService;
+import com.bitheads.braincloud.services.AuthenticationService;
+import com.bitheads.braincloud.services.DataStreamService;
+import com.bitheads.braincloud.services.EntityService;
+import com.bitheads.braincloud.services.EventService;
+import com.bitheads.braincloud.services.FileService;
+import com.bitheads.braincloud.services.FriendService;
+import com.bitheads.braincloud.services.GamificationService;
+import com.bitheads.braincloud.services.GlobalAppService;
+import com.bitheads.braincloud.services.GlobalEntityService;
+import com.bitheads.braincloud.services.GlobalStatisticsService;
+import com.bitheads.braincloud.services.GroupService;
+import com.bitheads.braincloud.services.IdentityService;
+import com.bitheads.braincloud.services.MailService;
+import com.bitheads.braincloud.services.MatchMakingService;
+import com.bitheads.braincloud.services.OneWayMatchService;
+import com.bitheads.braincloud.services.PlaybackStreamService;
+import com.bitheads.braincloud.services.PlayerStateService;
+import com.bitheads.braincloud.services.PlayerStatisticsEventService;
+import com.bitheads.braincloud.services.PlayerStatisticsService;
+import com.bitheads.braincloud.services.ProductService;
+import com.bitheads.braincloud.services.ProfanityService;
+import com.bitheads.braincloud.services.PushNotificationService;
+import com.bitheads.braincloud.services.RedemptionCodeService;
+import com.bitheads.braincloud.services.S3HandlingService;
+import com.bitheads.braincloud.services.ScriptService;
+import com.bitheads.braincloud.services.SocialLeaderboardService;
+import com.bitheads.braincloud.services.TimeService;
+import com.bitheads.braincloud.services.TournamentService;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * The BrainCloudWrapper provides some convenience functionality to developers when they are
  * getting started with the authentication system.
- *
+ * <p>
  * By using the wrapper authentication methods, the anonymous and profile ids will be automatically
  * persisted upon successful authentication. When authenticating, any stored anonymous/profile ids will
  * be sent to the server. This strategy is useful when using anonymous authentication.
@@ -24,48 +54,56 @@ public class BrainCloudWrapper implements IServerCallback {
     protected static String _SHARED_PREFERENCES = "bcprefs";
     private static String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
 
-    private static BrainCloudWrapper _instance = new BrainCloudWrapper();
+    private static BrainCloudWrapper _instance = null;
 
     private BrainCloudClient _client = null;
 
     /**
      * Returns a singleton instance of the BrainCloudClient, if this is the BrainCloudWrapper Singleton.
      * Otherwise, return an instance of the BrainCloudClient, if this is an instance of the BrainCloudWrapper.
+     *
      * @return A singleton instance of the BrainCloudClient.
      */
     public BrainCloudClient getClient() {
-        if(this == _instance) {
-            return getBC();
-        } else if(_client == null) {
-            _client = new BrainCloudClient();
-        }
-
         return _client;
     }
 
     public BrainCloudWrapper() {
-
+        _client = new BrainCloudClient();
     }
 
     /**
      * Method returns a singleton instance of the BrainCloudWrapper.
+     *
      * @return A singleton instance of the BrainCloudWrapper.
      */
     public static BrainCloudWrapper getInstance() {
+
+        if (BrainCloudClient.EnableSingletonMode == false) {
+            throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);
+        }
+
+        if (_instance == null) {
+            _instance = new BrainCloudWrapper();
+            BrainCloudClient.setInstance(_instance.getClient());
+        }
+
         return _instance;
     }
 
     /**
      * Returns a singleton instance of the BrainCloudClient.
+     *
      * @return A singleton instance of the BrainCloudClient.
      */
     public static BrainCloudClient getBC() {
-        return BrainCloudClient.getInstance();
+        return getInstance().getClient();
     }
 
     /**
      * Sets the context required for saving anonymous and profile ids to the
      * private SharedPreferences file.
+     *
      * @param ctx The application context
      */
     public void setContext(Context ctx) {
@@ -473,6 +511,124 @@ public class BrainCloudWrapper implements IServerCallback {
         if (_authenticateCallback != null) {
             _authenticateCallback.serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
         }
+    }
+
+
+    // brainCloud Services
+    public AuthenticationService getAuthenticationService() {
+        return _client.getAuthenticationService();
+    }
+
+    public AsyncMatchService getAsyncMatchService() {
+        return _client.getAsyncMatchService();
+    }
+
+    public DataStreamService getDataStreamService() {
+        return _client.getDataStreamService();
+    }
+
+    public EntityService getEntityService() {
+        return _client.getEntityService();
+    }
+
+    public EventService getEventService() {
+        return _client.getEventService();
+    }
+
+    public FileService getFileService() {
+        return _client.getFileService();
+    }
+
+    public FriendService getFriendService() {
+        return _client.getFriendService();
+    }
+
+    public GamificationService getGamificationService() {
+        return _client.getGamificationService();
+    }
+
+    public GlobalAppService getGlobalAppService() {
+        return _client.getGlobalAppService();
+    }
+
+    public GlobalEntityService getGlobalEntityService() {
+        return _client.getGlobalEntityService();
+    }
+
+    public GlobalStatisticsService getGlobalStatisticsService() {
+        return _client.getGlobalStatisticsService();
+    }
+
+    public GroupService getGroupService() {
+        return _client.getGroupService();
+    }
+
+    public IdentityService getIdentityService() {
+        return _client.getIdentityService();
+    }
+
+    public MailService getMailService() {
+        return _client.getMailService();
+    }
+
+    public MatchMakingService getMatchMakingService() {
+        return _client.getMatchMakingService();
+    }
+
+    public OneWayMatchService getOneWayMatchService() {
+        return _client.getOneWayMatchService();
+    }
+
+    public PlaybackStreamService getPlaybackStreamService() {
+        return _client.getPlaybackStreamService();
+    }
+
+    public PlayerStateService getPlayerStateService() {
+        return _client.getPlayerStateService();
+    }
+
+    public PlayerStatisticsService getPlayerStatisticsService() {
+        return _client.getPlayerStatisticsService();
+    }
+
+    public PlayerStatisticsEventService getPlayerStatisticsEventService() {
+        return _client.getPlayerStatisticsEventService();
+    }
+
+    public ProductService getProductService() {
+        return _client.getProductService();
+    }
+
+    public ProfanityService getProfanityService() {
+        return _client.getProfanityService();
+    }
+
+    public PushNotificationService getPushNotificationService() {
+        return _client.getPushNotificationService();
+    }
+
+    public RedemptionCodeService getRedemptionCodeService() {
+        return _client.getRedemptionCodeService();
+    }
+
+    public S3HandlingService getS3HandlingService() {
+        return _client.getS3HandlingService();
+    }
+
+    public ScriptService getScriptService() {
+        return _client.getScriptService();
+    }
+
+    public SocialLeaderboardService getSocialLeaderboardService() {
+        return _client.getSocialLeaderboardService();
+    }
+
+    public TimeService getTimeService() {
+        return _client.getTimeService();
+    }
+
+    public TournamentService getTournamentService() {
+        return _client.getTournamentService();
     }
 
 }

@@ -21,7 +21,7 @@ public class GroupServiceTest extends TestFixtureBase {
             deleteGroupAsUserA();
         }
 
-        if (BrainCloudClient.getInstance().isAuthenticated()) {
+        if (_wrapper.getClient().isAuthenticated()) {
             logout();
         }
     }
@@ -31,8 +31,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().inviteGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().inviteGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.ADMIN,
@@ -43,7 +43,7 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
         authenticate(Users.UserB);
 
-        BrainCloudClient.getInstance().getGroupService().acceptGroupInvitation(
+        _wrapper.getGroupService().acceptGroupInvitation(
                 _groupId,
                 tr);
         tr.Run();
@@ -57,8 +57,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroupAsUserA(true);
         authenticate(Users.UserB);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().autoJoinGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().autoJoinGroup(
                 _groupType,
                 GroupService.AutoJoinStrategy.JoinFirstGroup,
                 null,
@@ -74,8 +74,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().addGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().addGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.ADMIN,
@@ -91,8 +91,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroupAsUserA();
         authenticate(Users.UserB);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().joinGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().joinGroup(
                 _groupId,
                 tr);
         tr.Run();
@@ -100,7 +100,7 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
         authenticate(Users.UserA);
 
-        BrainCloudClient.getInstance().getGroupService().approveGroupJoinRequest(
+        _wrapper.getGroupService().approveGroupJoinRequest(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.MEMBER,
@@ -116,8 +116,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().inviteGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().inviteGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.ADMIN,
@@ -125,7 +125,7 @@ public class GroupServiceTest extends TestFixtureBase {
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().cancelGroupInvitation(
+        _wrapper.getGroupService().cancelGroupInvitation(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 tr);
@@ -166,8 +166,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroup();
         String entityId = createGroupEntity();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().deleteGroupEntity(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().deleteGroupEntity(
                 _groupId,
                 entityId,
                 1,
@@ -183,8 +183,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().getMyGroups(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().getMyGroups(
                 tr);
         tr.Run();
 
@@ -197,8 +197,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().incrementGroupData(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().incrementGroupData(
                 _groupId,
                 Helpers.createJsonPair("testInc", 1),
                 tr);
@@ -214,8 +214,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroup();
         String id = createGroupEntity();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().incrementGroupEntityData(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().incrementGroupEntityData(
                 _groupId,
                 id,
                 Helpers.createJsonPair("testInc", 1),
@@ -231,8 +231,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().inviteGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().inviteGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.MEMBER,
@@ -249,8 +249,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroupAsUserA();
         authenticate(Users.UserB);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().joinGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().joinGroup(
                 _groupId,
                 tr);
         tr.Run();
@@ -264,13 +264,13 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().leaveGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().leaveGroup(
                 _groupId,
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().readGroup(
+        _wrapper.getGroupService().readGroup(
                 _groupId,
                 tr);
         tr.RunExpectFail(400, 40345);
@@ -285,8 +285,8 @@ public class GroupServiceTest extends TestFixtureBase {
 
         String context = createContext(10, 1, "groupType", _groupType);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().listGroupsPage(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().listGroupsPage(
                 context,
                 tr);
         tr.Run();
@@ -300,15 +300,15 @@ public class GroupServiceTest extends TestFixtureBase {
 
         String context = createContext(10, 1, "groupType", _groupType);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().listGroupsPage(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().listGroupsPage(
                 context,
                 tr);
         tr.Run();
 
         context = tr.m_response.getJSONObject("data").getString("context");
 
-        BrainCloudClient.getInstance().getGroupService().listGroupsPageByOffset(
+        _wrapper.getGroupService().listGroupsPageByOffset(
                 context,
                 1,
                 tr);
@@ -321,8 +321,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         //createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().listGroupsWithMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().listGroupsWithMember(
                 getUser(Users.UserA).profileId,
                 tr);
         tr.Run();
@@ -335,8 +335,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroup(
                 _groupId,
                 tr);
         tr.Run();
@@ -352,8 +352,8 @@ public class GroupServiceTest extends TestFixtureBase {
 
         String context = createContext(10, 1, "groupId", _groupId);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroupEntitiesPage(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroupEntitiesPage(
                 context,
                 tr);
         tr.Run();
@@ -369,15 +369,15 @@ public class GroupServiceTest extends TestFixtureBase {
 
         String context = createContext(10, 1, "groupId", _groupId);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroupEntitiesPage(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroupEntitiesPage(
                 context,
                 tr);
         tr.Run();
 
         context = tr.m_response.getJSONObject("data").getString("context");
 
-        BrainCloudClient.getInstance().getGroupService().readGroupEntitiesPageByOffset(
+        _wrapper.getGroupService().readGroupEntitiesPageByOffset(
                 context,
                 1,
                 tr);
@@ -392,8 +392,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroup();
         String id = createGroupEntity();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroupEntity(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroupEntity(
                 _groupId,
                 id,
                 tr);
@@ -408,8 +408,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroupMembers(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroupMembers(
                 _groupId,
                 tr);
         tr.Run();
@@ -423,8 +423,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().inviteGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().inviteGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 GroupService.Role.ADMIN,
@@ -435,7 +435,7 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
         authenticate(Users.UserB);
 
-        BrainCloudClient.getInstance().getGroupService().rejectGroupInvitation(
+        _wrapper.getGroupService().rejectGroupInvitation(
                 _groupId,
                 tr);
         tr.Run();
@@ -449,8 +449,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroupAsUserA();
         authenticate(Users.UserB);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().joinGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().joinGroup(
                 _groupId,
                 tr);
         tr.Run();
@@ -458,7 +458,7 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
         authenticate(Users.UserA);
 
-        BrainCloudClient.getInstance().getGroupService().rejectGroupJoinRequest(
+        _wrapper.getGroupService().rejectGroupJoinRequest(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 tr);
@@ -472,8 +472,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroupAsUserA(true);
         authenticate(Users.UserB);
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().joinGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().joinGroup(
                 _groupId,
                 tr);
         tr.Run();
@@ -481,7 +481,7 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
         authenticate(Users.UserA);
 
-        BrainCloudClient.getInstance().getGroupService().removeGroupMember(
+        _wrapper.getGroupService().removeGroupMember(
                 _groupId,
                 getUser(Users.UserB).profileId,
                 tr);
@@ -495,8 +495,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().updateGroupData(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().updateGroupData(
                 _groupId,
                 1,
                 Helpers.createJsonPair("testUpdate", 1),
@@ -513,8 +513,8 @@ public class GroupServiceTest extends TestFixtureBase {
         createGroup();
         String id = createGroupEntity();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().updateGroupEntityData(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().updateGroupEntityData(
                 _groupId,
                 id,
                 1,
@@ -531,8 +531,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().updateGroupMember(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().updateGroupMember(
                 _groupId,
                 getUser(Users.UserA).profileId,
                 null,
@@ -549,8 +549,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().updateGroupName(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().updateGroupName(
                 _groupId,
                 "testName",
                 tr);
@@ -565,8 +565,8 @@ public class GroupServiceTest extends TestFixtureBase {
         authenticate(Users.UserA);
         createGroup();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().readGroupData(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().readGroupData(
                 _groupId, tr);
         tr.Run();
 
@@ -595,8 +595,8 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     private void authenticate(Users user) throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getAuthenticationService().authenticateUniversal(
                 getUser(user).id,
                 getUser(user).password,
                 true,
@@ -605,11 +605,11 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     private void logout() throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getPlayerStateService().logout(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getPlayerStateService().logout(
                 tr);
         tr.Run();
-        BrainCloudClient.getInstance().getAuthenticationService().clearSavedProfileId();
+        _wrapper.getAuthenticationService().clearSavedProfileId();
     }
 
     private void createGroup() throws Exception {
@@ -617,9 +617,9 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     private void createGroup(boolean isOpen) throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroup(
+        _wrapper.getGroupService().createGroup(
                 "testGroup",
                 _groupType,
                 isOpen,
@@ -636,9 +636,9 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     private String createGroupEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroupEntity(
+        _wrapper.getGroupService().createGroupEntity(
                 _groupId,
                 _entityType,
                 false,
@@ -653,8 +653,8 @@ public class GroupServiceTest extends TestFixtureBase {
     }
 
     private void deleteGroup() throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGroupService().deleteGroup(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().deleteGroup(
                 _groupId,
                 -1,
                 tr);

@@ -17,9 +17,9 @@ public class GlobalStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadAllGlobalStats() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalStatisticsService().readAllGlobalStats(
+        _wrapper.getGlobalStatisticsService().readAllGlobalStats(
                 tr);
 
         tr.Run();
@@ -28,11 +28,11 @@ public class GlobalStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadGlobalStatsSubset() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String[] stats = {"TestStat"};
 
-        BrainCloudClient.getInstance().getGlobalStatisticsService().readGlobalStatsSubset(
+        _wrapper.getGlobalStatisticsService().readGlobalStatsSubset(
                 stats, tr);
 
         tr.Run();
@@ -41,20 +41,20 @@ public class GlobalStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadGlobalStatsForCategory() throws Exception
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getGlobalStatisticsService().readGlobalStatsForCategory("Test", tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGlobalStatisticsService().readGlobalStatsForCategory("Test", tr);
         tr.Run();
     }
 
     @Test
     public void testIncrementGlobalStats() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject stats = new JSONObject();
         stats.put("TestStat", "RESET");
 
-        BrainCloudClient.getInstance().getGlobalStatisticsService().incrementGlobalStats(
+        _wrapper.getGlobalStatisticsService().incrementGlobalStats(
                 stats.toString(),
                 tr);
 
@@ -64,12 +64,12 @@ public class GlobalStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testProcessStatistics() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject stats = new JSONObject();
         stats.put("TestStat", "RESET");
 
-        BrainCloudClient.getInstance().getGlobalStatisticsService().processStatistics(
+        _wrapper.getGlobalStatisticsService().processStatistics(
                 stats.toString(),
                 tr);
 

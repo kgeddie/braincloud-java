@@ -30,9 +30,9 @@ public class OneWayMatchServiceTest extends TestFixtureBase
     public void testCompleteMatch() throws Exception
     {
         String streamId = startMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getOneWayMatchService().completeMatch(
+        _wrapper.getOneWayMatchService().completeMatch(
                 streamId,
                 tr);
 
@@ -41,10 +41,10 @@ public class OneWayMatchServiceTest extends TestFixtureBase
 
     private String startMatch() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String streamId = "";
 
-        BrainCloudClient.getInstance().getOneWayMatchService().startMatch(
+        _wrapper.getOneWayMatchService().startMatch(
                 getUser(Users.UserB).profileId,
                 1000,
                 tr);
@@ -59,8 +59,8 @@ public class OneWayMatchServiceTest extends TestFixtureBase
 
     private void cancelMatch(String streamId)
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getOneWayMatchService().cancelMatch(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getOneWayMatchService().cancelMatch(
                 streamId,
                 tr);
         tr.Run();

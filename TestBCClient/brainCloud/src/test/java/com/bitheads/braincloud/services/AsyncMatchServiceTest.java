@@ -20,7 +20,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testCreateMatch() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONArray players = new JSONArray();
         JSONObject player = new JSONObject();
@@ -28,7 +28,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         player.put("id", getUser(Users.UserB).profileId);
         players.put(player);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().createMatch(
+        _wrapper.getAsyncMatchService().createMatch(
                 players.toString(),
                 null,
                 tr);
@@ -46,7 +46,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testCreateMatchWithInitialTurn() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONArray players = new JSONArray();
         JSONObject player = new JSONObject();
@@ -54,7 +54,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         player.put("id", getUser(Users.UserB).profileId);
         players.put(player);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().createMatchWithInitialTurn(
+        _wrapper.getAsyncMatchService().createMatchWithInitialTurn(
                 players.toString(),
                 Helpers.createJsonPair("blob", 1),
                 null,
@@ -76,9 +76,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testSubmitTurn() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().submitTurn(
+        _wrapper.getAsyncMatchService().submitTurn(
                 getUser(Users.UserA).profileId,
                 matchId,
                 BigInteger.valueOf(0),
@@ -98,9 +98,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testUpdateMatchSummaryData() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().updateMatchSummaryData(
+        _wrapper.getAsyncMatchService().updateMatchSummaryData(
                 getUser(Users.UserA).profileId,
                 matchId,
                 BigInteger.valueOf(0),
@@ -116,9 +116,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testCompleteMatch() throws Exception
     {
         String matchId = createMatchWithInitialTurn();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().completeMatch(
+        _wrapper.getAsyncMatchService().completeMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);
@@ -130,9 +130,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testReadMatch() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().readMatch(
+        _wrapper.getAsyncMatchService().readMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);
@@ -146,9 +146,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testReadMatchHistory() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().readMatch(
+        _wrapper.getAsyncMatchService().readMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);
@@ -161,9 +161,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testFindMatches() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().findMatches(
+        _wrapper.getAsyncMatchService().findMatches(
                 tr);
 
         tr.Run();
@@ -172,9 +172,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testFindCompleteMatches() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().findCompleteMatches(
+        _wrapper.getAsyncMatchService().findCompleteMatches(
                 tr);
 
         tr.Run();
@@ -184,9 +184,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testAbandonMatch() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().abandonMatch(
+        _wrapper.getAsyncMatchService().abandonMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);
@@ -198,9 +198,9 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     public void testDeleteMatch() throws Exception
     {
         String matchId = createMatch();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().deleteMatch(
+        _wrapper.getAsyncMatchService().deleteMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);
@@ -213,7 +213,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
 
     private String createMatch() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONArray players = new JSONArray();
         JSONObject player = new JSONObject();
@@ -221,7 +221,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         player.put("id", getUser(Users.UserB).profileId);
         players.put(player);
 
-        BrainCloudClient.getInstance().getAsyncMatchService().createMatch(
+        _wrapper.getAsyncMatchService().createMatch(
                 players.toString(),
                 null,
                 tr);
@@ -238,7 +238,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
 
     private String createMatchWithInitialTurn() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONArray players = new JSONArray();
         JSONObject player = new JSONObject();
@@ -246,7 +246,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         player.put("id", getUser(Users.UserB).profileId);
         players.put(player);
         
-        BrainCloudClient.getInstance().getAsyncMatchService().createMatchWithInitialTurn(
+        _wrapper.getAsyncMatchService().createMatchWithInitialTurn(
                 players.toString(),
                 Helpers.createJsonPair("map", "level1"),
                 null,
@@ -266,8 +266,8 @@ public class AsyncMatchServiceTest extends TestFixtureBase
 
     private void abandonMatch(String matchId) throws Exception
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getAsyncMatchService().abandonMatch(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getAsyncMatchService().abandonMatch(
                 getUser(Users.UserA).profileId,
                 matchId,
                 tr);

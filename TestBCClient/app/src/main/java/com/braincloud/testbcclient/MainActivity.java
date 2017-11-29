@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-        BrainCloudClient client = BrainCloudClient.getInstance();
+        BrainCloudClient client = _wrapper;
         String appId = "";
         String secret = "";
         String appVersion = "1.0.0";
@@ -145,7 +145,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void testGoogleLogin()
     {
-        BrainCloudClient client = BrainCloudClient.getInstance();
+        BrainCloudClient client = _wrapper;
         client.getAuthenticationService().authenticateGoogle(GOOGLE_ACCOUNT,
                 authToken, true, this);
     }
@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         if (user.length() > 0 && pwd.length() > 0)
         {
-            BrainCloudClient client = BrainCloudClient.getInstance();
+            BrainCloudClient client = _wrapper;
             client.getAuthenticationService().authenticateUniversal(user, pwd, true, this);
         }
     }

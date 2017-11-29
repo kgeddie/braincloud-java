@@ -23,9 +23,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetSocialLeaderboard() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getSocialLeaderboard(
+        _wrapper.getSocialLeaderboardService().getSocialLeaderboard(
                 _globalLeaderboardId,
                 true,
                 tr);
@@ -39,13 +39,13 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         postScoreToDynamicLeaderboard();
         postScoreToNonDynamicLeaderboard();
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String[] lbIds = new String[] {
                 _globalLeaderboardId,
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE
         };
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getMultiSocialLeaderboard(
+        _wrapper.getSocialLeaderboardService().getMultiSocialLeaderboard(
                 lbIds,
                 10,
                 true,
@@ -57,9 +57,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardPageHigh() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardPage(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardPage(
                 _globalLeaderboardId,
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 0,
@@ -72,9 +72,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardPageLow() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardPage(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardPage(
                 _globalLeaderboardId,
                 SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
                 0,
@@ -87,9 +87,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardPageFail() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardPage(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardPage(
                 "thisDoesNotExistLeaderboard",
                 SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
                 0,
@@ -102,9 +102,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardPageByVersion() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardPageByVersion(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardPageByVersion(
                 _globalLeaderboardId,
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 0,
@@ -118,9 +118,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardView() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardView(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardView(
                 _globalLeaderboardId,
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 5,
@@ -133,9 +133,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardViewByVersion() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardViewByVersion(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardViewByVersion(
                 _globalLeaderboardId,
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 5,
@@ -149,9 +149,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGlobalLeaderboardVersions() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardVersions(
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardVersions(
                 _globalLeaderboardId,
                 tr);
 
@@ -173,9 +173,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testPostScoreToDynamicLeaderboardDays() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboardDays(
+        _wrapper.getSocialLeaderboardService().postScoreToDynamicLeaderboardDays(
                 _dynamicLeaderboardId + "-" + "DAYS",
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
@@ -191,9 +191,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testPostScoreToDynamicLeaderboardLowValue() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
+        _wrapper.getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LOW_VALUE,
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
@@ -209,9 +209,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testPostScoreToDynamicLeaderboardCumulative() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
+        _wrapper.getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.CUMULATIVE,
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
@@ -227,9 +227,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testPostScoreToDynamicLeaderboardLastValue() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
+        _wrapper.getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE,
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
@@ -251,9 +251,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetGroupSocialLeaderboard() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroup(
+        _wrapper.getGroupService().createGroup(
                 "testGroup",
                 "test",
                 false,
@@ -268,13 +268,13 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         JSONObject data = tr.m_response.getJSONObject("data");
         String groupId = data.getString("groupId");
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGroupSocialLeaderboard(
+        _wrapper.getSocialLeaderboardService().getGroupSocialLeaderboard(
                 _socialLeaderboardId,
                 groupId,
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().deleteGroup(
+        _wrapper.getGroupService().deleteGroup(
                 groupId,
                 -1,
                 tr);
@@ -284,9 +284,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testGetPlayersSocialLeaderboard() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayersSocialLeaderboard(
+        _wrapper.getSocialLeaderboardService().getPlayersSocialLeaderboard(
                 _socialLeaderboardId,
                 new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
                 tr);
@@ -297,9 +297,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void testListAllLeaderboards() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().listAllLeaderboards(tr);
+        _wrapper.getSocialLeaderboardService().listAllLeaderboards(tr);
 
         tr.Run();
     }
@@ -307,9 +307,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void getGlobalLeaderboardEntryCount() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardEntryCount(_globalLeaderboardId, tr);
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardEntryCount(_globalLeaderboardId, tr);
 
         tr.Run();
     }
@@ -317,9 +317,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     @Test
     public void getGlobalLeaderboardEntryCountByVersion() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getGlobalLeaderboardEntryCountByVersion(_globalLeaderboardId, 1, tr);
+        _wrapper.getSocialLeaderboardService().getGlobalLeaderboardEntryCountByVersion(_globalLeaderboardId, 1, tr);
 
         tr.Run();
     }
@@ -329,8 +329,8 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     {
         postScoreToNonDynamicLeaderboard();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayerScore(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getSocialLeaderboardService().getPlayerScore(
                 _globalLeaderboardId,
                 -1,
                 tr);
@@ -343,8 +343,8 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     {
         postScoreToNonDynamicLeaderboard();
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getSocialLeaderboardService().removePlayerScore(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getSocialLeaderboardService().removePlayerScore(
                 _globalLeaderboardId,
                 -1,
                 tr);
@@ -358,13 +358,13 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         postScoreToDynamicLeaderboard();
         postScoreToNonDynamicLeaderboard();
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String[] lbIds = new String[] {
                 _globalLeaderboardId,
                 _dynamicLeaderboardId + "-" + SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE
         };
-        BrainCloudClient.getInstance().getSocialLeaderboardService().getPlayerScoresFromLeaderboards(
+        _wrapper.getSocialLeaderboardService().getPlayerScoresFromLeaderboards(
                 lbIds,
                 tr);
 
@@ -373,9 +373,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
 
     public void postScoreToDynamicLeaderboard() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToDynamicLeaderboard(
+        _wrapper.getSocialLeaderboardService().postScoreToDynamicLeaderboard(
                 _dynamicLeaderboardId + "-" + (int)(Math.random() * 10000000),
                 100,
                 Helpers.createJsonPair("testDataKey", 400),
@@ -390,9 +390,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
 
     public void postScoreToNonDynamicLeaderboard() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getSocialLeaderboardService().postScoreToLeaderboard(
+        _wrapper.getSocialLeaderboardService().postScoreToLeaderboard(
                 _globalLeaderboardId,
                 1000,
                 Helpers.createJsonPair("testDataKey", 400),

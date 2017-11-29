@@ -25,25 +25,25 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
     public void Setup() {
         _returnCount = 0;
         _failCount = 0;
-        BrainCloudClient.getInstance().registerFileUploadCallback(this);
+        _wrapper.getClient().registerFileUploadCallback(this);
     }
 
     @After
     public void Teardown() {
-        BrainCloudClient.getInstance().deregisterFileUploadCallback();
+        _wrapper.getClient().deregisterFileUploadCallback();
     }
 
     @Test
     public void testListUserFiles() throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getFileService().listUserFiles(tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getFileService().listUserFiles(tr);
         tr.Run();
     }
 
     @Test
     public void testListUserFilesDirectory() throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getFileService().listUserFiles(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getFileService().listUserFiles(
                 "/test/", true,
                 tr);
         tr.Run();
@@ -51,11 +51,11 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
 
     @Test
     public void testDeleteUserFile() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String localPath = createFile(1);
         String fileName = "testFile";
 
-        BrainCloudClient.getInstance().getFileService().uploadFile(
+        _wrapper.getFileService().uploadFile(
                 "", fileName, true, true, localPath, tr);
         tr.Run();
         if (tr.m_result) {
@@ -66,18 +66,18 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
         Assert.assertEquals(0, _failCount);
         Assert.assertEquals(1, _returnCount);
 
-        BrainCloudClient.getInstance().getFileService().deleteUserFile(
+        _wrapper.getFileService().deleteUserFile(
                 "", fileName, tr);
         tr.Run();
     }
 
     @Test
     public void testGetCdnUrl() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String localPath = createFile(1);
         String fileName = "testFile";
 
-        BrainCloudClient.getInstance().getFileService().uploadFile(
+        _wrapper.getFileService().uploadFile(
                 "", fileName, true, true, localPath, tr);
         tr.Run();
         if (tr.m_result) {
@@ -88,31 +88,31 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
         Assert.assertEquals(0, _failCount);
         Assert.assertEquals(1, _returnCount);
 
-        BrainCloudClient.getInstance().getFileService().getCDNUrl(
+        _wrapper.getFileService().getCDNUrl(
                 "", fileName, tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getFileService().deleteUserFile(
+        _wrapper.getFileService().deleteUserFile(
                 "", fileName, tr);
         tr.Run();
     }
 
     @Test
     public void testDeleteUserFiles() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFileService().deleteUserFiles(
+        _wrapper.getFileService().deleteUserFiles(
                 "", true, tr);
         tr.Run();
     }
 
     @Test
     public void testUploadSingleFile() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String path = createFile(10);
 
-        BrainCloudClient.getInstance().getFileService().uploadFile(
+        _wrapper.getFileService().uploadFile(
                 "", "test.dat", true, true, path, tr);
 
         tr.Run();
@@ -127,11 +127,11 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
 
     @Test
     public void testUploadCancel() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String path = createFile(10);
 
-        BrainCloudClient.getInstance().getFileService().uploadFile(
+        _wrapper.getFileService().uploadFile(
                 "", "test.dat", true, true, path, tr);
 
         tr.Run();
@@ -145,12 +145,12 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
     }
 
     private void waitForReturn(String[] uploadIds, Boolean cancelUpload) throws Exception {
-        FileService service = BrainCloudClient.getInstance().getFileService();
+        FileService service = _wrapper.getFileService();
         int count = 0;
         Boolean sw = true;
 
         while (_returnCount < uploadIds.length && count < 1000 * 30) {
-            BrainCloudClient.getInstance().runCallbacks();
+            _wrapper.runCallbacks();
             for (String id : uploadIds) {
                 double progress = service.getUploadProgress(id);
 

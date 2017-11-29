@@ -1,6 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 import com.bitheads.braincloud.client.IGlobalErrorCallback;
 import com.bitheads.braincloud.client.INetworkErrorCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
@@ -30,8 +31,12 @@ public class TestResult implements IServerCallback, IGlobalErrorCallback, INetwo
     public int m_networkErrorCount;
     public int m_maxWait = 30 * 1000;
 
-    public TestResult()
-    {}
+    BrainCloudWrapper _wrapper;
+
+    public TestResult(BrainCloudWrapper wrapper)
+    {
+        _wrapper = wrapper;
+    }
 
     public void Reset()
     {
@@ -158,7 +163,7 @@ public class TestResult implements IServerCallback, IGlobalErrorCallback, INetwo
         while(!m_done && maxWait > 0)
         {
             TestFixtureBase._client.runCallbacks();
-            BrainCloudClient.getInstance().runCallbacks();
+            _wrapper.runCallbacks();
             try
             {
                 Thread.sleep (100);
