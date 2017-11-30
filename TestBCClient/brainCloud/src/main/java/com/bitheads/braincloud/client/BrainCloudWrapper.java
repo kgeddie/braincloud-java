@@ -45,18 +45,21 @@ import org.json.JSONObject;
  * be sent to the server. This strategy is useful when using anonymous authentication.
  */
 public class BrainCloudWrapper implements IServerCallback {
-    protected Context _context = null;
 
-    protected boolean _alwaysAllowProfileSwitch = true;
-    protected IServerCallback _authenticateCallback = null;
-
-    public static String AUTHENTICATION_ANONYMOUS = "anonymous";
-    protected static String _SHARED_PREFERENCES = "bcprefs";
-    private static String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
+    private static final String AUTHENTICATION_ANONYMOUS = "anonymous";
+    private static final String _SHARED_PREFERENCES = "bcprefs";
+    private static final String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
 
     private static BrainCloudWrapper _instance = null;
 
+
+    private Context _context = null;
+
+    private boolean _alwaysAllowProfileSwitch = true;
+    private IServerCallback _authenticateCallback = null;
+
     private BrainCloudClient _client = null;
+    private String _wrapperName = "";
 
     /**
      * Returns a singleton instance of the BrainCloudClient, if this is the BrainCloudWrapper Singleton.
@@ -69,6 +72,11 @@ public class BrainCloudWrapper implements IServerCallback {
     }
 
     public BrainCloudWrapper() {
+        _client = new BrainCloudClient();
+    }
+
+    public BrainCloudWrapper(String wrapperName) {
+        _wrapperName = wrapperName;
         _client = new BrainCloudClient();
     }
 
@@ -175,13 +183,28 @@ public class BrainCloudWrapper implements IServerCallback {
         getClient().initializeIdentity(profileIdToAuthenticateWith, anonymousId);
     }
 
+
+    /**
+     * Combines the wrapperName and the _SHARED_PREFERENCES to create a unique save name
+     *
+     * ie. userone_bcprefs
+     *
+     * @return
+     */
+    private String getSaveName() {
+        String prefix = _wrapperName.isEmpty() ? "" : "_" + _wrapperName;
+        return prefix + _SHARED_PREFERENCES;
+    }
+
     /**
      * Returns the stored profile id
      *
      * @return The stored profile id
      */
     public String getStoredProfileId() {
-        SharedPreferences sharedPref = _context.getSharedPreferences(_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String saveName = getSaveName();
+
+        SharedPreferences sharedPref = _context.getSharedPreferences(saveName, Context.MODE_PRIVATE);
         return sharedPref.getString("profileId", "");
     }
 
@@ -191,11 +214,14 @@ public class BrainCloudWrapper implements IServerCallback {
      * @param profileId The profile id to set
      */
     public void setStoredProfileId(String profileId) {
-        SharedPreferences sharedPref = _context.getSharedPreferences(_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String saveName = getSaveName();
+
+        SharedPreferences sharedPref = _context.getSharedPreferences(saveName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("profileId", profileId);
         editor.commit();
     }
+
 
     /**
      * Resets the profile id to empty string

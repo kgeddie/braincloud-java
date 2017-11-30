@@ -25,32 +25,32 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
 
         // this forces us to create a new anonymous account
         Context ctx = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        BrainCloudWrapper.getInstance().setContext(ctx);
-        BrainCloudWrapper.getInstance().setStoredAnonymousId("");
-        BrainCloudWrapper.getInstance().setStoredProfileId("");
+
+        _wrapper.setContext(ctx);
+        _wrapper.setStoredAnonymousId("");
+        _wrapper.setStoredProfileId("");
     }
 
     @Test
     public void testAuthenticateAnonymous()
     {
-        BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
-        bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
         TestResult tr = new TestResult(_wrapper);
-        bcw.authenticateAnonymous(tr);
+        _wrapper.authenticateAnonymous(tr);
         tr.Run();
 
-        String anonId = bcw.getStoredAnonymousId();
-        String profileId = bcw.getStoredProfileId();
+        String anonId = _wrapper.getStoredAnonymousId();
+        String profileId = _wrapper.getStoredProfileId();
 
         Logout();
-        bcw.getBC().getAuthenticationService().clearSavedProfileId();
+        _wrapper.getClient().getAuthenticationService().clearSavedProfileId();
 
-        bcw.authenticateAnonymous(tr);
+        _wrapper.authenticateAnonymous(tr);
         tr.Run();
 
-        Assert.assertEquals(anonId, bcw.getStoredAnonymousId());
-        Assert.assertEquals(profileId, bcw.getStoredProfileId());
+        Assert.assertEquals(anonId, _wrapper.getStoredAnonymousId());
+        Assert.assertEquals(profileId, _wrapper.getStoredProfileId());
 
         Logout();
     }
@@ -58,14 +58,13 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
     @Test
     public void testAuthenticateEmailPassword()
     {
-        BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
-        bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
         String email = getUser(Users.UserA).email;
         email += "_wrapper";
 
         TestResult tr = new TestResult(_wrapper);
-        bcw.authenticateEmailPassword(email, getUser(Users.UserA).password, true, tr);
+        _wrapper.authenticateEmailPassword(email, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
         Logout();
@@ -74,13 +73,12 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
     @Test
     public void testAuthenticateUniversal()
     {
-        BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
-        bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
         TestResult tr = new TestResult(_wrapper);
         String uid = getUser(Users.UserA).id;
         uid += "_wrapper";
-        bcw.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
+        _wrapper.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
         Logout();
@@ -89,19 +87,18 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth
     @Test
     public void testReconnect()
     {
-        BrainCloudWrapper bcw = BrainCloudWrapper.getInstance();
-        bcw.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
 
         TestResult tr = new TestResult(_wrapper);
         String uid = getUser(Users.UserA).id;
         uid += "_wrapper";
-        bcw.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
+        _wrapper.authenticateUniversal(uid, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
-        BrainCloudWrapper.getBC().getPlayerStateService().logout(tr);
+        _wrapper.getClient().getPlayerStateService().logout(tr);
         tr.Run();
 
-        bcw.reconnect(tr);
+        _wrapper.reconnect(tr);
         tr.Run();
 
         Logout();
