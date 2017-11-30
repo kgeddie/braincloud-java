@@ -149,7 +149,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void testGoogleLogin()
     {
-        BrainCloudClient client = _wrapper;
+        BrainCloudClient client = _wrapper.getClient();
         client.getAuthenticationService().authenticateGoogle(GOOGLE_ACCOUNT,
                 authToken, true, this);
     }
