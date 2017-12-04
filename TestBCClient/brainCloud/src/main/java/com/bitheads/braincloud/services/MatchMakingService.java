@@ -150,6 +150,26 @@ public class MatchMakingService {
     }
 
     /**
+     * Increases the shield on time by specified number of minutes
+     *
+     * Service Name - MatchMaking
+     * Service Operation - ShieldOnFor
+     *
+     * @param minutes Number of minutes to increase the shield turn for
+     * @param callback The callback.
+     */
+    public void incrementShieldOnFor(int minutes, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.minutes.name(), minutes);
+
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_SHIELD_ON_FOR, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
      * Turns shield off
      *
      * Service Name - MatchMaking

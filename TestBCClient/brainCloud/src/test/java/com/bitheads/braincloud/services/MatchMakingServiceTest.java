@@ -84,6 +84,17 @@ public class MatchMakingServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void testIncrementShieldOnFor() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getMatchMakingService().incrementShieldOnFor(
+                1,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testTurnShieldOff() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
