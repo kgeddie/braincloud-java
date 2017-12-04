@@ -1,6 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import org.json.JSONException;
 
@@ -18,8 +19,12 @@ public class TestUser
     public String profileId = "";
     public String email = "";
 
-    public TestUser(String idPrefix, int suffix)
+    BrainCloudWrapper _wrapper;
+
+
+    public TestUser(BrainCloudWrapper wrapper, String idPrefix, int suffix)
     {
+        _wrapper = wrapper;
         id = idPrefix + suffix;
         password = id;
         email = id + "@bctestuser.com";
@@ -28,28 +33,28 @@ public class TestUser
 
     private void Authenticate()
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getAuthenticationService().authenticateUniversal(
                 id,
                 password,
                 true,
                 tr);
         tr.Run();
-        profileId = BrainCloudClient.getInstance().getAuthenticationService().getProfileId();
+        profileId = _wrapper.getAuthenticationService().getProfileId();
 
         try
         {
             if (tr.m_response.getJSONObject("data").getBoolean("newUser") == true)
             {
-                BrainCloudClient.getInstance().getMatchMakingService().enableMatchMaking(tr);
+                _wrapper.getMatchMakingService().enableMatchMaking(tr);
                 tr.Run();
-                BrainCloudClient.getInstance().getPlayerStateService().updateUserName(id, tr);
+                _wrapper.getPlayerStateService().updateUserName(id, tr);
                 tr.Run();
-                BrainCloudClient.getInstance().getPlayerStateService().updateContactEmail("braincloudunittest@gmail.com", tr);
+                _wrapper.getPlayerStateService().updateContactEmail("braincloudunittest@gmail.com", tr);
                 tr.Run();
             }
 
-            BrainCloudClient.getInstance().getPlayerStateService().logout(tr);
+            _wrapper.getPlayerStateService().logout(tr);
             tr.Run();
         }
         catch(JSONException je)

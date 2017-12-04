@@ -15,9 +15,9 @@ public class GlobalAppServiceTest extends TestFixtureBase
     @Test
     public void testReadProperties() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalAppService().readProperties(
+        _wrapper.getGlobalAppService().readProperties(
                 tr);
 
         tr.Run();

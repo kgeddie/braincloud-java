@@ -3,50 +3,115 @@ package com.bitheads.braincloud.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.bitheads.braincloud.services.AsyncMatchService;
+import com.bitheads.braincloud.services.AuthenticationService;
+import com.bitheads.braincloud.services.DataStreamService;
+import com.bitheads.braincloud.services.EntityService;
+import com.bitheads.braincloud.services.EventService;
+import com.bitheads.braincloud.services.FileService;
+import com.bitheads.braincloud.services.FriendService;
+import com.bitheads.braincloud.services.GamificationService;
+import com.bitheads.braincloud.services.GlobalAppService;
+import com.bitheads.braincloud.services.GlobalEntityService;
+import com.bitheads.braincloud.services.GlobalStatisticsService;
+import com.bitheads.braincloud.services.GroupService;
+import com.bitheads.braincloud.services.IdentityService;
+import com.bitheads.braincloud.services.MailService;
+import com.bitheads.braincloud.services.MatchMakingService;
+import com.bitheads.braincloud.services.OneWayMatchService;
+import com.bitheads.braincloud.services.PlaybackStreamService;
+import com.bitheads.braincloud.services.PlayerStateService;
+import com.bitheads.braincloud.services.PlayerStatisticsEventService;
+import com.bitheads.braincloud.services.PlayerStatisticsService;
+import com.bitheads.braincloud.services.ProductService;
+import com.bitheads.braincloud.services.ProfanityService;
+import com.bitheads.braincloud.services.PushNotificationService;
+import com.bitheads.braincloud.services.RedemptionCodeService;
+import com.bitheads.braincloud.services.S3HandlingService;
+import com.bitheads.braincloud.services.ScriptService;
+import com.bitheads.braincloud.services.SocialLeaderboardService;
+import com.bitheads.braincloud.services.TimeService;
+import com.bitheads.braincloud.services.TournamentService;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * The BrainCloudWrapper provides some convenience functionality to developers when they are
  * getting started with the authentication system.
- *
+ * <p>
  * By using the wrapper authentication methods, the anonymous and profile ids will be automatically
  * persisted upon successful authentication. When authenticating, any stored anonymous/profile ids will
  * be sent to the server. This strategy is useful when using anonymous authentication.
  */
 public class BrainCloudWrapper implements IServerCallback {
-    protected Context _context = null;
 
-    protected boolean _alwaysAllowProfileSwitch = true;
-    protected IServerCallback _authenticateCallback = null;
+    private static final String AUTHENTICATION_ANONYMOUS = "anonymous";
+    private static final String _SHARED_PREFERENCES = "bcprefs";
+    private static final String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
 
-    public static String AUTHENTICATION_ANONYMOUS = "anonymous";
-    protected static String _SHARED_PREFERENCES = "bcprefs";
-    private static String _DEFAULT_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
-    private static BrainCloudWrapper _instance = new BrainCloudWrapper();
+    private static BrainCloudWrapper _instance = null;
 
-    protected BrainCloudWrapper() {
+
+    private Context _context = null;
+
+    private boolean _alwaysAllowProfileSwitch = true;
+    private IServerCallback _authenticateCallback = null;
+
+    private BrainCloudClient _client = null;
+    private String _wrapperName = "";
+
+    /**
+     * Returns a singleton instance of the BrainCloudClient, if this is the BrainCloudWrapper Singleton.
+     * Otherwise, return an instance of the BrainCloudClient, if this is an instance of the BrainCloudWrapper.
+     *
+     * @return A singleton instance of the BrainCloudClient.
+     */
+    public BrainCloudClient getClient() {
+        return _client;
+    }
+
+    public BrainCloudWrapper() {
+        _client = new BrainCloudClient();
+    }
+
+    public BrainCloudWrapper(String wrapperName) {
+        _wrapperName = wrapperName;
+        _client = new BrainCloudClient();
     }
 
     /**
      * Method returns a singleton instance of the BrainCloudWrapper.
+     *
      * @return A singleton instance of the BrainCloudWrapper.
      */
     public static BrainCloudWrapper getInstance() {
+
+        if (BrainCloudClient.EnableSingletonMode == false) {
+            throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);
+        }
+
+        if (_instance == null) {
+            _instance = new BrainCloudWrapper();
+            BrainCloudClient.setInstance(_instance.getClient());
+        }
+
         return _instance;
     }
 
     /**
      * Returns a singleton instance of the BrainCloudClient.
+     *
      * @return A singleton instance of the BrainCloudClient.
      */
     public static BrainCloudClient getBC() {
-        return BrainCloudClient.getInstance();
+        return getInstance().getClient();
     }
 
     /**
      * Sets the context required for saving anonymous and profile ids to the
      * private SharedPreferences file.
+     *
      * @param ctx The application context
      */
     public void setContext(Context ctx) {
@@ -56,28 +121,28 @@ public class BrainCloudWrapper implements IServerCallback {
     /**
      * Method initializes the BrainCloudClient.
      *
-     * @param ctx The application context
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param ctx        The application context
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
      */
     public void initialize(Context ctx, String appId, String secretKey, String appVersion) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, _DEFAULT_URL);
+        getClient().initialize(appId, secretKey, appVersion, _DEFAULT_URL);
     }
 
     /**
      * Method initializes the BrainCloudClient.
      *
-     * @param ctx The application context
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param ctx        The application context
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
-     * @param serverUrl The url to the brainCloud server
+     * @param serverUrl  The url to the brainCloud server
      */
     public void initialize(Context ctx, String appId, String secretKey, String appVersion, String serverUrl) {
         setContext(ctx);
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, serverUrl);
+        getClient().initialize(appId, secretKey, appVersion, serverUrl);
     }
 
 
@@ -85,23 +150,24 @@ public class BrainCloudWrapper implements IServerCallback {
      * Method initializes the BrainCloudClient. Make sure to
      * set the context via setContext() if you're using this method.
      *
-     * @param appId The app id
-     * @param secretKey The secret key for your app
+     * @param appId      The app id
+     * @param secretKey  The secret key for your app
      * @param appVersion The app version
-     * @param serverUrl The url to the brainCloud server
+     * @param serverUrl  The url to the brainCloud server
      */
     public void initialize(String appId, String secretKey, String appVersion, String serverUrl) {
-        BrainCloudClient.getInstance().initialize(appId, secretKey, appVersion, serverUrl);
+        getClient().initialize(appId, secretKey, appVersion, serverUrl);
     }
 
     protected void initializeIdentity(boolean isAnonymousAuth) {
+
         // check if we already have saved IDs
         String profileId = getStoredProfileId();
         String anonymousId = getStoredAnonymousId();
 
         // create an anonymous ID if necessary
         if ((!anonymousId.isEmpty() && profileId.isEmpty()) || anonymousId.isEmpty()) {
-            anonymousId = BrainCloudClient.getInstance().getAuthenticationService().generateAnonymousId();
+            anonymousId = getClient().getAuthenticationService().generateAnonymousId();
             profileId = "";
             setStoredAnonymousId(anonymousId);
             setStoredProfileId(profileId);
@@ -114,28 +180,48 @@ public class BrainCloudWrapper implements IServerCallback {
         setStoredAuthenticationType(isAnonymousAuth ? AUTHENTICATION_ANONYMOUS : "");
 
         // send our IDs to brainCloud
-        BrainCloudClient.getInstance().initializeIdentity(profileIdToAuthenticateWith, anonymousId);
+        getClient().initializeIdentity(profileIdToAuthenticateWith, anonymousId);
+    }
+
+
+    /**
+     * Combines the wrapperName and the _SHARED_PREFERENCES to create a unique save name
+     *
+     * ie. userone_bcprefs
+     *
+     * @return
+     */
+    private String getSaveName() {
+        String prefix = _wrapperName.isEmpty() ? "" : "_" + _wrapperName;
+        return prefix + _SHARED_PREFERENCES;
     }
 
     /**
      * Returns the stored profile id
+     *
      * @return The stored profile id
      */
     public String getStoredProfileId() {
-        SharedPreferences sharedPref = _context.getSharedPreferences(_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String saveName = getSaveName();
+
+        SharedPreferences sharedPref = _context.getSharedPreferences(saveName, Context.MODE_PRIVATE);
         return sharedPref.getString("profileId", "");
     }
 
     /**
      * Sets the stored profile id
+     *
      * @param profileId The profile id to set
      */
     public void setStoredProfileId(String profileId) {
-        SharedPreferences sharedPref = _context.getSharedPreferences(_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String saveName = getSaveName();
+
+        SharedPreferences sharedPref = _context.getSharedPreferences(saveName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("profileId", profileId);
         editor.commit();
     }
+
 
     /**
      * Resets the profile id to empty string
@@ -146,6 +232,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Returns the stored anonymous id
+     *
      * @return The stored anonymous id
      */
     String getStoredAnonymousId() {
@@ -155,6 +242,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Sets the stored anonymous id
+     *
      * @param anonymousId The anonymous id to set
      */
     public void setStoredAnonymousId(String anonymousId) {
@@ -178,7 +266,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * authentication credentials. By default, this value is true.
      *
      * @param alwaysAllow Controls whether the profile id is passed in with
-     * non-anonymous authentications.
+     *                    non-anonymous authentications.
      */
     public void setAlwaysAllowProfileSwitch(boolean alwaysAllow) {
         _alwaysAllowProfileSwitch = alwaysAllow;
@@ -186,6 +274,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
     /**
      * Returns the value for always allow profile switch
+     *
      * @return Whether to always allow profile switches
      */
     public boolean getAlwaysAllowProfileSwitch() {
@@ -214,14 +303,14 @@ public class BrainCloudWrapper implements IServerCallback {
      * don't want to bother the user to login, or for users who are sensitive to
      * their privacy
      *
-     * @param callback    The callback handler
+     * @param callback The callback handler
      */
     public void authenticateAnonymous(IServerCallback callback) {
         _authenticateCallback = callback;
 
         initializeIdentity(true);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateAnonymous(true, this);
+        getClient().getAuthenticationService().authenticateAnonymous(true, this);
     }
 
     /**
@@ -230,7 +319,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * potentially password (for convenience) in the client data. For the
      * greatest security, force the user to re-enter their * password at each
      * login. (Or at least give them that option).
-     *
+     * <p>
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
@@ -248,13 +337,13 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateEmailPassword(email, password, forceCreate, this);
+        getClient().getAuthenticationService().authenticateEmailPassword(email, password, forceCreate, this);
     }
 
     /**
      * Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
      * This allows the developer to extend brainCloud authentication to support other backend authentication systems.
-     *
+     * <p>
      * Service Name - Authenticate
      * Server Operation - Authenticate
      *
@@ -274,7 +363,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateExternal(userId, token, externalAuthName, forceCreate, this);
+        getClient().getAuthenticationService().authenticateExternal(userId, token, externalAuthName, forceCreate, this);
     }
 
     /**
@@ -295,7 +384,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateFacebook(fbUserId, fbAuthToken, forceCreate, this);
+        getClient().getAuthenticationService().authenticateFacebook(fbUserId, fbAuthToken, forceCreate, this);
     }
 
     /**
@@ -316,7 +405,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateGoogle(googleUserId, googleAuthToken, forceCreate, this);
+        getClient().getAuthenticationService().authenticateGoogle(googleUserId, googleAuthToken, forceCreate, this);
     }
 
     /**
@@ -337,23 +426,21 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateSteam(steamUserId, steamSessionTicket, forceCreate, this);
+        getClient().getAuthenticationService().authenticateSteam(steamUserId, steamSessionTicket, forceCreate, this);
     }
 
     /**
      * Authenticate the user using a Twitter userid, authentication token, and secret from Twitter.
-     *
+     * <p>
      * Service Name - Authenticate
      * Service Operation - Authenticate
      *
-     * @param userId String representation of Twitter userid
-     * @param token The authentication token derived via the Twitter apis.
-     * @param secret The secret given when attempting to link with Twitter
+     * @param userId      String representation of Twitter userid
+     * @param token       The authentication token derived via the Twitter apis.
+     * @param secret      The secret given when attempting to link with Twitter
      * @param forceCreate Should a new profile be created for this user if the account does not exist?
-     * @param callback The callback handler
-     *
+     * @param callback    The callback handler
      * @returns performs the in_success callback on success, in_failure callback on failure
-     *
      */
     public void authenticateTwitter(String userId,
                                     String token,
@@ -364,7 +451,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateTwitter(userId, token, secret, forceCreate, this);
+        getClient().getAuthenticationService().authenticateTwitter(userId, token, secret, forceCreate, this);
     }
 
 
@@ -388,7 +475,7 @@ public class BrainCloudWrapper implements IServerCallback {
 
         initializeIdentity(false);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(userId, userPassword, forceCreate, this);
+        getClient().getAuthenticationService().authenticateUniversal(userId, userPassword, forceCreate, this);
     }
 
     /**
@@ -404,7 +491,7 @@ public class BrainCloudWrapper implements IServerCallback {
      * Run callbacks, to be called once per frame from your main thread
      */
     public void runCallbacks() {
-        BrainCloudClient.getInstance().runCallbacks();
+        getClient().runCallbacks();
     }
 
 
@@ -412,9 +499,9 @@ public class BrainCloudWrapper implements IServerCallback {
      * The serverCallback() method returns server data back to the layer
      * interfacing with the BrainCloud library.
      *
-     * @param serviceName - name of the requested service
+     * @param serviceName      - name of the requested service
      * @param serviceOperation - requested operation
-     * @param jsonData - returned data from the server
+     * @param jsonData         - returned data from the server
      */
     public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData) {
         if (serviceName.equals(ServiceName.authenticationV2) && serviceOperation.equals(ServiceOperation.AUTHENTICATE)) {
@@ -436,19 +523,138 @@ public class BrainCloudWrapper implements IServerCallback {
     /**
      * Errors are returned back to the layer which is interfacing with the
      * BrainCloud library through the serverError() callback.
-     *
+     * <p>
      * A server error might indicate a failure of the client to communicate
      * with the server after N retries.
      *
-     * @param serviceName - name of the requested service
+     * @param serviceName      - name of the requested service
      * @param serviceOperation - requested operation
-     * @param statusCode The error status return code (400, 403, 500, etc)
-     * @param reasonCode The brainCloud reason code (see reason codes on apidocs site)
-     * @param jsonError The error json string
+     * @param statusCode       The error status return code (400, 403, 500, etc)
+     * @param reasonCode       The brainCloud reason code (see reason codes on apidocs site)
+     * @param jsonError        The error json string
      */
     public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError) {
         if (_authenticateCallback != null) {
             _authenticateCallback.serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
         }
     }
+
+
+    // brainCloud Services
+    public AuthenticationService getAuthenticationService() {
+        return _client.getAuthenticationService();
+    }
+
+    public AsyncMatchService getAsyncMatchService() {
+        return _client.getAsyncMatchService();
+    }
+
+    public DataStreamService getDataStreamService() {
+        return _client.getDataStreamService();
+    }
+
+    public EntityService getEntityService() {
+        return _client.getEntityService();
+    }
+
+    public EventService getEventService() {
+        return _client.getEventService();
+    }
+
+    public FileService getFileService() {
+        return _client.getFileService();
+    }
+
+    public FriendService getFriendService() {
+        return _client.getFriendService();
+    }
+
+    public GamificationService getGamificationService() {
+        return _client.getGamificationService();
+    }
+
+    public GlobalAppService getGlobalAppService() {
+        return _client.getGlobalAppService();
+    }
+
+    public GlobalEntityService getGlobalEntityService() {
+        return _client.getGlobalEntityService();
+    }
+
+    public GlobalStatisticsService getGlobalStatisticsService() {
+        return _client.getGlobalStatisticsService();
+    }
+
+    public GroupService getGroupService() {
+        return _client.getGroupService();
+    }
+
+    public IdentityService getIdentityService() {
+        return _client.getIdentityService();
+    }
+
+    public MailService getMailService() {
+        return _client.getMailService();
+    }
+
+    public MatchMakingService getMatchMakingService() {
+        return _client.getMatchMakingService();
+    }
+
+    public OneWayMatchService getOneWayMatchService() {
+        return _client.getOneWayMatchService();
+    }
+
+    public PlaybackStreamService getPlaybackStreamService() {
+        return _client.getPlaybackStreamService();
+    }
+
+    public PlayerStateService getPlayerStateService() {
+        return _client.getPlayerStateService();
+    }
+
+    public PlayerStatisticsService getPlayerStatisticsService() {
+        return _client.getPlayerStatisticsService();
+    }
+
+    public PlayerStatisticsEventService getPlayerStatisticsEventService() {
+        return _client.getPlayerStatisticsEventService();
+    }
+
+    public ProductService getProductService() {
+        return _client.getProductService();
+    }
+
+    public ProfanityService getProfanityService() {
+        return _client.getProfanityService();
+    }
+
+    public PushNotificationService getPushNotificationService() {
+        return _client.getPushNotificationService();
+    }
+
+    public RedemptionCodeService getRedemptionCodeService() {
+        return _client.getRedemptionCodeService();
+    }
+
+    public S3HandlingService getS3HandlingService() {
+        return _client.getS3HandlingService();
+    }
+
+    public ScriptService getScriptService() {
+        return _client.getScriptService();
+    }
+
+    public SocialLeaderboardService getSocialLeaderboardService() {
+        return _client.getSocialLeaderboardService();
+    }
+
+    public TimeService getTimeService() {
+        return _client.getTimeService();
+    }
+
+    public TournamentService getTournamentService() {
+        return _client.getTournamentService();
+    }
+
 }

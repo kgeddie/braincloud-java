@@ -20,9 +20,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadAllGamification() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readAllGamification(
+        _wrapper.getGamificationService().readAllGamification(
                 true,
                 tr);
 
@@ -32,9 +32,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadMilestones() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readMilestones(
+        _wrapper.getGamificationService().readMilestones(
                 true,
                 tr);
 
@@ -44,9 +44,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadAchievements() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readAchievements(
+        _wrapper.getGamificationService().readAchievements(
                 true,
                 tr);
 
@@ -56,9 +56,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadXpLevels() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readXpLevels(
+        _wrapper.getGamificationService().readXpLevels(
                 tr);
 
         tr.Run();
@@ -67,9 +67,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadAchievedAchievements() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readAchievedAchievements(
+        _wrapper.getGamificationService().readAchievedAchievements(
                 true,
                 tr);
 
@@ -79,9 +79,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadCompletedMilestones() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readCompletedMilestones(
+        _wrapper.getGamificationService().readCompletedMilestones(
                 true,
                 tr);
 
@@ -91,9 +91,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadInProgressMilestones() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readInProgressMilestones(
+        _wrapper.getGamificationService().readInProgressMilestones(
                 true,
                 tr);
 
@@ -103,9 +103,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadMilestonesByCategory() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readMilestonesByCategory(
+        _wrapper.getGamificationService().readMilestonesByCategory(
                 _milestoneCategory,
                 true,
                 tr);
@@ -116,9 +116,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testAwardAchievements() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().awardAchievements(
+        _wrapper.getGamificationService().awardAchievements(
                 new String[]{_achievementId01, _achievementId02},
                 tr);
 
@@ -134,9 +134,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuests() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuests(
+        _wrapper.getGamificationService().readQuests(
                 true,
                 tr);
 
@@ -146,9 +146,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsCompleted() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsCompleted(
+        _wrapper.getGamificationService().readQuestsCompleted(
                 true,
                 tr);
 
@@ -158,9 +158,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsInProgress() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsInProgress(
+        _wrapper.getGamificationService().readQuestsInProgress(
                 true,
                 tr);
 
@@ -170,9 +170,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsNotStarted() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsNotStarted(
+        _wrapper.getGamificationService().readQuestsNotStarted(
                 true,
                 tr);
 
@@ -182,9 +182,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsWithStatus() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsWithStatus(
+        _wrapper.getGamificationService().readQuestsWithStatus(
                 true,
                 tr);
 
@@ -194,9 +194,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsWithBasicPercentage() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsWithBasicPercentage(
+        _wrapper.getGamificationService().readQuestsWithBasicPercentage(
                 true,
                 tr);
 
@@ -206,9 +206,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsWithComplexPercentage() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsWithComplexPercentage(
+        _wrapper.getGamificationService().readQuestsWithComplexPercentage(
                 true,
                 tr);
 
@@ -218,9 +218,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testReadQuestsByCategory() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().readQuestsByCategory(
+        _wrapper.getGamificationService().readQuestsByCategory(
                 _questsCategory,
                 true,
                 tr);
@@ -231,9 +231,9 @@ public class GamificationServiceTest extends TestFixtureBase
     @Test
     public void testResetMilestones() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGamificationService().resetMilestones(
+        _wrapper.getGamificationService().resetMilestones(
                 new String[]{_milestoneId},
                 tr);
 

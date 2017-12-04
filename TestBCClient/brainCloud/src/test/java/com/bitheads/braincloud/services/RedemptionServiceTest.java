@@ -17,25 +17,25 @@ public class RedemptionServiceTest extends TestFixtureBase
     public void testRedeemCode() throws Exception
     {
         int code = getValidCode();
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getRedemptionCodeService().redeemCode("" + code, "default", null, tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getRedemptionCodeService().redeemCode("" + code, "default", null, tr);
         tr.Run();
     }
 
     @Test
     public void testGetRedeemedCodes() throws Exception
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getRedemptionCodeService().getRedeemedCodes("default", tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getRedemptionCodeService().getRedeemedCodes("default", tr);
         tr.Run();
     }
 
     public int getValidCode() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         JSONObject stats = new JSONObject();
         stats.put("lastCodeUsed", 1);
-        BrainCloudClient.getInstance().getGlobalStatisticsService().incrementGlobalStats(stats.toString(), tr);
+        _wrapper.getGlobalStatisticsService().incrementGlobalStats(stats.toString(), tr);
         tr.Run();
         return tr.m_response.getJSONObject("data").getJSONObject("statistics").getInt("lastCodeUsed");
     }

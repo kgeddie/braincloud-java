@@ -59,7 +59,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_CREDENTIAL, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -81,7 +81,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -103,7 +103,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_EXTERNAL_ID_FOR_PROFILE_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -126,7 +126,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_USERS_BY_EXACT_NAME, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -150,7 +150,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_USERS_BY_SUBSTR_NAME, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -166,7 +166,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_PLAYER_BY_UNIVERSAL_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -185,7 +185,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.FIND_PLAYER_BY_UNIVERSAL_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -208,7 +208,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.READ_FRIEND_ENTITY, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -231,7 +231,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.READ_FRIENDS_ENTITIES, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -246,7 +246,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.READ_FRIEND_PLAYER_STATE, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -267,7 +267,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.READ_FRIEND_PLAYER_STATE, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -290,7 +290,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.LIST_FRIENDS, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -316,7 +316,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.ADD_FRIENDS, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -342,7 +342,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.REMOVE_FRIENDS, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -360,7 +360,7 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_SUMMARY_DATA_FOR_PROFILE_ID, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 
     /**
@@ -386,6 +386,6 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_USERS_ONLINE_STATUS, data, callback);
-        BrainCloudClient.getInstance().sendRequest(sc);
+        _client.sendRequest(sc);
     }
 }

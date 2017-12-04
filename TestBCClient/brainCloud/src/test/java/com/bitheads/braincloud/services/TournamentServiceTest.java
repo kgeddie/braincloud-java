@@ -28,9 +28,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void claimTournamentReward() throws Exception {
         int version = joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().claimTournamentReward(
+        _wrapper.getTournamentService().claimTournamentReward(
                 _leaderboardId,
                 version,
                 tr);
@@ -41,9 +41,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void getTournamentStatus() throws Exception {
         int version = joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().getTournamentStatus(
+        _wrapper.getTournamentService().getTournamentStatus(
                 _leaderboardId,
                 version,
                 tr);
@@ -65,9 +65,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void postTournamentScore() throws Exception {
         joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().postTournamentScore(
+        _wrapper.getTournamentService().postTournamentScore(
                 _leaderboardId,
                 200,
                 Helpers.createJsonPair("test", 1),
@@ -80,9 +80,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void postTournamentScoreWithResults() throws Exception {
         joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().postTournamentScoreWithResults(
+        _wrapper.getTournamentService().postTournamentScoreWithResults(
                 _leaderboardId,
                 200,
                 Helpers.createJsonPair("test", 1),
@@ -99,9 +99,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void viewCurrentReward() throws Exception {
         joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().viewCurrentReward(
+        _wrapper.getTournamentService().viewCurrentReward(
                 _leaderboardId,
                 tr);
 
@@ -111,9 +111,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     @Test
     public void viewReward() throws Exception {
         joinTestTournament();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().viewReward(
+        _wrapper.getTournamentService().viewReward(
                 _leaderboardId,
                 -1,
                 tr);
@@ -122,9 +122,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     private int joinTestTournament() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().joinTournament(
+        _wrapper.getTournamentService().joinTournament(
                 _leaderboardId,
                 _tournamentCode,
                 0,
@@ -133,7 +133,7 @@ public class TournamentServiceTest extends TestFixtureBase {
         tr.Run();
         _didJoin = true;
 
-        BrainCloudClient.getInstance().getTournamentService().getTournamentStatus(
+        _wrapper.getTournamentService().getTournamentStatus(
                 _leaderboardId,
                 -1,
                 tr);
@@ -144,9 +144,9 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     private void leaveTestTournament() {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTournamentService().leaveTournament(
+        _wrapper.getTournamentService().leaveTournament(
                 _leaderboardId,
                 tr);
 
