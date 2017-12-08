@@ -92,7 +92,10 @@ public class BrainCloudClient {
         _restClient = new BrainCloudRestClient(this);
     }
 
-    public static BrainCloudClient getInstance(){
+    /**
+     * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/
+     */
+    public static BrainCloudClient getInstance() {
 
         if (BrainCloudClient.EnableSingletonMode == false) {
             throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);

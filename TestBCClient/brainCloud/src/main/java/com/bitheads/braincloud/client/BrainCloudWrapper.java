@@ -84,6 +84,8 @@ public class BrainCloudWrapper implements IServerCallback {
      * Method returns a singleton instance of the BrainCloudWrapper.
      *
      * @return A singleton instance of the BrainCloudWrapper.
+     *
+     * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/
      */
     public static BrainCloudWrapper getInstance() {
 
