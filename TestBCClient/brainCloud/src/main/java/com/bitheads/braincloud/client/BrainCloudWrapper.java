@@ -543,10 +543,6 @@ public class BrainCloudWrapper implements IServerCallback {
 
 
     // brainCloud Services
-    public AuthenticationService getAuthenticationService() {
-        return _client.getAuthenticationService();
-    }
-
     public AsyncMatchService getAsyncMatchService() {
         return _client.getAsyncMatchService();
     }
