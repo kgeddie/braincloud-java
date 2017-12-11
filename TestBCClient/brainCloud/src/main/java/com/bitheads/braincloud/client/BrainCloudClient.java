@@ -38,7 +38,7 @@ import java.util.TimeZone;
 
 public class BrainCloudClient {
 
-    public static final boolean EnableSingletonMode = true;
+    public static final boolean EnableSingletonMode = false;
     public static final String SingletonUseErrorMessage =
             "Singleton usage is disabled. If called by mistake, use your own variable that holds an instance of the bcWrapper/bcClient.";
 
