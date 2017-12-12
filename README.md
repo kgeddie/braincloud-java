@@ -26,7 +26,7 @@ On Android, to use the wrapper serialization features, you also need to pass in 
 ```java
 _bc.setContext(_applicationContext);
 ```
-Your _appId, _secret, is set on the brainCloud dashboard.
+Your _appId, _secret, is set on the brainCloud dashboard. Under Design | Core App Info > Application IDs
 
 ![wrapper](/Screenshots/bc-ids.png?raw=true)
 
