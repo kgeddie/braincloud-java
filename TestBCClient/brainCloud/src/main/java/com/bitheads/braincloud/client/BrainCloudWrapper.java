@@ -75,6 +75,11 @@ public class BrainCloudWrapper implements IServerCallback {
         _client = new BrainCloudClient();
     }
 
+    /**
+     * Instantiate a copy of the brainCloud wrapper. Don't use getInstance if creating your own copy.
+     * 
+     * @param wrapperName value used to differentiate saved wrapper data
+     */
     public BrainCloudWrapper(String wrapperName) {
         _wrapperName = wrapperName;
         _client = new BrainCloudClient();
