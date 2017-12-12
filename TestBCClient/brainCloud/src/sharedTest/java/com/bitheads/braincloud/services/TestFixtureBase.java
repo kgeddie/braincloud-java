@@ -33,13 +33,10 @@ public class TestFixtureBase {
         LoadIds();
 
         _wrapper = new BrainCloudWrapper();
-        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion);
         _wrapper.getClient().enableLogging(true);
         _client = _wrapper.getClient();
 
-
-        _client.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
-        _client.enableLogging(true);
 
         if (shouldAuthenticate()) {
             TestResult tr = new TestResult(_wrapper);
