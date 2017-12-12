@@ -8,10 +8,13 @@ brainCloud consists of:
 - Design Portal – a portal that allows you to design and debug your apps
 - brainCloud Architecture
 
+![architecture](/Screenshots/bc-architecture.png?raw=true)
+
 ## What's the difference between the brainCloud Wrapper and the brainCloud Client?
 The wrapper contains quality of life improvement around the brainCloud Client. It may contain device specific code, such as serializing the user's login id on an Android or iOS device.
 It is recommended to use the wrapper by default.
 
+![wrapper](/Screenshots/bc-wrapper.png?raw=true)
 
 ## How do I initialize brainCloud?
 If using the wrapper use the following code.
@@ -25,10 +28,13 @@ _bc.setContext(_applicationContext);
 ```
 Your _appId, _secret, is set on the brainCloud dashboard.
 
+![wrapper](/Screenshots/bc-ids.png?raw=true)
+
 _wrapperName prefixes saved operations that the wrapper will make. Use a _wrapperName if you plan on having multiple instances of brainCloud running.
 
 _appVersion is the current version of our app. Having an _appVersion less than your minimum app version on brainCloud will prevent the user from accessing the service until they update their app to the lastest version you have provided them.
 
+![wrapper](/Screenshots/bc-minVersions.png?raw=true)
 
 ## How do I authenticate a user with brainCloud?
 The simipliest form of authenticating with brainCloud Wrapper is an Anonymous Authentication.
