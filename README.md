@@ -1,3 +1,12 @@
+## Troubleshooting
+
+Here are a few common errors that you may see on your first attempt to connect to brainCloud.
+
+- **App id not set**: Verify you've set up the app id and app secret correctly in the `initialize()` method.
+- **Platform not enabled**: Verify you've enabled your platform on the portal.
+
+If you're still having issues, log into the portal and give us a shout through the help system (bottom right icon with the question mark and chat bubble).
+
 # brainCloud Library for Java
 
 brainCloud is a ready-made back-end platform for the development of feature-rich games, apps and things. brainCloud provides the features you need – along with comprehensive tools to support your team during development, testing and user support.
