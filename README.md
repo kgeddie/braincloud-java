@@ -56,11 +56,15 @@ _appVersion is the current version of our app. Having an _appVersion less than y
 ![wrapper](/Screenshots/bc-minVersions.png?raw=true)
 
 ## How do I authenticate a user with brainCloud?
-The simipliest form of authenticating with brainCloud Wrapper is an Anonymous Authentication.
+The simplest form of authenticating with brainCloud Wrapper is an Anonymous Authentication.
 ```java
-_bc.authenticateAnonymous();
+_bc.authenticateAnonymous(_callback);
 ```
-This method will create an account, and contiune to use a locally saved anonymous id.
+This method will create an account, and continue to use a locally saved anonymous id.
+
+Your _callback will inherit from IServerCallback and contain the functions needed to react to the brainCloud Server response.
+
+
 To login with a specfic anonymous id, use the brainCloud client.
 ```java
 _bc.getClient().getAuthenticationService().setAnonymousId(_anonymousId); // re-use an Anon id
@@ -70,7 +74,7 @@ _bc.getClient().GetAuthenticationService().AuthenticateAnonymous(_forceCreate, _
 Setting _forceCreate to false will ensure the user will only login to an existing account. Setting it to true, will allow the user to register a new account
 
 ## How do I attach an email to a user's brainCloud profile?
-After having the user create an anonymous with brainCloud, they are probably going to want to attach an email or username, so there account can be access via another platform, or or when there local data is discarded.
+After having the user create an anonymous with brainCloud, they are probably going to want to attach an email or username, so their account can be accessed via another platform, or when their local data is discarded.
 Attaching email authenticate would look like this.
 ```java
 _wrapper.getIdentityService().attachEmailIdentity(_email, _password, _callback);
