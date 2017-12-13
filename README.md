@@ -1,3 +1,13 @@
+# brainCloud Java Library
+
+Thanks for downloading the brainCloud Java client library! Here are a few notes to get you started. Further information about the brainCloud API, including example Tutorials can be found here:
+
+http://getbraincloud.com/apidocs/
+
+If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
+
+https://portal.braincloudservers.com/
+
 ## Troubleshooting
 
 Here are a few common errors that you may see on your first attempt to connect to brainCloud.
@@ -7,7 +17,7 @@ Here are a few common errors that you may see on your first attempt to connect t
 
 If you're still having issues, log into the portal and give us a shout through the help system (bottom right icon with the question mark and chat bubble).
 
-# brainCloud Library for Java
+## brainCloud Summary
 
 brainCloud is a ready-made back-end platform for the development of feature-rich games, apps and things. brainCloud provides the features you need – along with comprehensive tools to support your team during development, testing and user support.
 
