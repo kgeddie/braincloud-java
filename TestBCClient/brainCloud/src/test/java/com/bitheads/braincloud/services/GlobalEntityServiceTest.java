@@ -223,6 +223,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
         TestResult tr = new TestResult(_wrapper);
         String entityId = getEntityId(tr.m_response);
         _wrapper.getGlobalEntityService().getRandomEntitiesMatching(entityId, 2,tr);
+
         tr.Run();
     }
 

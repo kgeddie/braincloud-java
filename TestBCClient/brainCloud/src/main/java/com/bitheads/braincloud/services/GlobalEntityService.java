@@ -406,6 +406,7 @@ public class GlobalEntityService {
             data.put(Parameter.maxReturn.name(), maxReturn);
             ServerCall serverCall = new ServerCall(ServiceName.globalEntity,
                     ServiceOperation.GET_RANDOM_ENTITIES_MATCHING, data, callback); _client.sendRequest(serverCall);
+
         } catch (JSONException ignored) {
         }
     }
