@@ -12,18 +12,18 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testRead() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().read(tr);
+        _wrapper.getMatchMakingService().read(tr);
 
         tr.Run();
     }
 
     @Test
     public void testSetPlayerRating() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().setPlayerRating(
+        _wrapper.getMatchMakingService().setPlayerRating(
                 5,
                 tr);
 
@@ -32,9 +32,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testResetPlayerRating() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().resetPlayerRating(
+        _wrapper.getMatchMakingService().resetPlayerRating(
                 tr);
 
         tr.Run();
@@ -42,9 +42,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testIncrementPlayerRating() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().incrementPlayerRating(
+        _wrapper.getMatchMakingService().incrementPlayerRating(
                 2,
                 tr);
 
@@ -53,9 +53,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testDecrementPlayerRating() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().decrementPlayerRating(
+        _wrapper.getMatchMakingService().decrementPlayerRating(
                 2,
                 tr);
 
@@ -64,9 +64,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testTurnShieldOn() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().turnShieldOn(
+        _wrapper.getMatchMakingService().turnShieldOn(
                 tr);
 
         tr.Run();
@@ -74,9 +74,20 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testTurnShieldOnFor() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().turnShieldOnFor(
+        _wrapper.getMatchMakingService().turnShieldOnFor(
+                1,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testIncrementShieldOnFor() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getMatchMakingService().incrementShieldOnFor(
                 1,
                 tr);
 
@@ -85,9 +96,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testTurnShieldOff() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().turnShieldOff(
+        _wrapper.getMatchMakingService().turnShieldOff(
                 tr);
 
         tr.Run();
@@ -95,9 +106,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetShieldExpiry() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().getShieldExpiry(
+        _wrapper.getMatchMakingService().getShieldExpiry(
                 null,
                 tr);
 
@@ -106,9 +117,9 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testFindPlayers() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().findPlayers(
+        _wrapper.getMatchMakingService().findPlayers(
                 3,
                 5,
                 tr);
@@ -118,12 +129,12 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testFindPlayersUsingFilter() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject filters = new JSONObject();
         filters.put("filter1", 10);
 
-        BrainCloudClient.getInstance().getMatchMakingService().findPlayersUsingFilter(
+        _wrapper.getMatchMakingService().findPlayersUsingFilter(
                 3,
                 5,
                 filters.toString(),
@@ -134,12 +145,12 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testFindPlayersWithAttributes() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject attributes = new JSONObject();
         attributes.put("name", "asdf");
 
-        BrainCloudClient.getInstance().getMatchMakingService().findPlayersWithAttributes(
+        _wrapper.getMatchMakingService().findPlayersWithAttributes(
                 3,
                 5,
                 attributes.toString(),
@@ -150,7 +161,7 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testFindPlayersWithAttributesUsingFilter() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject filters = new JSONObject();
         filters.put("filter1", 10);
@@ -158,7 +169,7 @@ public class MatchMakingServiceTest extends TestFixtureBase {
         JSONObject attributes = new JSONObject();
         attributes.put("name", "asdf");
 
-        BrainCloudClient.getInstance().getMatchMakingService().findPlayersWithAttributesUsingFilter(
+        _wrapper.getMatchMakingService().findPlayersWithAttributesUsingFilter(
                 3,
                 5,
                 attributes.toString(),
@@ -170,20 +181,20 @@ public class MatchMakingServiceTest extends TestFixtureBase {
 
     @Test
     public void testEnableMatchMaking() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().enableMatchMaking(tr);
+        _wrapper.getMatchMakingService().enableMatchMaking(tr);
         tr.Run();
     }
 
     @Test
     public void testDisableMatchMaking() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMatchMakingService().disableMatchMaking(tr);
+        _wrapper.getMatchMakingService().disableMatchMaking(tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getMatchMakingService().enableMatchMaking(tr);
+        _wrapper.getMatchMakingService().enableMatchMaking(tr);
         tr.Run();
     }
 }

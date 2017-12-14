@@ -19,9 +19,9 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testCreateEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getEntityService().createEntity(
+        _wrapper.getEntityService().createEntity(
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, _defaultEntityValue),
                 null,
@@ -33,11 +33,11 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testDeleteEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String entityId = createDefaultAddressEntity(ACL.Access.None);
 
         //Delete entity
-        BrainCloudClient.getInstance().getEntityService().deleteEntity(entityId, 1, tr);
+        _wrapper.getEntityService().deleteEntity(entityId, 1, tr);
 
         tr.Run();
         deleteAllDefaultEntities();
@@ -45,10 +45,10 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testDeleteSingleton() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         createDefaultAddressEntity(ACL.Access.ReadWrite);
 
-        BrainCloudClient.getInstance().getEntityService().deleteSingleton(
+        _wrapper.getEntityService().deleteSingleton(
                 _defaultEntityType,
                 1,
                 tr);
@@ -59,11 +59,11 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetInstanceEntitiesByType() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         createDefaultAddressEntity(ACL.Access.None);
 
         //getInstanceEntity
-        BrainCloudClient.getInstance().getEntityService().getEntitiesByType(_defaultEntityType, tr);
+        _wrapper.getEntityService().getEntitiesByType(_defaultEntityType, tr);
 
         tr.Run();
         deleteAllDefaultEntities();
@@ -71,11 +71,11 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetInstanceEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String entityId = createDefaultAddressEntity(ACL.Access.None);
 
         //getInstanceEntity
-        BrainCloudClient.getInstance().getEntityService().getEntity(entityId, tr);
+        _wrapper.getEntityService().getEntity(entityId, tr);
 
         tr.Run();
         deleteAllDefaultEntities();
@@ -83,24 +83,24 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetInstanceSharedEntitiesForProfileId() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         createDefaultAddressEntity(ACL.Access.None);
 
         //getInstanceEntity
-        BrainCloudClient.getInstance().getEntityService().getSharedEntitiesForProfileId(getUser(Users.UserA).profileId, tr);
+        _wrapper.getEntityService().getSharedEntitiesForProfileId(getUser(Users.UserA).profileId, tr);
         tr.Run();
         deleteAllDefaultEntities();
     }
 
     @Test
     public void testUpdateEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String entityId = createDefaultAddressEntity(ACL.Access.None);
 
         //Update entity
         String updatedAddress = "1609 Bank St";
 
-        BrainCloudClient.getInstance().getEntityService().updateEntity(
+        _wrapper.getEntityService().updateEntity(
                 entityId,
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
@@ -114,13 +114,13 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testUpdateSharedEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String entityId = createDefaultAddressEntity(ACL.Access.ReadWrite);
 
         String updatedAddress = "1609 Bank St";
 
-        BrainCloudClient.getInstance().getEntityService().updateSharedEntity(
-                BrainCloudClient.getInstance().getAuthenticationService().getProfileId(),
+        _wrapper.getEntityService().updateSharedEntity(
+                _wrapper.getAuthenticationService().getProfileId(),
                 entityId,
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
@@ -133,11 +133,11 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetSharedEntityForProfileId() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String entityId = createDefaultAddressEntity(ACL.Access.ReadWrite);
 
-        BrainCloudClient.getInstance().getEntityService().getSharedEntityForProfileId(
-                BrainCloudClient.getInstance().getAuthenticationService().getProfileId(),
+        _wrapper.getEntityService().getSharedEntityForProfileId(
+                _wrapper.getAuthenticationService().getProfileId(),
                 entityId,
                 tr);
 
@@ -147,12 +147,12 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testUpdateSingleton() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         createDefaultAddressEntity(ACL.Access.ReadWrite);
 
         String updatedAddress = "1609 Bank St";
 
-        BrainCloudClient.getInstance().getEntityService().updateSingleton(
+        _wrapper.getEntityService().updateSingleton(
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
                 ACL.readWriteOther().toJsonString(),
@@ -165,10 +165,10 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetSingleton() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         createDefaultAddressEntity(ACL.Access.None);
 
-        BrainCloudClient.getInstance().getEntityService().getSingleton(
+        _wrapper.getEntityService().getSingleton(
                 _defaultEntityType,
                 tr);
 
@@ -178,12 +178,12 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetList() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         createDefaultAddressEntity(ACL.Access.None);
         createDefaultAddressEntity(ACL.Access.None);
 
-        BrainCloudClient.getInstance().getEntityService().getList(
+        _wrapper.getEntityService().getList(
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 "",
                 1000,
@@ -195,12 +195,12 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetListCount() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         createDefaultAddressEntity(ACL.Access.None);
         createDefaultAddressEntity(ACL.Access.None);
 
-        BrainCloudClient.getInstance().getEntityService().getListCount(
+        _wrapper.getEntityService().getListCount(
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 tr);
 
@@ -212,7 +212,7 @@ public class EntityServiceTest extends TestFixtureBase {
     public void testGetPage() throws Exception {
         createDefaultAddressEntity(ACL.Access.ReadWrite);
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         JSONObject context = new JSONObject();
         JSONObject pagination = new JSONObject();
         pagination.put("rowsPerPage", 50);
@@ -222,7 +222,7 @@ public class EntityServiceTest extends TestFixtureBase {
         searchCriteria.put("entityType", _defaultEntityType);
         context.put("searchCriteria", searchCriteria);
 
-        BrainCloudClient.getInstance().getEntityService().getPage(context.toString(), tr);
+        _wrapper.getEntityService().getPage(context.toString(), tr);
         tr.Run();
 
         deleteAllDefaultEntities();
@@ -232,7 +232,7 @@ public class EntityServiceTest extends TestFixtureBase {
     public void testGetPageOffset() throws Exception {
         createDefaultAddressEntity(ACL.Access.ReadWrite);
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         JSONObject context = new JSONObject();
         JSONObject pagination = new JSONObject();
         pagination.put("rowsPerPage", 50);
@@ -242,13 +242,13 @@ public class EntityServiceTest extends TestFixtureBase {
         searchCriteria.put("entityType", _defaultEntityType);
         context.put("searchCriteria", searchCriteria);
 
-        BrainCloudClient.getInstance().getEntityService().getPage(context.toString(), tr);
+        _wrapper.getEntityService().getPage(context.toString(), tr);
         tr.Run();
 
         String retCtx = tr.m_response.getJSONObject("data").getString("context");
 
         tr.Reset();
-        BrainCloudClient.getInstance().getEntityService().getPageOffset(retCtx, 1, tr);
+        _wrapper.getEntityService().getPageOffset(retCtx, 1, tr);
         tr.Run();
 
         deleteAllDefaultEntities();
@@ -256,9 +256,9 @@ public class EntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testIncrementUserEntityData() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getEntityService().createEntity(
+        _wrapper.getEntityService().createEntity(
                 _defaultEntityType,
                 Helpers.createJsonPair("test", 1234),
                 "",
@@ -266,21 +266,21 @@ public class EntityServiceTest extends TestFixtureBase {
         tr.Run();
         String entityId = getEntityId(tr.m_response);
 
-        BrainCloudClient.getInstance().getEntityService().incrementUserEntityData(
+        _wrapper.getEntityService().incrementUserEntityData(
                 entityId,
                 Helpers.createJsonPair("test", 1234),
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getEntityService().deleteEntity(entityId, -1, tr);
+        _wrapper.getEntityService().deleteEntity(entityId, -1, tr);
         tr.Run();
     }
 
     @Test
     public void testIncrementSharedUserEntityData() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getEntityService().createEntity(
+        _wrapper.getEntityService().createEntity(
                 _defaultEntityType,
                 Helpers.createJsonPair("test", 1234),
                 "",
@@ -288,25 +288,25 @@ public class EntityServiceTest extends TestFixtureBase {
         tr.Run();
         String entityId = getEntityId(tr.m_response);
 
-        BrainCloudClient.getInstance().getEntityService().incrementSharedUserEntityData(
+        _wrapper.getEntityService().incrementSharedUserEntityData(
                 entityId,
                 getUser(Users.UserA).profileId,
                 Helpers.createJsonPair("test", 1234),
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getEntityService().deleteEntity(entityId, -1, tr);
+        _wrapper.getEntityService().deleteEntity(entityId, -1, tr);
         tr.Run();
     }
 
     @Test
     public void testGetSharedEntitiesListForProfileId() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         createDefaultAddressEntity(ACL.Access.None);
         createDefaultAddressEntity(ACL.Access.None);
 
-        BrainCloudClient.getInstance().getEntityService().getSharedEntitiesListForProfileId(
+        _wrapper.getEntityService().getSharedEntitiesListForProfileId(
                 getUser(Users.UserA).profileId,
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 "",
@@ -340,14 +340,14 @@ public class EntityServiceTest extends TestFixtureBase {
     /// <param name="accessLevel"> accessLevel for entity </param>
     /// <returns> The ID of the entity </returns>
     private String createDefaultAddressEntity(ACL.Access accessLevel) {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         ACL access = new ACL();
         access.setOther(accessLevel);
         String entityId = "";
 
         //Create entity
-        BrainCloudClient.getInstance().getEntityService().createEntity(
+        _wrapper.getEntityService().createEntity(
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, _defaultEntityValue),
                 access.toJsonString(),
@@ -368,12 +368,12 @@ public class EntityServiceTest extends TestFixtureBase {
     /// Deletes all default entities
     /// </summary>
     private void deleteAllDefaultEntities(int version) {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         ArrayList<String> entityIds = new ArrayList<>(0);
 
         //get all entities
-        BrainCloudClient.getInstance().getEntityService().getEntitiesByType(_defaultEntityType, tr);
+        _wrapper.getEntityService().getEntitiesByType(_defaultEntityType, tr);
 
         if (tr.Run()) {
             try {
@@ -392,7 +392,7 @@ public class EntityServiceTest extends TestFixtureBase {
 
         while (!entityIds.isEmpty()) {
             tr.Reset();
-            BrainCloudClient.getInstance().getEntityService().deleteEntity(entityIds.remove(0), version, tr);
+            _wrapper.getEntityService().deleteEntity(entityIds.remove(0), version, tr);
             tr.Run();
         }
     }

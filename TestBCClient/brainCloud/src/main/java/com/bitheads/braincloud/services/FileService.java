@@ -179,7 +179,7 @@ public class FileService {
      * @param uploadId The id of the upload
      */
     public void cancelUpload(String uploadId) {
-        BrainCloudClient.getInstance().getRestClient().cancelUpload(uploadId);
+        _client.getRestClient().cancelUpload(uploadId);
     }
 
     /**
@@ -190,7 +190,7 @@ public class FileService {
      * @return A progress from 0.0 to 1.0 or -1 if upload not found.
      */
     public double getUploadProgress(String uploadId) {
-        return BrainCloudClient.getInstance().getRestClient().getUploadProgress(uploadId);
+        return _client.getRestClient().getUploadProgress(uploadId);
     }
 
     /**
@@ -200,7 +200,7 @@ public class FileService {
      * @return The number of bytes uploaded or -1 if upload not found.
      */
     public long getUploadBytesTransferred(String uploadId) {
-        return BrainCloudClient.getInstance().getRestClient().getUploadBytesTransferred(uploadId);
+        return _client.getRestClient().getUploadBytesTransferred(uploadId);
     }
 
     /**
@@ -210,6 +210,6 @@ public class FileService {
      * @return The total number of bytes that will be uploaded or -1 if upload not found.
      */
     public long getUploadTotalBytesToTransfer(String uploadId) {
-        return BrainCloudClient.getInstance().getRestClient().getUploadTotalBytesToTransfer(uploadId);
+        return _client.getRestClient().getUploadTotalBytesToTransfer(uploadId);
     }
 }

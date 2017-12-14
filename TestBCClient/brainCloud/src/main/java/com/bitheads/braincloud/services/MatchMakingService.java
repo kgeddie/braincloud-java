@@ -70,7 +70,7 @@ public class MatchMakingService {
      * @param callback The callback.
      */
     public void resetPlayerRating(IServerCallback callback) {
-        BrainCloudClient braincloudClient = BrainCloudClient.getInstance();
+        BrainCloudClient braincloudClient = _client;
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.RESET_PLAYER_RATING, null, callback);
         _client.sendRequest(sc);
     }
@@ -144,6 +144,26 @@ public class MatchMakingService {
             data.put(Parameter.minutes.name(), minutes);
 
             ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.SHIELD_ON_FOR, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException ignored) {
+        }
+    }
+
+    /**
+     * Increases the shield on time by specified number of minutes
+     *
+     * Service Name - MatchMaking
+     * Service Operation - ShieldOnFor
+     *
+     * @param minutes Number of minutes to increase the shield turn for
+     * @param callback The callback.
+     */
+    public void incrementShieldOnFor(int minutes, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.minutes.name(), minutes);
+
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_SHIELD_ON_FOR, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException ignored) {
         }

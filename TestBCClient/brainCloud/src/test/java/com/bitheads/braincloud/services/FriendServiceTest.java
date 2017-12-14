@@ -21,9 +21,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void testGetExternalIdForProfileId() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().getExternalIdForProfileId(
+        _wrapper.getFriendService().getExternalIdForProfileId(
                 getUser(Users.UserA).profileId,
                 "Facebook",
                 tr);
@@ -34,9 +34,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void testGetSummaryDataForProfileId() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().getSummaryDataForProfileId(
+        _wrapper.getFriendService().getSummaryDataForProfileId(
                 getUser(Users.UserA).profileId,
                 tr);
 
@@ -46,9 +46,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void findUsersByExactName() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().findUsersByExactName(
+        _wrapper.getFriendService().findUsersByExactName(
                 "search",
                 10,
                 tr);
@@ -59,9 +59,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void findUsersBySubstrName() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().findUsersBySubstrName(
+        _wrapper.getFriendService().findUsersBySubstrName(
                 "search",
                 10,
                 tr);
@@ -72,9 +72,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void testFindPlayerByUniversalId() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().findUserByUniversalId(
+        _wrapper.getFriendService().findUserByUniversalId(
                 "search",
                 5,
                 tr);
@@ -85,9 +85,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void testGetProfileInfoForCredential() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().getProfileInfoForCredential(
+        _wrapper.getFriendService().getProfileInfoForCredential(
                 getUser(Users.UserA).id,
                 AuthenticationType.Universal,
                 tr);
@@ -98,9 +98,9 @@ public class FriendServiceTest extends TestFixtureBase
     @Test
     public void testGetProfileInfoForExternalAuthId() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().getProfileInfoForExternalAuthId(
+        _wrapper.getFriendService().getProfileInfoForExternalAuthId(
                 getUser(Users.UserA).id,
                 "failType",
                 tr);
@@ -112,9 +112,9 @@ public class FriendServiceTest extends TestFixtureBase
     public void testListFriends() throws Exception
     {
         addFriend();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getFriendService().listFriends(
+        _wrapper.getFriendService().listFriends(
                 FriendService.FriendPlatform.All, false, tr);
 
         tr.Run();
@@ -131,18 +131,18 @@ public class FriendServiceTest extends TestFixtureBase
     {
         addFriend();
 
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String[] ids = { getUser(Users.UserB).profileId };
-        BrainCloudClient.getInstance().getFriendService().removeFriends(ids, tr);
+        _wrapper.getFriendService().removeFriends(ids, tr);
         tr.Run();
     }
 
     @Test
     public void testGetUsersOnlineStatus() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String[] ids = { getUser(Users.UserB).profileId };
-        BrainCloudClient.getInstance().getFriendService().getUsersOnlineStatus(ids, tr);
+        _wrapper.getFriendService().getUsersOnlineStatus(ids, tr);
         tr.Run();
     }
 
@@ -166,9 +166,9 @@ public class FriendServiceTest extends TestFixtureBase
 
     private void addFriend()
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String[] ids = { getUser(Users.UserB).profileId };
-        BrainCloudClient.getInstance().getFriendService().addFriends(ids, tr);
+        _wrapper.getFriendService().addFriends(ids, tr);
         tr.Run();
     }
 }

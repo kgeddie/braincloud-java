@@ -660,6 +660,8 @@ public class BrainCloudRestClient implements Runnable {
                 connection.setRequestProperty("X-SIG", getSignature(body));
             }
 
+            connection.setRequestProperty("X-APPID", _appId);
+
             connection.setRequestProperty("charset", "utf-8");
             byte[] postData = body.getBytes("UTF-8");
             connection.setRequestProperty("Content-Length", Integer.toString(postData.length));

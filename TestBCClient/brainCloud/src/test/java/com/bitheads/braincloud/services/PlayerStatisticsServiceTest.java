@@ -1,12 +1,7 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -17,9 +12,9 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadAllPlayerStats() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readAllUserStats(
+        _wrapper.getPlayerStatisticsService().readAllUserStats(
                 tr);
 
         tr.Run();
@@ -28,10 +23,10 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadPlayerStatsSubset() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String[] stats = {"currency", "highestScore"};
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readUserStatsSubset(
+        _wrapper.getPlayerStatisticsService().readUserStatsSubset(
                 stats,
                 tr);
 
@@ -41,17 +36,17 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testReadPlayerStatisticsByCategory() throws Exception
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getPlayerStatisticsService().readUserStatsForCategory("Test", tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getPlayerStatisticsService().readUserStatsForCategory("Test", tr);
         tr.Run();
     }
 
     @Test
     public void testResetAllPlayerStats() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().resetAllUserStats(
+        _wrapper.getPlayerStatisticsService().resetAllUserStats(
                 tr);
 
         tr.Run();
@@ -60,12 +55,12 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testIncrementPlayerStats() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject stats = new JSONObject();
         stats.put("highestScore", "RESET");
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().incrementUserStats(
+        _wrapper.getPlayerStatisticsService().incrementUserStats(
                 stats.toString(),
                 tr);
 
@@ -75,9 +70,9 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testIncrementExperiencePoints() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().incrementExperiencePoints(
+        _wrapper.getPlayerStatisticsService().incrementExperiencePoints(
                 10,
                 tr);
 
@@ -87,9 +82,9 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testGetNextExperienceLevel() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().getNextExperienceLevel(
+        _wrapper.getPlayerStatisticsService().getNextExperienceLevel(
                 tr);
 
         tr.Run();
@@ -98,9 +93,9 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testSetExperiencePoints() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().setExperiencePoints(
+        _wrapper.getPlayerStatisticsService().setExperiencePoints(
                 100,
                 tr);
 
@@ -110,12 +105,12 @@ public class PlayerStatisticsServiceTest extends TestFixtureBase
     @Test
     public void testProcessStatistics() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject stats = new JSONObject();
         stats.put("TestStat", "RESET");
 
-        BrainCloudClient.getInstance().getPlayerStatisticsService().processStatistics(
+        _wrapper.getPlayerStatisticsService().processStatistics(
                 stats.toString(),
                 tr);
 

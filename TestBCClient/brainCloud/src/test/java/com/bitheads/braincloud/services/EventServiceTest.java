@@ -29,13 +29,13 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @Test
     public void testSendEvent() throws Exception {
-        BrainCloudClient.getInstance().registerEventCallback(this);
+        _wrapper.getClient().registerEventCallback(this);
 
         sendDefaultMessage();
 
         Assert.assertTrue(_callbackRan);
 
-        BrainCloudClient.getInstance().deregisterEventCallback();
+        _wrapper.getClient().deregisterEventCallback();
     }
 
     @Override
@@ -54,10 +54,10 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @Test
     public void testUpdateIncomingEventData() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         sendDefaultMessage();
 
-        BrainCloudClient.getInstance().getEventService().updateIncomingEventData(
+        _wrapper.getEventService().updateIncomingEventData(
                 _eventId,
                 Helpers.createJsonPair(_eventDataKey, 343),
                 tr);
@@ -67,11 +67,11 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @Test
     public void testDeleteIncomingEvent() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         sendDefaultMessage();
 
-        BrainCloudClient.getInstance().getEventService().deleteIncomingEvent(
+        _wrapper.getEventService().deleteIncomingEvent(
                 _eventId,
                 tr);
 
@@ -81,11 +81,11 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @Test
     public void testGetEvents() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         sendDefaultMessage();
 
-        BrainCloudClient.getInstance().getEventService().getEvents(tr);
+        _wrapper.getEventService().getEvents(tr);
 
         tr.Run();
     }
@@ -94,9 +94,9 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     /// helpers
 
     private void sendDefaultMessage() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getEventService().sendEvent(
+        _wrapper.getEventService().sendEvent(
                 getUser(Users.UserA).profileId,
                 _eventType,
                 Helpers.createJsonPair(_eventDataKey, 117),
@@ -108,9 +108,9 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     }
 
     private void cleanupIncomingEvent(String eventId) throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getEventService().deleteIncomingEvent(
+        _wrapper.getEventService().deleteIncomingEvent(
                 eventId,
                 tr);
 

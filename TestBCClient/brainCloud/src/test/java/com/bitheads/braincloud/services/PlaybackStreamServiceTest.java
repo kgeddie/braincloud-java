@@ -16,10 +16,10 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testStartStream() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String streamId = "";
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().startStream(
+        _wrapper.getPlaybackStreamService().startStream(
                 getUser(Users.UserB).profileId,
                 true,
                 tr);
@@ -35,11 +35,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testReadStream() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().readStream(
+        _wrapper.getPlaybackStreamService().readStream(
                 streamId,
                 tr);
 
@@ -50,11 +50,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testEndStream() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().endStream(
+        _wrapper.getPlaybackStreamService().endStream(
                 streamId,
                 tr);
 
@@ -64,11 +64,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testDeleteStream() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().deleteStream(
+        _wrapper.getPlaybackStreamService().deleteStream(
                 streamId,
                 tr);
 
@@ -78,11 +78,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testAddEvent() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().addEvent(
+        _wrapper.getPlaybackStreamService().addEvent(
                 streamId,
                 Helpers.createJsonPair("data", 1),
                 Helpers.createJsonPair("total", 5),
@@ -95,11 +95,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testGetStreamSummariesForInitiatingPlayer() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().getStreamSummariesForInitiatingPlayer(
+        _wrapper.getPlaybackStreamService().getStreamSummariesForInitiatingPlayer(
                 getUser(Users.UserA).profileId,
                 tr);
 
@@ -110,11 +110,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testGetStreamSummariesForTargetPlayer() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().getStreamSummariesForTargetPlayer(
+        _wrapper.getPlaybackStreamService().getStreamSummariesForTargetPlayer(
                 getUser(Users.UserB).profileId,
                 tr);
 
@@ -125,12 +125,12 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testGetRecentStreamsForInitiatingPlayer() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
         int maxStream = 10;
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForInitiatingPlayer(
+        _wrapper.getPlaybackStreamService().getRecentStreamsForInitiatingPlayer(
                 getUser(Users.UserA).profileId,
                 maxStream,
                 tr);
@@ -142,12 +142,12 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     @Test
     public void testGetRecentStreamsForTargetPlayer() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = startStream();
         int maxStream = 10;
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().getRecentStreamsForTargetPlayer(
+        _wrapper.getPlaybackStreamService().getRecentStreamsForTargetPlayer(
                 getUser(Users.UserB).profileId,
                 maxStream,
                 tr);
@@ -160,10 +160,10 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
 
     private String startStream() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String streamId = "";
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().startStream(
+        _wrapper.getPlaybackStreamService().startStream(
                 getUser(Users.UserB).profileId,
                 true,
                 tr);
@@ -178,9 +178,9 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
 
     private void endStream(String streamId)
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().endStream(
+        _wrapper.getPlaybackStreamService().endStream(
                 streamId,
                 tr);
 
@@ -189,11 +189,11 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
 
     private String getStreamId() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String streamId = "";
 
-        BrainCloudClient.getInstance().getPlaybackStreamService().getStreamSummariesForTargetPlayer(
+        _wrapper.getPlaybackStreamService().getStreamSummariesForTargetPlayer(
                 getUser(Users.UserB).profileId,
                 tr);
 

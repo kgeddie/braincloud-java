@@ -15,9 +15,9 @@ public class TimeServiceTest extends TestFixtureBase
     @Test
     public void testReadServerTime() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getTimeService().readServerTime(
+        _wrapper.getTimeService().readServerTime(
                 tr);
 
         tr.Run();

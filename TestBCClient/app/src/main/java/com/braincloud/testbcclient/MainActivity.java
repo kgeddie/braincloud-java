@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
@@ -49,6 +50,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private String authToken;
 
+    BrainCloudWrapper _wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-        BrainCloudClient client = BrainCloudClient.getInstance();
+
+        _wrapper = new BrainCloudWrapper();
+        BrainCloudClient client = _wrapper.getClient();
         String appId = "";
         String secret = "";
         String appVersion = "1.0.0";
@@ -145,7 +149,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void testGoogleLogin()
     {
-        BrainCloudClient client = BrainCloudClient.getInstance();
+        BrainCloudClient client = _wrapper.getClient();
         client.getAuthenticationService().authenticateGoogle(GOOGLE_ACCOUNT,
                 authToken, true, this);
     }
@@ -160,7 +164,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         if (user.length() > 0 && pwd.length() > 0)
         {
-            BrainCloudClient client = BrainCloudClient.getInstance();
+            BrainCloudClient client = _wrapper.getClient();
             client.getAuthenticationService().authenticateUniversal(user, pwd, true, this);
         }
     }

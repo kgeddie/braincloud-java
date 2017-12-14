@@ -1,6 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,11 +22,21 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
     }
 
     @Test
+    public void testAuthenticateUniversalInstance() throws Exception
+    {
+
+        TestResult tr = new TestResult(_wrapper);
+        _client.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testAuthenticateEmailPassword() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateEmailPassword(
+        BrainCloudWrapper.getInstance().getClient().getAuthenticationService().authenticateEmailPassword(
                 getUser(Users.UserA).email,
                 getUser(Users.UserA).password,
                 true,
@@ -66,8 +77,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
 
     @Test
     public void testAuthenticateUniversal() throws Exception {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         tr.Run();
     }
 
@@ -76,8 +87,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
     {
         String email = "braincloudunittest@gmail.com";
 
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getAuthenticationService().resetEmailPassword(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getAuthenticationService().resetEmailPassword(
                 email, tr);
         tr.Run();
     }

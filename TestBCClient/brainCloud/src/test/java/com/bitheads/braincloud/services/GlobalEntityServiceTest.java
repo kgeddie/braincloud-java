@@ -15,9 +15,9 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testCreateEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().createEntity(
+        _wrapper.getGlobalEntityService().createEntity(
                 _defaultEntityType,
                 0,
                 null,
@@ -29,9 +29,9 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testCreateEntityWithIndexedId() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().createEntityWithIndexedId(
+        _wrapper.getGlobalEntityService().createEntityWithIndexedId(
                 _defaultEntityType,
                 "indexedIdTest",
                 0,
@@ -44,11 +44,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testUpdateEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().updateEntity(
+        _wrapper.getGlobalEntityService().updateEntity(
                 entityId,
                 1,
                 Helpers.createJsonPair(_defaultEntityValueName, "Test Name 02 Changed"),
@@ -59,11 +59,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testUpdateEntityAcl() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().updateEntityAcl(
+        _wrapper.getGlobalEntityService().updateEntityAcl(
                 entityId,
                 1,
                 ACL.readWriteOther().toJsonString(),
@@ -74,11 +74,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testUpdateEntityTimeToLive() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().updateEntityTimeToLive(
+        _wrapper.getGlobalEntityService().updateEntityTimeToLive(
                 entityId,
                 1,
                 1000,
@@ -89,11 +89,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testDeleteEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().deleteEntity(
+        _wrapper.getGlobalEntityService().deleteEntity(
                 entityId,
                 1,
                 tr);
@@ -103,11 +103,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testReadEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().readEntity(
+        _wrapper.getGlobalEntityService().readEntity(
                 entityId,
                 tr);
 
@@ -116,12 +116,12 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetList() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         createDefaultGlobalEntity();
         createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getList(
+        _wrapper.getGlobalEntityService().getList(
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 Helpers.createJsonPair("data.name", 1),
                 1000,
@@ -132,14 +132,14 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetListByIndexedId() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String indexedId = "testIndexedId";
 
         createDefaultGlobalEntity(ACL.Access.None, indexedId);
         createDefaultGlobalEntity(ACL.Access.None, indexedId);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getListByIndexedId(
+        _wrapper.getGlobalEntityService().getListByIndexedId(
                 indexedId,
                 100,
                 tr);
@@ -149,12 +149,12 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetListCount() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         createDefaultGlobalEntity();
         createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getListCount(
+        _wrapper.getGlobalEntityService().getListCount(
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 tr);
 
@@ -163,11 +163,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetPage() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         generateDefaultEntitites(200);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getPage(
+        _wrapper.getGlobalEntityService().getPage(
                 createContext(125, 1, _defaultEntityType),
                 tr);
 
@@ -176,10 +176,10 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetPageOffset() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         generateDefaultEntitites(200);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getPage(
+        _wrapper.getGlobalEntityService().getPage(
                 createContext(50, 1, _defaultEntityType),
                 tr);
         tr.Run();
@@ -189,7 +189,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
         String context = tr.m_response.getJSONObject("data").getString("context");
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getPageOffset(
+        _wrapper.getGlobalEntityService().getPageOffset(
                 context,
                 page,
                 tr);
@@ -199,9 +199,9 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testIncrementGlobalEntityData() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().createEntity(
+        _wrapper.getGlobalEntityService().createEntity(
                 _defaultEntityType,
                 10000,
                 "",
@@ -211,7 +211,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
         String entityId = getEntityId(tr.m_response);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().incrementGlobalEntityData(
+        _wrapper.getGlobalEntityService().incrementGlobalEntityData(
                 entityId,
                 Helpers.createJsonPair("test", 1234),
                 tr);
@@ -220,24 +220,20 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetRandomEntitiesMatching() throws Exception {
-        TestResult tr = new TestResult();
-
+        TestResult tr = new TestResult(_wrapper);
         String entityId = getEntityId(tr.m_response);
+        _wrapper.getGlobalEntityService().getRandomEntitiesMatching(entityId, 2,tr);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getRandomEntitiesMatching(
-                entityId,
-                2,
-                tr);
         tr.Run();
     }
 
     @Test
     public void testUpdateEntityOwnerAndAcl() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().updateEntityOwnerAndAcl(
+        _wrapper.getGlobalEntityService().updateEntityOwnerAndAcl(
                 entityId,
                 -1,
                 getUser(Users.UserA).profileId,
@@ -248,11 +244,11 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
     @Test
     public void testMakeSystemEntity() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String entityId = createDefaultGlobalEntity();
 
-        BrainCloudClient.getInstance().getGlobalEntityService().makeSystemEntity(
+        _wrapper.getGlobalEntityService().makeSystemEntity(
                 entityId,
                 -1,
                 ACL.readWriteOther().toJsonString(),
@@ -281,7 +277,7 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
     /// <param name="accessLevel"> accessLevel for entity </param>
     /// <returns> The ID of the entity </returns>
     private String createDefaultGlobalEntity(ACL.Access accessLevel, String indexedId) throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         ACL access = new ACL();
         access.setOther(accessLevel);
@@ -289,14 +285,14 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
 
         //Create entity
         if (indexedId.length() <= 0) {
-            BrainCloudClient.getInstance().getGlobalEntityService().createEntity(
+            _wrapper.getGlobalEntityService().createEntity(
                     _defaultEntityType,
                     0,
                     access.toJsonString(),
                     Helpers.createJsonPair(_defaultEntityValueName, _defaultEntityValue),
                     tr);
         } else {
-            BrainCloudClient.getInstance().getGlobalEntityService().createEntityWithIndexedId(
+            _wrapper.getGlobalEntityService().createEntityWithIndexedId(
                     _defaultEntityType,
                     indexedId,
                     0,
@@ -328,9 +324,9 @@ public class GlobalEntityServiceTest extends TestFixtureBase {
     }
 
     private void generateDefaultEntitites(int numberOfEntites) throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGlobalEntityService().getListCount(
+        _wrapper.getGlobalEntityService().getListCount(
                 Helpers.createJsonPair("entityType", _defaultEntityType),
                 tr);
 

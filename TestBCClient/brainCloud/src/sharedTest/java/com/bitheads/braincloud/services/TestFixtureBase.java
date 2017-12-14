@@ -2,6 +2,7 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,16 +24,24 @@ public class TestFixtureBase {
     static protected String m_childAppId = "";
     static protected String m_peerName = "";
 
+    public static BrainCloudWrapper _wrapper;
+    public static BrainCloudClient _client;
+
     @Before
     public void setUp() throws Exception {
+
         LoadIds();
 
-        BrainCloudClient.getInstance().initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
-        BrainCloudClient.getInstance().enableLogging(true);
+        _wrapper = new BrainCloudWrapper();
+        _wrapper.initialize(m_appId, m_secret, m_appVersion);
+        _wrapper.getClient().enableLogging(true);
+        _client = _wrapper.getClient();
+
 
         if (shouldAuthenticate()) {
-            TestResult tr = new TestResult();
-            BrainCloudClient.getInstance().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+            TestResult tr = new TestResult(_wrapper);
+            _wrapper.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+            _client.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
             if (!tr.Run()) {
                 // what do we do on error?
             }
@@ -41,9 +50,12 @@ public class TestFixtureBase {
 
     @After
     public void tearDown() throws Exception {
-        BrainCloudClient.getInstance().resetCommunication();
-        BrainCloudClient.getInstance().deregisterEventCallback();
-        BrainCloudClient.getInstance().deregisterRewardCallback();
+        _wrapper.getClient().resetCommunication();
+        _wrapper.getClient().deregisterEventCallback();
+        _wrapper.getClient().deregisterRewardCallback();
+        _client.resetCommunication();
+        _client.deregisterEventCallback();
+        _client.deregisterRewardCallback();
     }
 
     /// <summary>
@@ -60,7 +72,7 @@ public class TestFixtureBase {
     /// in a platform agnostic way.
     /// </summary>
     private void LoadIds() {
-        if(m_serverUrl.length() > 0) return;
+        if (m_serverUrl.length() > 0) return;
 
         File idsFile = new File("ids.txt");
         try {
@@ -69,7 +81,7 @@ public class TestFixtureBase {
             e.printStackTrace();
         }
 
-        if(idsFile.exists()) System.out.println("Found ids.txt file");
+        if (idsFile.exists()) System.out.println("Found ids.txt file");
 
         List<String> lines = new ArrayList<>();
         BufferedReader reader = null;
@@ -146,16 +158,16 @@ public class TestFixtureBase {
     protected TestUser getUser(Users user) {
         if (!_init) {
             //Log.i(getClass().getName(), "Initializing New Random Users");
-            BrainCloudClient.getInstance().enableLogging(false);
+            _wrapper.getClient().enableLogging(false);
             _testUsers = new TestUser[TestFixtureBase.Users.values().length];
             Random rand = new Random();
 
             for (int i = 0, ilen = _testUsers.length; i < ilen; ++i) {
-                _testUsers[i] = new TestUser(Users.byOrdinal(i).toString() + "-", rand.nextInt());
+                _testUsers[i] = new TestUser(_wrapper, Users.byOrdinal(i).toString() + "-", rand.nextInt());
                 //Log.i(getClass().getName(), ".");
             }
             //Log.i(getClass().getName(), "\n");
-            BrainCloudClient.getInstance().enableLogging(true);
+            _wrapper.getClient().enableLogging(true);
             _init = true;
         }
 
@@ -163,38 +175,38 @@ public class TestFixtureBase {
     }
 
     public boolean goToChildProfile() {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getIdentityService().switchToChildProfile(null, m_childAppId, true, tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getIdentityService().switchToChildProfile(null, m_childAppId, true, tr);
         return tr.Run();
     }
 
     public boolean goToParentProfile() {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getIdentityService().switchToParentProfile(m_parentLevelName, tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getIdentityService().switchToParentProfile(m_parentLevelName, tr);
         return tr.Run();
     }
 
     public boolean attachPeer(Users user) {
         TestUser testUser = getUser(user);
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getIdentityService().attachPeerProfile(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getIdentityService().attachPeerProfile(
                 m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal,null,  true, tr);
         return tr.Run();
     }
 
     public boolean detachPeer() {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getIdentityService().detachPeer(m_peerName, tr);
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getIdentityService().detachPeer(m_peerName, tr);
         return tr.Run();
     }
 
     public void Logout() {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPlayerStateService().logout(
+        _wrapper.getPlayerStateService().logout(
                 tr);
         tr.Run();
-        BrainCloudClient.getInstance().resetCommunication();
-        BrainCloudClient.getInstance().getAuthenticationService().clearSavedProfileId();
+        _wrapper.getClient().resetCommunication();
+        _wrapper.getAuthenticationService().clearSavedProfileId();
     }
 }

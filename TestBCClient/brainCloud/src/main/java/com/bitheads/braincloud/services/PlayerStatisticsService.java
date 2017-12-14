@@ -248,7 +248,7 @@ public class PlayerStatisticsService {
         }
 
         // TODO: 15-09-03 need to check for any achievements awarded and notify gamification service
-        //SuccessCallback successCallbacks = BrainCloudClient.getInstance().getGamificationService().checkForAchievementsToAward;
+        //SuccessCallback successCallbacks = _client.getGamificationService().checkForAchievementsToAward;
         //if (success != null)
         //{
         //     successCallbacks += success;

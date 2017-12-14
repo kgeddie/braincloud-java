@@ -21,9 +21,9 @@ public class DataStreamServiceTest extends TestFixtureBase
     @Test
     public void testCustomPageEvent() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getDataStreamService().customPageEvent("testPage", "{\"testProperty\":\"1\"}", tr);
+        _wrapper.getDataStreamService().customPageEvent("testPage", "{\"testProperty\":\"1\"}", tr);
 
         tr.Run();
     }
@@ -31,9 +31,9 @@ public class DataStreamServiceTest extends TestFixtureBase
     @Test
     public void testCustomScreenEvent() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getDataStreamService().customScreenEvent("testScreen", "{\"testProperty\":\"1\"}", tr);
+        _wrapper.getDataStreamService().customScreenEvent("testScreen", "{\"testProperty\":\"1\"}", tr);
 
         tr.Run();
     }
@@ -41,9 +41,9 @@ public class DataStreamServiceTest extends TestFixtureBase
     @Test
     public void testCustomTrackEvent() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getDataStreamService().customTrackEvent("testTrack", "{\"testProperty\":\"1\"}", tr);
+        _wrapper.getDataStreamService().customTrackEvent("testTrack", "{\"testProperty\":\"1\"}", tr);
 
         tr.Run();
     }

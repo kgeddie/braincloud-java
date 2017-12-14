@@ -19,9 +19,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testGetCurrency() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().getCurrency(
+        _wrapper.getProductService().getCurrency(
                 _currencytype,
                 tr);
 
@@ -31,9 +31,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testAwardCurrency() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().awardCurrency(
+        _wrapper.getProductService().awardCurrency(
                 _currencytype,
                 200,
                 tr);
@@ -45,9 +45,9 @@ public class ProductServiceTest extends TestFixtureBase
     public void testConsumeCurrency() throws Exception
     {
         testAwardCurrency();
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().consumeCurrency(
+        _wrapper.getProductService().consumeCurrency(
                 _currencytype,
                 100,
                 tr);
@@ -58,9 +58,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testResetCurrency() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().resetCurrency(
+        _wrapper.getProductService().resetCurrency(
                 tr);
 
         tr.RunExpectFail(403, ReasonCodes.CURRENCY_SECURITY_ERROR);
@@ -69,9 +69,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testGetSalesInventory() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().getSalesInventory(
+        _wrapper.getProductService().getSalesInventory(
                 _platform,
                 "CAD",
                 tr);
@@ -82,9 +82,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testGetSalesInventoryByCategory() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().getSalesInventoryByCategory(
+        _wrapper.getProductService().getSalesInventoryByCategory(
                 _platform,
                 "CAD",
                 _productCatagory,
@@ -96,9 +96,9 @@ public class ProductServiceTest extends TestFixtureBase
     @Test
     public void testGetEligiblePromotions() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getProductService().getEligiblePromotions(
+        _wrapper.getProductService().getEligiblePromotions(
                 tr);
 
         tr.Run();

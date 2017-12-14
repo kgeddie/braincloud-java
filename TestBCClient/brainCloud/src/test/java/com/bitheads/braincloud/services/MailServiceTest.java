@@ -8,9 +8,9 @@ public class MailServiceTest extends TestFixtureBase {
 
     @Test
     public void testSendBasicEmail() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getMailService().sendBasicEmail(
+        _wrapper.getMailService().sendBasicEmail(
                 getUser(Users.UserA).profileId,
                 "Test Subject - TestSendBasicEmail",
                 "Test body content message.",
@@ -21,14 +21,14 @@ public class MailServiceTest extends TestFixtureBase {
 
     @Test
     public void testSendAdvancedEmailSendGrid() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject data = new JSONObject();
         data.put("subject", "Test Subject - TestSendAdvancedEmailSendGrid");
         data.put("body", "Test body");
         data.put("categories", new String[]{"unit-test"});
 
-        BrainCloudClient.getInstance().getMailService().sendAdvancedEmail(
+        _wrapper.getMailService().sendAdvancedEmail(
                 getUser(Users.UserA).profileId,
                 data.toString(),
                 tr);
@@ -38,14 +38,14 @@ public class MailServiceTest extends TestFixtureBase {
 
     @Test
     public void testSendAdvancedEmailByAddress() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         JSONObject data = new JSONObject();
         data.put("subject", "Test Subject - TestSendAdvancedEmailByAddress");
         data.put("body", "Test body");
         data.put("categories", new String[]{"unit-test"});
 
-        BrainCloudClient.getInstance().getMailService().sendAdvancedEmailByAddress(
+        _wrapper.getMailService().sendAdvancedEmailByAddress(
                 getUser(Users.UserA).email,
                 data.toString(),
                 tr);

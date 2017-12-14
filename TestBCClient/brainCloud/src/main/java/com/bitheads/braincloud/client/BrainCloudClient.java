@@ -38,6 +38,11 @@ import java.util.TimeZone;
 
 public class BrainCloudClient {
 
+    public static final boolean EnableSingletonMode = false;
+    public static final String SingletonUseErrorMessage =
+            "Singleton usage is disabled. If called by mistake, use your own variable that holds an instance of the bcWrapper/bcClient.";
+
+
     private String _appId;
     private Platform _releasePlatform;
     private String _appVersion;
@@ -45,7 +50,8 @@ public class BrainCloudClient {
     private String _languageCode;
     private double _timeZoneOffset;
 
-    private final static String BRAINCLOUD_VERSION = "3.5.0";
+
+    private final static String BRAINCLOUD_VERSION = "3.6.5";
 
     private BrainCloudRestClient _restClient;
 
@@ -83,15 +89,27 @@ public class BrainCloudClient {
 
     private static String DEFAULT_SERVER_URL = "https://sharedprod.braincloudservers.com/dispatcherv2";
 
-    protected BrainCloudClient() {
+    public BrainCloudClient() {
         _restClient = new BrainCloudRestClient(this);
     }
 
+    /**
+     * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/wrappers-clients-and-inconvenient-singletons/
+     */
     public static BrainCloudClient getInstance() {
+
+        if (BrainCloudClient.EnableSingletonMode == false) {
+            throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);
+        }
+
         if (instance == null) {
             instance = new BrainCloudClient();
         }
         return instance;
+    }
+
+    public static void setInstance(BrainCloudClient client) {
+        instance = client;
     }
 
     public BrainCloudRestClient getRestClient() {

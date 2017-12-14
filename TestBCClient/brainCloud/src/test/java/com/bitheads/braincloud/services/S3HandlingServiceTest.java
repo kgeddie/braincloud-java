@@ -13,9 +13,9 @@ public class S3HandlingServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetUpdatedFiles() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getS3HandlingService().getUpdatedFiles(
+        _wrapper.getS3HandlingService().getUpdatedFiles(
                 _category,
                 getModifiedFileDetails(),
                 tr);
@@ -25,9 +25,9 @@ public class S3HandlingServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetFileList() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getS3HandlingService().getFileList(
+        _wrapper.getS3HandlingService().getFileList(
                 _category,
                 tr);
 
@@ -36,23 +36,23 @@ public class S3HandlingServiceTest extends TestFixtureBase {
 
     @Test
     public void testGetCdnUrl() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getS3HandlingService().getFileList(_category, tr);
+        _wrapper.getS3HandlingService().getFileList(_category, tr);
         tr.Run();
 
         JSONArray files = tr.m_response.getJSONObject("data").getJSONArray("fileDetails");
         String fileId = files.getJSONObject(0).getString("fileId");
 
-        BrainCloudClient.getInstance().getS3HandlingService().getCDNUrl(fileId, tr);
+        _wrapper.getS3HandlingService().getCDNUrl(fileId, tr);
         tr.Run();
     }
 
     private String getModifiedFileDetails() throws Exception {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
         String fileDetails = "";
 
-        BrainCloudClient.getInstance().getS3HandlingService().getFileList(
+        _wrapper.getS3HandlingService().getFileList(
                 _category,
                 tr);
 

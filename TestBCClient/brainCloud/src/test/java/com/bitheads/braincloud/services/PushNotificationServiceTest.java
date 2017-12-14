@@ -16,9 +16,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testDeregisterAllPushNotificationDeviceTokens() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().deregisterAllPushNotificationDeviceTokens(tr);
+        _wrapper.getPushNotificationService().deregisterAllPushNotificationDeviceTokens(tr);
 
         tr.Run();
     }
@@ -26,12 +26,12 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testDeregisterPushNotificationDeviceToken() throws Exception
     {
-        TestResult tr = new TestResult();
-        BrainCloudClient.getInstance().getPushNotificationService().registerPushNotificationToken(
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getPushNotificationService().registerPushNotificationToken(
                 Platform.GooglePlayAndroid, "GARBAGE_TOKEN", tr);
 
         tr.Reset();
-        BrainCloudClient.getInstance().getPushNotificationService().deregisterPushNotificationDeviceToken(
+        _wrapper.getPushNotificationService().deregisterPushNotificationDeviceToken(
                 Platform.GooglePlayAndroid, "GARBAGE_TOKEN", tr);
         tr.Run();
     }
@@ -39,9 +39,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testRegisterPushNotificationToken() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().registerPushNotificationToken(
+        _wrapper.getPushNotificationService().registerPushNotificationToken(
                 Platform.GooglePlayAndroid, "GARBAGE_TOKEN", tr);
 
         tr.Run();
@@ -62,9 +62,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendTemplatedPushNotificationToGroup() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroup(
+        _wrapper.getGroupService().createGroup(
                 "testGroup",
                 "test",
                 false,
@@ -79,14 +79,14 @@ public class PushNotificationServiceTest extends TestFixtureBase
         JSONObject data = tr.m_response.getJSONObject("data");
         String groupId = data.getString("groupId");
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendTemplatedPushNotificationToGroup(
+        _wrapper.getPushNotificationService().sendTemplatedPushNotificationToGroup(
                 groupId,
                 1,
                 Helpers.createJsonPair("1", "asdf"),
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().deleteGroup(
+        _wrapper.getGroupService().deleteGroup(
                 groupId,
                 -1,
                 tr);
@@ -96,9 +96,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendNormalizedPushNotificationToGroup() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroup(
+        _wrapper.getGroupService().createGroup(
                 "testGroup",
                 "test",
                 false,
@@ -113,14 +113,14 @@ public class PushNotificationServiceTest extends TestFixtureBase
         JSONObject data = tr.m_response.getJSONObject("data");
         String groupId = data.getString("groupId");
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendNormalizedPushNotificationToGroup(
+        _wrapper.getPushNotificationService().sendNormalizedPushNotificationToGroup(
                 groupId,
                 "{ \"body\": \"content of message\", \"title\": \"message title\" }",
                 Helpers.createJsonPair("1", "asdf"),
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().deleteGroup(
+        _wrapper.getGroupService().deleteGroup(
                 groupId,
                 -1,
                 tr);
@@ -130,13 +130,13 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleRawPushNotificationUTC() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String fcmContent = "{ \"notification\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"data\": { \"customfield1\": \"customValue1\", \"customfield2\": \"customValue2\" }, \"priority\": \"normal\" }";
         String iosContent = "{ \"aps\": { \"alert\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"badge\": 0, \"sound\": \"gggg\" } }";
         String facebookContent = "{\"template\": \"content of message\"}";
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleRawPushNotificationUTC(
+        _wrapper.getPushNotificationService().scheduleRawPushNotificationUTC(
                 getUser(Users.UserA).profileId,
                 fcmContent,
                 iosContent,
@@ -150,13 +150,13 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleRawPushNotificationMinutes() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String fcmContent = "{ \"notification\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"data\": { \"customfield1\": \"customValue1\", \"customfield2\": \"customValue2\" }, \"priority\": \"normal\" }";
         String iosContent = "{ \"aps\": { \"alert\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"badge\": 0, \"sound\": \"gggg\" } }";
         String facebookContent = "{\"template\": \"content of message\"}";
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleRawPushNotificationUTC(
+        _wrapper.getPushNotificationService().scheduleRawPushNotificationUTC(
                 getUser(Users.UserA).profileId,
                 fcmContent,
                 iosContent,
@@ -170,13 +170,13 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendRawPushNotification() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String fcmContent = "{ \"notification\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"data\": { \"customfield1\": \"customValue1\", \"customfield2\": \"customValue2\" }, \"priority\": \"normal\" }";
         String iosContent = "{ \"aps\": { \"alert\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"badge\": 0, \"sound\": \"gggg\" } }";
         String facebookContent = "{\"template\": \"content of message\"}";
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendRawPushNotification(
+        _wrapper.getPushNotificationService().sendRawPushNotification(
                 getUser(Users.UserA).profileId,
                 fcmContent,
                 iosContent,
@@ -189,14 +189,14 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendRawPushNotificationBatch() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
         String fcmContent = "{ \"notification\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"data\": { \"customfield1\": \"customValue1\", \"customfield2\": \"customValue2\" }, \"priority\": \"normal\" }";
         String iosContent = "{ \"aps\": { \"alert\": { \"body\": \"content of message\", \"title\": \"message title\" }, \"badge\": 0, \"sound\": \"gggg\" } }";
         String facebookContent = "{\"template\": \"content of message\"}";
 
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendRawPushNotificationBatch(
+        _wrapper.getPushNotificationService().sendRawPushNotificationBatch(
                 new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
                 fcmContent,
                 iosContent,
@@ -209,9 +209,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendRawPushNotificationToGroup() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getGroupService().createGroup(
+        _wrapper.getGroupService().createGroup(
                 "testGroup",
                 "test",
                 false,
@@ -231,7 +231,7 @@ public class PushNotificationServiceTest extends TestFixtureBase
         String facebookContent = "{\"template\": \"content of message\"}";
 
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendRawPushNotificationToGroup(
+        _wrapper.getPushNotificationService().sendRawPushNotificationToGroup(
                 groupId,
                 fcmContent,
                 iosContent,
@@ -239,7 +239,7 @@ public class PushNotificationServiceTest extends TestFixtureBase
                 tr);
         tr.Run();
 
-        BrainCloudClient.getInstance().getGroupService().deleteGroup(
+        _wrapper.getGroupService().deleteGroup(
                 groupId,
                 -1,
                 tr);
@@ -249,9 +249,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleNormalizedPushNotificationUTC() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleNormalizedPushNotificationUTC(
+        _wrapper.getPushNotificationService().scheduleNormalizedPushNotificationUTC(
                 getUser(Users.UserA).profileId,
                 "{ \"body\": \"content of message\", \"title\": \"message title\" }",
                 Helpers.createJsonPair("1", "asdf"),
@@ -264,9 +264,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleNormalizedPushNotificationMinutes() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleNormalizedPushNotificationMinutes(
+        _wrapper.getPushNotificationService().scheduleNormalizedPushNotificationMinutes(
                 getUser(Users.UserA).profileId,
                 "{ \"body\": \"content of message\", \"title\": \"message title\" }",
                 Helpers.createJsonPair("1", "asdf"),
@@ -279,9 +279,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleRichPushNotificationUTC() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleRichPushNotificationUTC(
+        _wrapper.getPushNotificationService().scheduleRichPushNotificationUTC(
                 getUser(Users.UserA).profileId,
                 1,
                 Helpers.createJsonPair("1", "asdf"),
@@ -294,9 +294,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testScheduleRichPushNotificationMinutes() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().scheduleRichPushNotificationMinutes(
+        _wrapper.getPushNotificationService().scheduleRichPushNotificationMinutes(
                 getUser(Users.UserA).profileId,
                 1,
                 Helpers.createJsonPair("1", "asdf"),
@@ -310,9 +310,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendNormalizedPushNotification() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendNormalizedPushNotification(
+        _wrapper.getPushNotificationService().sendNormalizedPushNotification(
                 getUser(Users.UserA).profileId,
                 "{ \"body\": \"content of message\", \"title\": \"message title\" }",
                 Helpers.createJsonPair("1", "asdf"),
@@ -324,9 +324,9 @@ public class PushNotificationServiceTest extends TestFixtureBase
     @Test
     public void testSendNormalizedPushNotificationBatch() throws Exception
     {
-        TestResult tr = new TestResult();
+        TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudClient.getInstance().getPushNotificationService().sendNormalizedPushNotificationBatch(
+        _wrapper.getPushNotificationService().sendNormalizedPushNotificationBatch(
                 new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
                 "{ \"body\": \"content of message\", \"title\": \"message title\" }",
                 Helpers.createJsonPair("1", "asdf"),
