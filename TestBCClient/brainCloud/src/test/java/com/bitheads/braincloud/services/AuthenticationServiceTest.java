@@ -36,7 +36,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
     {
         TestResult tr = new TestResult(_wrapper);
 
-        BrainCloudWrapper.getInstance().getClient().getAuthenticationService().authenticateEmailPassword(
+        _wrapper.getClient().getAuthenticationService().authenticateEmailPassword(
                 getUser(Users.UserA).email,
                 getUser(Users.UserA).password,
                 true,
@@ -78,7 +78,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
     @Test
     public void testAuthenticateUniversal() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         tr.Run();
     }
 
@@ -88,7 +88,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth
         String email = "braincloudunittest@gmail.com";
 
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAuthenticationService().resetEmailPassword(
+        _wrapper.getClient().getAuthenticationService().resetEmailPassword(
                 email, tr);
         tr.Run();
     }

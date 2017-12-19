@@ -25,7 +25,7 @@ public class CommsTest extends TestFixtureNoAuth
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.initialize("123", "123", "1.0.0", "http://localhost:5432");
-        _wrapper.getAuthenticationService().authenticateUniversal("abc", "123", true, tr);
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "123", true, tr);
         tr.RunExpectFail(-1, -1);
 
         _wrapper.resetCommunication();
@@ -91,7 +91,7 @@ public class CommsTest extends TestFixtureNoAuth
         // this test assumes you're running a server that returns 503
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
         long prevSessionTimeout = _wrapper.getClient().getHeartbeatInterval();
@@ -107,7 +107,7 @@ public class CommsTest extends TestFixtureNoAuth
         _wrapper.getTimeService().readServerTime(tr);
         tr.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.USER_SESSION_EXPIRED);
 
-        _wrapper.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
         tr.Run();
 
         _wrapper.getPlayerStateService().logout(tr);
@@ -211,7 +211,7 @@ public class CommsTest extends TestFixtureNoAuth
 
         //bcc.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
         //bcc.enableLogging(true);
-        _wrapper.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         _wrapper.getClient().insertEndOfMessageBundleMarker();
         _wrapper.getPlayerStatisticsService().readAllUserStats(tr);
         _wrapper.getClient().insertEndOfMessageBundleMarker();
@@ -246,12 +246,12 @@ public class CommsTest extends TestFixtureNoAuth
         tr.setMaxWait(30);
     }
 
-    //@Test
+    @Test
     public void testKillSwitch() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getAuthenticationService().authenticateUniversal(
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
         tr.Run();
 

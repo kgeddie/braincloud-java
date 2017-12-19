@@ -120,7 +120,7 @@ public class EntityServiceTest extends TestFixtureBase {
         String updatedAddress = "1609 Bank St";
 
         _wrapper.getEntityService().updateSharedEntity(
-                _wrapper.getAuthenticationService().getProfileId(),
+                _wrapper.getClient().getAuthenticationService().getProfileId(),
                 entityId,
                 _defaultEntityType,
                 Helpers.createJsonPair(_defaultEntityValueName, updatedAddress),
@@ -137,7 +137,7 @@ public class EntityServiceTest extends TestFixtureBase {
         String entityId = createDefaultAddressEntity(ACL.Access.ReadWrite);
 
         _wrapper.getEntityService().getSharedEntityForProfileId(
-                _wrapper.getAuthenticationService().getProfileId(),
+                _wrapper.getClient().getAuthenticationService().getProfileId(),
                 entityId,
                 tr);
 

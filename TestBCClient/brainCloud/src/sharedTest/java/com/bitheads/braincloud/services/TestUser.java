@@ -34,13 +34,13 @@ public class TestUser
     private void Authenticate()
     {
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAuthenticationService().authenticateUniversal(
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 id,
                 password,
                 true,
                 tr);
         tr.Run();
-        profileId = _wrapper.getAuthenticationService().getProfileId();
+        profileId = _wrapper.getClient().getAuthenticationService().getProfileId();
 
         try
         {
