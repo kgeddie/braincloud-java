@@ -33,15 +33,15 @@ public class TestFixtureBase {
         LoadIds();
 
         _wrapper = new BrainCloudWrapper();
-        _wrapper.initialize(m_appId, m_secret, m_appVersion);
+        _wrapper.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
         _wrapper.getClient().enableLogging(true);
         _client = _wrapper.getClient();
 
 
         if (shouldAuthenticate()) {
             TestResult tr = new TestResult(_wrapper);
-            _wrapper.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
-            _client.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+
             if (!tr.Run()) {
                 // what do we do on error?
             }
@@ -207,6 +207,6 @@ public class TestFixtureBase {
                 tr);
         tr.Run();
         _wrapper.getClient().resetCommunication();
-        _wrapper.getAuthenticationService().clearSavedProfileId();
+        _wrapper.getClient().getAuthenticationService().clearSavedProfileId();
     }
 }

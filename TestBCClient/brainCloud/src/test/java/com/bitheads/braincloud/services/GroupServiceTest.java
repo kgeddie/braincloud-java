@@ -596,7 +596,7 @@ public class GroupServiceTest extends TestFixtureBase {
 
     private void authenticate(Users user) throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAuthenticationService().authenticateUniversal(
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(user).id,
                 getUser(user).password,
                 true,
@@ -609,7 +609,7 @@ public class GroupServiceTest extends TestFixtureBase {
         _wrapper.getPlayerStateService().logout(
                 tr);
         tr.Run();
-        _wrapper.getAuthenticationService().clearSavedProfileId();
+        _wrapper.getClient().getAuthenticationService().clearSavedProfileId();
     }
 
     private void createGroup() throws Exception {

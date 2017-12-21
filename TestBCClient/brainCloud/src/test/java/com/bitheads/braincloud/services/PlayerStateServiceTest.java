@@ -22,14 +22,14 @@ public class PlayerStateServiceTest extends TestFixtureBase
         _wrapper.getPlayerStateService().deleteUser(
                 tr);
         tr.Run();
-        _wrapper.getAuthenticationService().clearSavedProfileId();
-        _wrapper.getAuthenticationService().authenticateUniversal(
+        _wrapper.getClient().getAuthenticationService().clearSavedProfileId();
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserA).id,
                 getUser(Users.UserA).password,
                 true,
                 tr);
         tr.Run();
-        getUser(Users.UserA).profileId = _wrapper.getAuthenticationService().getProfileId();
+        getUser(Users.UserA).profileId = _wrapper.getClient().getAuthenticationService().getProfileId();
     }
 
     @Test

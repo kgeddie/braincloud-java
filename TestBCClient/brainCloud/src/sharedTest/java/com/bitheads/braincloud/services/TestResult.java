@@ -61,7 +61,9 @@ public class TestResult implements IServerCallback, IGlobalErrorCallback, INetwo
         Reset();
         Spin();
 
-        if(!noAssert) Assert.assertTrue(m_result);
+        if(!noAssert) {
+            Assert.assertTrue(m_result);
+        }
 
         return m_result;
     }

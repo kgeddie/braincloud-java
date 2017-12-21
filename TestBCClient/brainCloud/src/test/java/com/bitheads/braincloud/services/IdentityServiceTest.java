@@ -44,7 +44,7 @@ public class IdentityServiceTest extends TestFixtureBase {
         Logout();
 
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAuthenticationService().authenticateEmailPassword(
+        _wrapper.getClient().getAuthenticationService().authenticateEmailPassword(
                 getUser(Users.UserC).email,
                 getUser(Users.UserC).password,
                 true,
