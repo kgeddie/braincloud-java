@@ -54,7 +54,7 @@ android {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.json:json:20160212'
+    testImplementation 'org.json:json:20171018'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
 
