@@ -1,2 +1,2 @@
 include ':brainCloud'
-rootProject.name = 'test-bc-client'
+rootProject.name = 'TestBCClient-Desktop'
